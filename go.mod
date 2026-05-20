@@ -6,7 +6,7 @@ require (
 	github.com/grokify/goauth v0.23.30
 	github.com/grokify/gogoogle v0.9.0
 	github.com/modelcontextprotocol/go-sdk v1.6.0
-	google.golang.org/api v0.279.0
+	google.golang.org/api v0.280.0
 )
 
 require (
