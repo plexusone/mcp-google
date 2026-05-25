@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://plexusone.github.io/mcp-google/configuration/environment/">
+        <link rel="canonical" href="https://plexusone.github.io/mcp-google/releases/v0.2.0/">
       
       
-        <link rel="prev" href="../credentials/">
+        <link rel="prev" href="../../configuration/claude-desktop/">
       
       
-        <link rel="next" href="../claude-desktop/">
+        <link rel="next" href="../v0.1.0/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Environment Variables - Google MCP Server</title>
+        <title>v0.2.0 - Google MCP Server</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#environment-variables" class="md-skip">
+        <a href="#release-notes-v020" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Environment Variables
+              v0.2.0
             
           </span>
         </div>
@@ -746,8 +746,6 @@
       
   
   
-    
-  
   
   
     
@@ -760,11 +758,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
@@ -780,7 +780,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Configuration
@@ -794,7 +794,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../credentials/" class="md-nav__link">
+      <a href="../../configuration/credentials/" class="md-nav__link">
         
   
   
@@ -814,32 +814,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Environment Variables
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../configuration/environment/" class="md-nav__link">
         
   
   
@@ -850,179 +828,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#available-variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      Available Variables
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Available Variables">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#credential-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Credential Configuration
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#vault-provider-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vault Provider Authentication
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#precedence" class="md-nav__link">
-    <span class="md-ellipsis">
-      Precedence
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#google-service-account" class="md-nav__link">
-    <span class="md-ellipsis">
-      Google Service Account
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#goauth-credentialsset" class="md-nav__link">
-    <span class="md-ellipsis">
-      goauth CredentialsSet
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#vault-backed-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vault-Backed (File)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#1password" class="md-nav__link">
-    <span class="md-ellipsis">
-      1Password
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bitwarden" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bitwarden
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#shell-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Shell Configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Shell Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#bashzsh" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bash/Zsh
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fish" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fish
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dotenv-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dotenv Files
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1035,7 +840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../claude-desktop/" class="md-nav__link">
+      <a href="../../configuration/claude-desktop/" class="md-nav__link">
         
   
   
@@ -1062,8 +867,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -1074,13 +881,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
@@ -1096,7 +901,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Releases
@@ -1107,10 +912,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../releases/v0.2.0/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    v0.2.0
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1121,6 +948,155 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      Highlights
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#google-docs-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Docs Tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vault-backed-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vault-Backed Credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cobra-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cobra CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composable-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Composable Skills
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Guide
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-claude-desktop-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update Claude Desktop Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-cli-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update CLI Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1133,7 +1109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../releases/v0.1.0/" class="md-nav__link">
+      <a href="../v0.1.0/" class="md-nav__link">
         
   
   
@@ -1183,28 +1159,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#available-variables" class="md-nav__link">
+  <a href="#highlights" class="md-nav__link">
     <span class="md-ellipsis">
-      Available Variables
+      Highlights
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Available Variables">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#credential-configuration" class="md-nav__link">
+  <a href="#google-docs-tools" class="md-nav__link">
     <span class="md-ellipsis">
-      Credential Configuration
+      Google Docs Tools
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#vault-provider-authentication" class="md-nav__link">
+  <a href="#vault-backed-credentials" class="md-nav__link">
     <span class="md-ellipsis">
-      Vault Provider Authentication
+      Vault-Backed Credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cobra-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cobra CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composable-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Composable Skills
     </span>
   </a>
   
@@ -1216,64 +1228,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#precedence" class="md-nav__link">
+  <a href="#documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Precedence
+      Documentation
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#dependencies" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Dependencies
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Examples">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Guide
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Guide">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#google-service-account" class="md-nav__link">
+  <a href="#update-installation" class="md-nav__link">
     <span class="md-ellipsis">
-      Google Service Account
+      Update Installation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#goauth-credentialsset" class="md-nav__link">
+  <a href="#update-claude-desktop-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      goauth CredentialsSet
+      Update Claude Desktop Configuration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#vault-backed-file" class="md-nav__link">
+  <a href="#update-cli-flags" class="md-nav__link">
     <span class="md-ellipsis">
-      Vault-Backed (File)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#1password" class="md-nav__link">
-    <span class="md-ellipsis">
-      1Password
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bitwarden" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bitwarden
+      Update CLI Flags
     </span>
   </a>
   
@@ -1281,57 +1284,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#shell-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Shell Configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Shell Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#bashzsh" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bash/Zsh
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fish" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fish
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dotenv-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dotenv Files
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker
-    </span>
-  </a>
   
 </li>
       
@@ -1354,140 +1306,179 @@
   
 
 
-<h1 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h1>
-<p>All command-line flags can be set via environment variables.</p>
-<h2 id="available-variables">Available Variables<a class="headerlink" href="#available-variables" title="Permanent link">&para;</a></h2>
-<h3 id="credential-configuration">Credential Configuration<a class="headerlink" href="#credential-configuration" title="Permanent link">&para;</a></h3>
+<h1 id="release-notes-v020">Release Notes v0.2.0<a class="headerlink" href="#release-notes-v020" title="Permanent link">&para;</a></h1>
+<p>Major architectural upgrade from a Slides-only server to a composable multi-service MCP server built on the omniskill framework.</p>
+<h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Composable Architecture</strong>: Built on <a href="https://github.com/plexusone/omniskill">omniskill</a> for modular, reusable skills</li>
+<li><strong>Google Docs Support</strong>: 4 new tools for reading Google Docs documents</li>
+<li><strong>Vault-Backed Credentials</strong>: Secure credential storage via 1Password, Bitwarden, and more</li>
+<li><strong>Cobra CLI</strong>: New command-line interface with subcommands and direct tool invocation</li>
+</ul>
+<h2 id="breaking-changes">Breaking Changes<a class="headerlink" href="#breaking-changes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Binary renamed from <code>google-mcp-server</code> to <code>mcp-google</code></li>
+<li>CLI flags changed from <code>-flag</code> to <code>--flag</code> style (cobra convention)</li>
+<li>Old <code>internal/slides</code> package removed; use <code>skills/slides</code> instead</li>
+</ul>
+<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h2>
+<h3 id="google-docs-tools">Google Docs Tools<a class="headerlink" href="#google-docs-tools" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Variable</th>
-<th>Flag</th>
+<th>Tool</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>GOOGLE_CREDENTIALS_FILE</code></td>
-<td><code>--credentials</code></td>
-<td>Path to Google service account JSON</td>
+<td><code>get_document</code></td>
+<td>Get document metadata (title, word count, element counts)</td>
 </tr>
 <tr>
-<td><code>GOAUTH_CREDENTIALS_FILE</code></td>
-<td><code>--goauth-credentials-file</code></td>
-<td>Path to goauth CredentialsSet JSON</td>
+<td><code>get_document_content</code></td>
+<td>Get structured content (headings, paragraphs, images, tables)</td>
 </tr>
 <tr>
-<td><code>GOAUTH_CREDENTIALS_ACCOUNT</code></td>
-<td><code>--goauth-credentials-account</code></td>
-<td>Account key in CredentialsSet</td>
+<td><code>get_document_text</code></td>
+<td>Get all text as a single plain text string</td>
 </tr>
 <tr>
-<td><code>OMNITOKEN_VAULT_URI</code></td>
-<td><code>--vault</code></td>
-<td>Vault URI for credentials</td>
-</tr>
-<tr>
-<td><code>OMNITOKEN_CREDENTIALS_NAME</code></td>
-<td><code>--credentials-name</code></td>
-<td>Name of credentials in vault</td>
+<td><code>get_document_paragraphs</code></td>
+<td>Get text organized by paragraphs</td>
 </tr>
 </tbody>
 </table>
-<h3 id="vault-provider-authentication">Vault Provider Authentication<a class="headerlink" href="#vault-provider-authentication" title="Permanent link">&para;</a></h3>
+<h3 id="vault-backed-credentials">Vault-Backed Credentials<a class="headerlink" href="#vault-backed-credentials" title="Permanent link">&para;</a></h3>
+<p>Three authentication methods now supported:</p>
 <table>
 <thead>
 <tr>
-<th>Variable</th>
+<th>Method</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>OP_SERVICE_ACCOUNT_TOKEN</code></td>
-<td>1Password service account token</td>
+<td>Google Service Account</td>
+<td>Standard GCP service account JSON</td>
 </tr>
 <tr>
-<td><code>BW_ACCESS_TOKEN</code></td>
-<td>Bitwarden access token</td>
+<td>goauth CredentialsSet</td>
+<td>Multi-credential JSON file</td>
 </tr>
 <tr>
-<td><code>BW_ORGANIZATION_ID</code></td>
-<td>Bitwarden organization ID</td>
+<td>Vault (omnitoken)</td>
+<td>1Password, Bitwarden, file, or environment</td>
 </tr>
 </tbody>
 </table>
-<h2 id="precedence">Precedence<a class="headerlink" href="#precedence" title="Permanent link">&para;</a></h2>
-<p>Command-line flags take precedence over environment variables.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Environment variable is used</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_CREDENTIALS_FILE</span><span class="o">=</span>/path/to/env-creds.json
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>mcp-google
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Uses: /path/to/env-creds.json</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Flag overrides environment</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_CREDENTIALS_FILE</span><span class="o">=</span>/path/to/env-creds.json
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>mcp-google<span class="w"> </span>--credentials<span class="w"> </span>/path/to/flag-creds.json
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># Uses: /path/to/flag-creds.json</span>
+<p>Example with 1Password:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OP_SERVICE_ACCOUNT_TOKEN</span><span class="o">=</span><span class="s2">&quot;ops_...&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mcp-google<span class="w"> </span>--vault<span class="w"> </span>op://MyVault<span class="w"> </span>--credentials-name<span class="w"> </span>google
 </code></pre></div>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<h3 id="google-service-account">Google Service Account<a class="headerlink" href="#google-service-account" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_CREDENTIALS_FILE</span><span class="o">=</span>/path/to/service-account.json
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>mcp-google
+<h3 id="cobra-cli">Cobra CLI<a class="headerlink" href="#cobra-cli" title="Permanent link">&para;</a></h3>
+<p>New subcommand structure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mcp-google<span class="w"> </span>serve<span class="w">              </span><span class="c1"># Run MCP server (default)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>mcp-google<span class="w"> </span>version<span class="w">            </span><span class="c1"># Show version</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>mcp-google<span class="w"> </span>get-presentation<span class="w">   </span><span class="c1"># Direct tool invocation</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>mcp-google<span class="w"> </span>get-document<span class="w">       </span><span class="c1"># Direct tool invocation</span>
 </code></pre></div>
-<h3 id="goauth-credentialsset">goauth CredentialsSet<a class="headerlink" href="#goauth-credentialsset" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOAUTH_CREDENTIALS_FILE</span><span class="o">=</span>/path/to/credentials.json
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOAUTH_CREDENTIALS_ACCOUNT</span><span class="o">=</span>myaccount
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>mcp-google
+<h3 id="composable-skills">Composable Skills<a class="headerlink" href="#composable-skills" title="Permanent link">&para;</a></h3>
+<p>Skills can be imported into custom MCP servers:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="s">&quot;github.com/plexusone/mcp-google/skills/slides&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="s">&quot;github.com/plexusone/mcp-google/skills/docs&quot;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">// Add to your omniskill runtime</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nx">slidesSkill</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">slides</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="nx">httpClient</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nx">docsSkill</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">docs</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="nx">httpClient</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nx">rt</span><span class="p">.</span><span class="nx">RegisterSkill</span><span class="p">(</span><span class="nx">slidesSkill</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nx">rt</span><span class="p">.</span><span class="nx">RegisterSkill</span><span class="p">(</span><span class="nx">docsSkill</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="vault-backed-file">Vault-Backed (File)<a class="headerlink" href="#vault-backed-file" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMNITOKEN_VAULT_URI</span><span class="o">=</span>file:///path/to/secrets
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMNITOKEN_CREDENTIALS_NAME</span><span class="o">=</span>google
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>mcp-google
+<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
+<p>Comprehensive MkDocs documentation site added:</p>
+<ul>
+<li>Getting Started (installation, setup, quickstart)</li>
+<li>Configuration (credentials, environment, Claude Desktop)</li>
+<li>Architecture (overview, omniskill integration, composability)</li>
+<li>Skills Guide (using skills, multi-service servers)</li>
+<li>Tools Reference (all 9 tools documented)</li>
+</ul>
+<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dependency</th>
+<th>Version</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>github.com/plexusone/omniskill</code></td>
+<td>v0.8.0</td>
+<td>Skill framework</td>
+</tr>
+<tr>
+<td><code>github.com/plexusone/omnitoken</code></td>
+<td>v0.1.0</td>
+<td>Token/credential management</td>
+</tr>
+<tr>
+<td><code>github.com/plexusone/omnivault-desktop</code></td>
+<td>v0.1.0</td>
+<td>Vault provider registration</td>
+</tr>
+<tr>
+<td><code>github.com/spf13/cobra</code></td>
+<td>v1.10.2</td>
+<td>CLI framework</td>
+</tr>
+<tr>
+<td><code>github.com/grokify/gogoogle</code></td>
+<td>v0.10.0</td>
+<td>Google API utilities</td>
+</tr>
+<tr>
+<td><code>github.com/modelcontextprotocol/go-sdk</code></td>
+<td>v1.6.1</td>
+<td>MCP SDK</td>
+</tr>
+<tr>
+<td><code>google.golang.org/api</code></td>
+<td>v0.280.0</td>
+<td>Google APIs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="migration-guide">Migration Guide<a class="headerlink" href="#migration-guide" title="Permanent link">&para;</a></h2>
+<h3 id="update-installation">Update Installation<a class="headerlink" href="#update-installation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Old</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/google-mcp-server/cmd/google-mcp-server@latest
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># New</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/plexusone/mcp-google/cmd/mcp-google@latest
 </code></pre></div>
-<h3 id="1password">1Password<a class="headerlink" href="#1password" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OP_SERVICE_ACCOUNT_TOKEN</span><span class="o">=</span><span class="s2">&quot;ops_...&quot;</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMNITOKEN_VAULT_URI</span><span class="o">=</span>op://MyVault
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMNITOKEN_CREDENTIALS_NAME</span><span class="o">=</span>google
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>mcp-google
+<h3 id="update-claude-desktop-configuration">Update Claude Desktop Configuration<a class="headerlink" href="#update-claude-desktop-configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;google&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/mcp-google&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="nt">&quot;GOOGLE_CREDENTIALS_FILE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/service-account.json&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="bitwarden">Bitwarden<a class="headerlink" href="#bitwarden" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">BW_ACCESS_TOKEN</span><span class="o">=</span><span class="s2">&quot;...&quot;</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">BW_ORGANIZATION_ID</span><span class="o">=</span><span class="s2">&quot;...&quot;</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMNITOKEN_VAULT_URI</span><span class="o">=</span>bw://org-id
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMNITOKEN_CREDENTIALS_NAME</span><span class="o">=</span>google
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>mcp-google
-</code></pre></div>
-<h2 id="shell-configuration">Shell Configuration<a class="headerlink" href="#shell-configuration" title="Permanent link">&para;</a></h2>
-<h3 id="bashzsh">Bash/Zsh<a class="headerlink" href="#bashzsh" title="Permanent link">&para;</a></h3>
-<p>Add to <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Google MCP Server credentials</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_CREDENTIALS_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.config/google-mcp/service-account.json&quot;</span>
-</code></pre></div>
-<h3 id="fish">Fish<a class="headerlink" href="#fish" title="Permanent link">&para;</a></h3>
-<p>Add to <code>~/.config/fish/config.fish</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">set</span> -gx GOOGLE_CREDENTIALS_FILE <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.config/google-mcp/service-account.json&quot;</span>
-</code></pre></div>
-<h2 id="dotenv-files">Dotenv Files<a class="headerlink" href="#dotenv-files" title="Permanent link">&para;</a></h2>
-<p>For project-specific configuration, use a <code>.env</code> file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># .env</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">GOOGLE_CREDENTIALS_FILE</span><span class="o">=</span>/path/to/service-account.json
-</code></pre></div>
-<p>Load with <code>source</code> or a dotenv tool:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">source</span><span class="w"> </span>.env
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>mcp-google
-</code></pre></div>
-<p>Or use a tool like <code>direnv</code> for automatic loading.</p>
-<h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">golang:1.24</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">builder</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c"># ... build steps ...</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:latest</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>builder<span class="w"> </span>/app/mcp-google<span class="w"> </span>/usr/local/bin/
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">GOOGLE_CREDENTIALS_FILE</span><span class="o">=</span>/secrets/service-account.json
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp-google&quot;</span><span class="p">]</span>
-</code></pre></div>
-<p>Run with mounted secrets:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span>/path/to/secrets:/secrets<span class="w"> </span>mcp-google
+<h3 id="update-cli-flags">Update CLI Flags<a class="headerlink" href="#update-cli-flags" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Old</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>google-mcp-server<span class="w"> </span>-credentials<span class="w"> </span>/path/to/sa.json
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># New</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>mcp-google<span class="w"> </span>--credentials<span class="w"> </span>/path/to/sa.json
 </code></pre></div>
 
 
