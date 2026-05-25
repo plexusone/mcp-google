@@ -1,31 +1,47 @@
 site_name: Google MCP Server
 site_description: MCP server for reading Google Slides and Docs, built on omniskill for composability
-site_url: https://grokify.github.io/mcp-google
-repo_url: https://github.com/grokify/mcp-google
-repo_name: grokify/mcp-google
+site_url: https://plexusone.github.io/mcp-google
+repo_url: https://github.com/plexusone/mcp-google
+repo_name: plexusone/mcp-google
 
 theme:
   name: material
+  custom_dir: docs/overrides
   palette:
-    - scheme: default
-      primary: blue
-      accent: blue
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
+    # Dark mode first (PlexusOne default)
     - scheme: slate
-      primary: blue
-      accent: blue
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
   features:
-    - navigation.tabs
     - navigation.sections
     - navigation.expand
     - navigation.top
     - search.highlight
     - content.code.copy
+
+extra_css:
+  - https://plexusone.dev/css/plexusone-mkdocs.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - tables
+  - toc:
+      permalink: true
 
 nav:
   - Home: index.md
@@ -49,24 +65,7 @@ nav:
       - Environment Variables: configuration/environment.md
       - Claude Desktop: configuration/claude-desktop.md
 
-markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - admonition
-  - pymdownx.details
-  - attr_list
-  - md_in_html
-  - tables
-  - toc:
-      permalink: true
-
-plugins:
-  - search
-
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/grokify/mcp-google
+      link: https://github.com/plexusone/mcp-google
