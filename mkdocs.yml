@@ -1,0 +1,72 @@
+site_name: Google MCP Server
+site_description: MCP server for reading Google Slides and Docs, built on omniskill for composability
+site_url: https://grokify.github.io/mcp-google
+repo_url: https://github.com/grokify/mcp-google
+repo_name: grokify/mcp-google
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Setup: getting-started/setup.md
+      - Quick Start: getting-started/quickstart.md
+  - Tools Reference:
+      - Overview: tools/overview.md
+      - Google Slides: tools/slides.md
+      - Google Docs: tools/docs.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - OmniSkill Integration: architecture/omniskill.md
+      - Composability: architecture/composability.md
+  - Skills Guide:
+      - Using Skills: skills/using-skills.md
+      - Building Multi-Service Servers: skills/multi-service.md
+  - Configuration:
+      - Credentials: configuration/credentials.md
+      - Environment Variables: configuration/environment.md
+      - Claude Desktop: configuration/claude-desktop.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/grokify/mcp-google
