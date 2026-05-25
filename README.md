@@ -1,11 +1,32 @@
 # Google MCP Server
 
-[![Build Status][build-status-svg]][build-status-url]
-[![Lint Status][lint-status-svg]][lint-status-url]
+[![Go CI][go-ci-svg]][go-ci-url]
+[![Go Lint][go-lint-svg]][go-lint-url]
+[![Go SAST][go-sast-svg]][go-sast-url]
 [![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
+[![Docs][docs-mkdoc-svg]][docs-mkdoc-url]
 [![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
+
+ [go-ci-svg]: https://github.com/plexusone/mcp-google/actions/workflows/go-ci.yaml/badge.svg?branch=main
+ [go-ci-url]: https://github.com/plexusone/mcp-google/actions/workflows/go-ci.yaml
+ [go-lint-svg]: https://github.com/plexusone/mcp-google/actions/workflows/go-lint.yaml/badge.svg?branch=main
+ [go-lint-url]: https://github.com/plexusone/mcp-google/actions/workflows/go-lint.yaml
+ [go-sast-svg]: https://github.com/plexusone/mcp-google/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
+ [go-sast-url]: https://github.com/plexusone/mcp-google/actions/workflows/go-sast-codeql.yaml
+ [goreport-svg]: https://goreportcard.com/badge/github.com/plexusone/mcp-google
+ [goreport-url]: https://goreportcard.com/report/github.com/plexusone/mcp-google
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/plexusone/mcp-google
+ [docs-godoc-url]: https://pkg.go.dev/github.com/plexusone/mcp-google
+ [docs-mkdoc-svg]: https://img.shields.io/badge/Go-dev%20guide-blue.svg
+ [docs-mkdoc-url]: https://plexusone.dev/mcp-google
+ [viz-svg]: https://img.shields.io/badge/Go-visualizaton-blue.svg
+ [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=plexusone%2Fmcp-google
+ [loc-svg]: https://tokei.rs/b1/github/plexusone/mcp-google
+ [repo-url]: https://github.com/plexusone/mcp-google
+ [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+ [license-url]: https://github.com/plexusone/mcp-google/blob/main/LICENSE
 
 An MCP (Model Context Protocol) server for reading Google Slides presentations and Google Docs documents.
 
@@ -450,18 +471,3 @@ https://docs.google.com/document/d/DOCUMENT_ID_HERE/edit?tab=t.0#heading=h.xyz
 ## License
 
 MIT
-
- [build-status-svg]: https://github.com/grokify/mcp-google/actions/workflows/ci.yaml/badge.svg?branch=main
- [build-status-url]: https://github.com/grokify/mcp-google/actions/workflows/ci.yaml
- [lint-status-svg]: https://github.com/grokify/mcp-google/actions/workflows/lint.yaml/badge.svg?branch=main
- [lint-status-url]: https://github.com/grokify/mcp-google/actions/workflows/lint.yaml
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/mcp-google
- [goreport-url]: https://goreportcard.com/report/github.com/grokify/mcp-google
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/mcp-google
- [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/mcp-google
- [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
- [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fmcp-google
- [loc-svg]: https://tokei.rs/b1/github/grokify/mcp-google
- [repo-url]: https://github.com/grokify/mcp-google
- [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/mcp-google/blob/master/LICENSE
