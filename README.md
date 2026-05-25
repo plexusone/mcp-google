@@ -7,11 +7,13 @@
 [![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
 
-An MCP (Model Context Protocol) server for reading Google Slides presentations.
+An MCP (Model Context Protocol) server for reading Google Slides presentations and Google Docs documents.
 
 ## Features
 
-Read-only access to Google Slides presentations via five MCP tools:
+Read-only access to Google Slides and Google Docs via MCP tools.
+
+### Google Slides Tools
 
 - **get_presentation** - Get presentation metadata (title, slide count, locale, revision ID)
 - **list_slides** - List all slides with titles and element counts
@@ -19,23 +21,70 @@ Read-only access to Google Slides presentations via five MCP tools:
 - **get_slide_notes** - Get speaker notes by slide index or object ID
 - **get_presentation_content** - Get all slides' text and images in one call (ideal for AI)
 
+### Google Docs Tools
+
+- **get_document** - Get document metadata (title, word count, element counts)
+- **get_document_content** - Get structured content (headings, paragraphs, images, tables)
+- **get_document_text** - Get all text as a single plain text string
+- **get_document_paragraphs** - Get text organized by paragraphs
+
+## Architecture
+
+This server is built on [omniskill](https://github.com/plexusone/omniskill), making its Google Slides and Docs skills **composable building blocks** that can be reused in multi-service MCP servers.
+
+### Composable Skills
+
+The skills in this repository can be imported and combined with other skills:
+
+```go
+import (
+    "github.com/grokify/mcp-google/skills/slides"
+    "github.com/grokify/mcp-google/skills/docs"
+    runtime "github.com/plexusone/omniskill/mcp/server"
+)
+
+// Create runtime
+rt := runtime.New(&mcp.Implementation{
+    Name:    "work-mcp-server",
+    Version: "v1.0.0",
+}, nil)
+
+// Add Google skills
+slidesSkill := slides.New(googleHTTPClient)
+slidesSkill.Init(ctx)
+rt.RegisterSkill(slidesSkill)
+
+docsSkill := docs.New(googleHTTPClient)
+docsSkill.Init(ctx)
+rt.RegisterSkill(docsSkill)
+
+// Add other skills (Slack, Jira, GitHub, etc.)
+rt.RegisterSkill(slackSkill)
+rt.RegisterSkill(jiraSkill)
+
+// Run server
+rt.ServeStdio(ctx)
+```
+
+This enables building unified MCP servers that combine multiple services while keeping each service's implementation modular and maintainable.
+
 ## Requirements
 
 - Go 1.24+
-- Google Cloud service account with Slides API access
+- Google Cloud service account with Slides and Docs API access
 
 ## Installation
 
 ```bash
-go install github.com/grokify/google-mcp-server/cmd/google-mcp-server@latest
+go install github.com/grokify/mcp-google/cmd/mcp-google@latest
 ```
 
 Or build from source:
 
 ```bash
-git clone https://github.com/grokify/google-mcp-server.git
-cd google-mcp-server
-go build ./cmd/google-mcp-server
+git clone https://github.com/grokify/mcp-google.git
+cd mcp-google
+go build ./cmd/mcp-google
 ```
 
 ## Setup
@@ -44,13 +93,13 @@ go build ./cmd/google-mcp-server
 
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select an existing one
-3. Enable the Google Slides API
+3. Enable the Google Slides API and Google Docs API
 4. Create a service account with no special roles
 5. Download the JSON credentials file
 
-### 2. Share Presentations with the Service Account
+### 2. Share Documents with the Service Account
 
-Share any presentations you want to access with the service account's email address (found in the credentials JSON as `client_email`).
+Share any presentations or documents you want to access with the service account's email address (found in the credentials JSON as `client_email`).
 
 ## Usage
 
@@ -59,14 +108,14 @@ Share any presentations you want to access with the service account's email addr
 Use a standard Google Cloud service account JSON file:
 
 ```bash
-google-mcp-server -credentials /path/to/service-account.json
+mcp-google --credentials /path/to/service-account.json
 ```
 
 Or using an environment variable:
 
 ```bash
 export GOOGLE_CREDENTIALS_FILE=/path/to/service-account.json
-google-mcp-server
+mcp-google
 ```
 
 ### Option 2: goauth CredentialsSet
@@ -74,7 +123,7 @@ google-mcp-server
 Use a [goauth](https://github.com/grokify/goauth) CredentialsSet file, which can store multiple credentials:
 
 ```bash
-google-mcp-server -goauth-credentials-file /path/to/credentials.json -goauth-credentials-account myaccount
+mcp-google --goauth-credentials-file /path/to/credentials.json --goauth-credentials-account myaccount
 ```
 
 Or using environment variables:
@@ -82,7 +131,7 @@ Or using environment variables:
 ```bash
 export GOAUTH_CREDENTIALS_FILE=/path/to/credentials.json
 export GOAUTH_CREDENTIALS_ACCOUNT=myaccount
-google-mcp-server
+mcp-google
 ```
 
 The CredentialsSet entry should be of type `gcpsa` with appropriate scopes:
@@ -103,6 +152,7 @@ The CredentialsSet entry should be of type `gcpsa` with appropriate scopes:
         },
         "scopes": [
           "https://www.googleapis.com/auth/presentations.readonly",
+          "https://www.googleapis.com/auth/documents.readonly",
           "https://www.googleapis.com/auth/drive.readonly"
         ]
       }
@@ -111,38 +161,95 @@ The CredentialsSet entry should be of type `gcpsa` with appropriate scopes:
 }
 ```
 
+### Option 3: Vault-Backed Credentials
+
+Use [omnitoken](https://github.com/plexusone/omnitoken) with [omnivault-desktop](https://github.com/plexusone/omnivault-desktop) for secure credential storage in password managers.
+
+Supported vault providers:
+
+| Provider | URI Pattern | Requirements |
+|----------|-------------|--------------|
+| 1Password | `op://vault` | `OP_SERVICE_ACCOUNT_TOKEN` env var |
+| Bitwarden | `bw://org-id` | `BW_ACCESS_TOKEN` and `BW_ORGANIZATION_ID` env vars |
+| File | `file:///path` | None |
+| Env | `env://PREFIX_` | None |
+
+#### 1Password Example
+
+```bash
+export OP_SERVICE_ACCOUNT_TOKEN="ops_..."
+mcp-google --vault op://MyVault --credentials-name google
+```
+
+#### Bitwarden Example
+
+```bash
+export BW_ACCESS_TOKEN="..."
+export BW_ORGANIZATION_ID="..."
+mcp-google --vault bw://org-id --credentials-name google
+```
+
+#### File Vault Example
+
+```bash
+mcp-google --vault file:///path/to/secrets --credentials-name google
+```
+
 ### Claude Desktop Configuration
 
 Add to your Claude Desktop configuration (`claude_desktop_config.json`):
 
-```json
-{
-  "mcpServers": {
-    "google": {
-      "command": "/path/to/google-mcp-server",
-      "args": ["-credentials", "/path/to/service-account.json"]
-    }
-  }
-}
-```
-
-Or with goauth:
+#### With Google Service Account
 
 ```json
 {
   "mcpServers": {
     "google": {
-      "command": "/path/to/google-mcp-server",
-      "args": [
-        "-goauth-credentials-file", "/path/to/credentials.json",
-        "-goauth-credentials-account", "myaccount"
-      ]
+      "command": "/path/to/mcp-google",
+      "env": {
+        "GOOGLE_CREDENTIALS_FILE": "/path/to/service-account.json"
+      }
     }
   }
 }
 ```
 
-## Tools
+#### With goauth CredentialsSet
+
+```json
+{
+  "mcpServers": {
+    "google": {
+      "command": "/path/to/mcp-google",
+      "env": {
+        "GOAUTH_CREDENTIALS_FILE": "/path/to/credentials.json",
+        "GOAUTH_CREDENTIALS_ACCOUNT": "myaccount"
+      }
+    }
+  }
+}
+```
+
+#### With 1Password
+
+```json
+{
+  "mcpServers": {
+    "google": {
+      "command": "/path/to/mcp-google",
+      "env": {
+        "OP_SERVICE_ACCOUNT_TOKEN": "ops_...",
+        "OMNITOKEN_VAULT_URI": "op://MyVault",
+        "OMNITOKEN_CREDENTIALS_NAME": "google"
+      }
+    }
+  }
+}
+```
+
+See [docs/configuration/claude-desktop.md](docs/configuration/claude-desktop.md) for more options including Bitwarden.
+
+## Google Slides Tools
 
 ### get_presentation
 
@@ -235,29 +342,126 @@ Get all slide content in a single call - ideal for AI analysis of the entire pre
     - `alt_text` - Image description
   - `notes` - Speaker notes (if `include_notes` is true)
 
-## Finding Presentation IDs
+## Google Docs Tools
 
-The presentation ID is the long string in the URL when viewing a presentation:
+### get_document
+
+Get metadata about a document.
+
+**Input:**
+
+- `document_id` (required) - The ID or URL of the Google Doc
+
+**Output:**
+
+- `title` - Document title
+- `document_id` - Document ID
+- `revision_id` - Current revision ID
+- `word_count` - Approximate word count
+- `char_count` - Character count
+- `image_count` - Number of images
+- `table_count` - Number of tables
+- `header_count` - Number of headers
+- `footer_count` - Number of footers
+
+### get_document_content
+
+Get the full structured content of a document.
+
+**Input:**
+
+- `document_id` (required) - The ID or URL of the Google Doc
+- `include_images` (optional) - Include image information (default: false)
+- `include_tables` (optional) - Include table content (default: false)
+- `include_headers` (optional) - Include document headers (default: false)
+- `include_footers` (optional) - Include document footers (default: false)
+
+**Output:**
+
+- `title` - Document title
+- `sections` - Array of content sections:
+  - `type` - Section type ("heading", "paragraph")
+  - `level` - Heading level (1-6, for headings only)
+  - `text` - Section text content
+  - `style_id` - Style identifier (e.g., "HEADING_1", "NORMAL_TEXT")
+- `images` - Array of images (if requested):
+  - `object_id` - Image element ID
+  - `content_uri` - Direct URL to image
+  - `source_uri` - Original source URL
+  - `title` - Image title
+  - `description` - Image description
+- `tables` - Array of tables (if requested):
+  - `rows` - Number of rows
+  - `columns` - Number of columns
+  - `cells` - 2D array of cell text content
+- `headers` - Array of header text (if requested)
+- `footers` - Array of footer text (if requested)
+
+### get_document_text
+
+Get all text from a document as a single plain text string.
+
+**Input:**
+
+- `document_id` (required) - The ID or URL of the Google Doc
+
+**Output:**
+
+- `title` - Document title
+- `text` - Full document text
+
+### get_document_paragraphs
+
+Get text organized by paragraphs.
+
+**Input:**
+
+- `document_id` (required) - The ID or URL of the Google Doc
+
+**Output:**
+
+- `title` - Document title
+- `paragraphs` - Array of paragraph text strings
+
+## Finding Document IDs
+
+### Presentations
+
+The presentation ID is in the URL when viewing a presentation:
 
 ```
 https://docs.google.com/presentation/d/PRESENTATION_ID_HERE/edit
+```
+
+### Documents
+
+The document ID is in the URL when viewing a document:
+
+```
+https://docs.google.com/document/d/DOCUMENT_ID_HERE/edit
+```
+
+**Note:** Google Docs tools accept either the document ID or the full URL, including URLs with query strings and anchors:
+
+```
+https://docs.google.com/document/d/DOCUMENT_ID_HERE/edit?tab=t.0#heading=h.xyz
 ```
 
 ## License
 
 MIT
 
- [build-status-svg]: https://github.com/grokify/google-mcp-server/actions/workflows/ci.yaml/badge.svg?branch=main
- [build-status-url]: https://github.com/grokify/google-mcp-server/actions/workflows/ci.yaml
- [lint-status-svg]: https://github.com/grokify/google-mcp-server/actions/workflows/lint.yaml/badge.svg?branch=main
- [lint-status-url]: https://github.com/grokify/google-mcp-server/actions/workflows/lint.yaml
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/google-mcp-server
- [goreport-url]: https://goreportcard.com/report/github.com/grokify/google-mcp-server
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/google-mcp-server
- [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/google-mcp-server
+ [build-status-svg]: https://github.com/grokify/mcp-google/actions/workflows/ci.yaml/badge.svg?branch=main
+ [build-status-url]: https://github.com/grokify/mcp-google/actions/workflows/ci.yaml
+ [lint-status-svg]: https://github.com/grokify/mcp-google/actions/workflows/lint.yaml/badge.svg?branch=main
+ [lint-status-url]: https://github.com/grokify/mcp-google/actions/workflows/lint.yaml
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/mcp-google
+ [goreport-url]: https://goreportcard.com/report/github.com/grokify/mcp-google
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/mcp-google
+ [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/mcp-google
  [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
- [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fgoogle-mcp-server
- [loc-svg]: https://tokei.rs/b1/github/grokify/google-mcp-server
- [repo-url]: https://github.com/grokify/google-mcp-server
+ [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fmcp-google
+ [loc-svg]: https://tokei.rs/b1/github/grokify/mcp-google
+ [repo-url]: https://github.com/grokify/mcp-google
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/google-mcp-server/blob/master/LICENSE
+ [license-url]: https://github.com/grokify/mcp-google/blob/master/LICENSE
