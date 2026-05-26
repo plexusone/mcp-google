@@ -81,7 +81,7 @@ func (s *Skill) Name() string { return "docs" }
 
 func (s *Skill) Tools() []skill.Tool {
     return []skill.Tool{
-        s.getDocumentTool(),
+        s.getDocumentMetadataTool(),
         s.getDocumentContentTool(),
         s.getDocumentTextTool(),
         s.getDocumentParagraphsTool(),
@@ -94,9 +94,9 @@ func (s *Skill) Tools() []skill.Tool {
 Tools use `skill.NewTool()` for clean definitions:
 
 ```go
-func (s *Skill) getDocumentTool() skill.Tool {
+func (s *Skill) getDocumentMetadataTool() skill.Tool {
     return skill.NewTool(
-        "get_document",
+        "get_document_metadata",
         "Get metadata about a Google Doc document",
         map[string]skill.Parameter{
             "document_id": {

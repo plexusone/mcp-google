@@ -55,7 +55,7 @@ func (s *Skill) Close() error {
 // Tools returns all tools provided by this skill.
 func (s *Skill) Tools() []skill.Tool {
 	return []skill.Tool{
-		s.getDocumentTool(),
+		s.getDocumentMetadataTool(),
 		s.getDocumentContentTool(),
 		s.getDocumentTextTool(),
 		s.getDocumentParagraphsTool(),
@@ -69,9 +69,9 @@ func (s *Skill) getDocument(ctx context.Context, documentID string) (*docs.Docum
 	return s.documents.Get(documentID).Context(ctx).Do()
 }
 
-func (s *Skill) getDocumentTool() skill.Tool {
+func (s *Skill) getDocumentMetadataTool() skill.Tool {
 	return skill.NewTool(
-		"get_document",
+		"get_document_metadata",
 		"Get metadata about a Google Doc document including title, word count, and element counts. Accepts document ID or full URL.",
 		map[string]skill.Parameter{
 			"document_id": {

@@ -226,4 +226,4 @@ Once configured, you can ask Claude to:
 Claude will use the appropriate tools:
 
 - `get_presentation` / `get_presentation_content` for Slides
-- `get_document` / `get_document_text` for Docs
+- `get_document_metadata` / `get_document_text` for Docs

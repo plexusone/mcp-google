@@ -161,7 +161,7 @@ func main() {
 
     // Register skills (use prefix to avoid conflicts)
     rt.RegisterSkillWithPrefix(slidesSkill)  // slides_get_presentation, etc.
-    rt.RegisterSkillWithPrefix(docsSkill)    // docs_get_document, etc.
+    rt.RegisterSkillWithPrefix(docsSkill)    // docs_get_document_metadata, etc.
 
     // Run
     if err := rt.ServeStdio(ctx); err != nil {

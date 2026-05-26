@@ -65,6 +65,9 @@ Credentials can be provided via:
   # CLI: Get presentation metadata
   mcp-google get-presentation <id> --credentials /path/to/service-account.json
 
+  # CLI: Get document metadata
+  mcp-google get-document-metadata <id> --credentials /path/to/service-account.json
+
   # CLI: Get document text
   mcp-google get-document-text <id> --credentials /path/to/service-account.json`,
 	SilenceUsage: true,
@@ -163,13 +166,13 @@ var getPresentationContentCmd = &cobra.Command{
 }
 
 // Docs CLI commands
-var getDocumentCmd = &cobra.Command{
-	Use:   "get-document <document-id>",
+var getDocumentMetadataCmd = &cobra.Command{
+	Use:   "get-document-metadata <document-id>",
 	Short: "Get document metadata",
 	Long:  "Get metadata about a Google Doc including title, word count, and element counts.",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return runDocsTool("get_document", map[string]any{
+		return runDocsTool("get_document_metadata", map[string]any{
 			"document_id": args[0],
 		})
 	},
@@ -270,7 +273,7 @@ func init() {
 	rootCmd.AddCommand(getPresentationContentCmd)
 
 	// Docs commands
-	rootCmd.AddCommand(getDocumentCmd)
+	rootCmd.AddCommand(getDocumentMetadataCmd)
 	rootCmd.AddCommand(getDocumentContentCmd)
 	rootCmd.AddCommand(getDocumentTextCmd)
 	rootCmd.AddCommand(getDocumentParagraphsCmd)

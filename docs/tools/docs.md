@@ -6,7 +6,7 @@
     https://docs.google.com/document/d/abc123/edit?tab=t.0#heading=h.xyz
     ```
 
-## get_document
+## get_document_metadata
 
 Get metadata about a Google Doc document.
 
@@ -34,7 +34,7 @@ Get metadata about a Google Doc document.
 
 ```json
 {
-  "name": "get_document",
+  "name": "get_document_metadata",
   "arguments": {
     "document_id": "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
   }

@@ -135,7 +135,7 @@ Both skills require these scopes:
 
 | Tool | Description |
 |------|-------------|
-| `get_document` | Get document metadata |
+| `get_document_metadata` | Get document metadata |
 | `get_document_content` | Get structured content |
 | `get_document_text` | Get plain text |
 | `get_document_paragraphs` | Get text by paragraphs |

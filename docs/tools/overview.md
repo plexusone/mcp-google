@@ -25,7 +25,7 @@ Google MCP Server provides 9 tools for reading Google Slides and Google Docs.
 
 | Tool | Purpose |
 |------|---------|
-| `get_document` | Document metadata (title, word count) |
+| `get_document_metadata` | Document metadata (title, word count) |
 | `get_document_content` | Structured content with optional images/tables |
 | `get_document_text` | Plain text extraction |
 | `get_document_paragraphs` | Text organized by paragraphs |
@@ -51,4 +51,4 @@ For specific content:
 For quick metadata checks:
 
 - **Slides**: `get_presentation`
-- **Docs**: `get_document`
+- **Docs**: `get_document_metadata`

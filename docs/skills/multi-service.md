@@ -193,7 +193,7 @@ func main() {
 
 ```go
 rt.RegisterSkillWithPrefix(slidesSkill)  // slides_get_presentation
-rt.RegisterSkillWithPrefix(docsSkill)    // docs_get_document
+rt.RegisterSkillWithPrefix(docsSkill)    // docs_get_document_metadata
 rt.RegisterSkillWithPrefix(slackSkill)   // slack_send_message
 ```
 
@@ -201,7 +201,7 @@ rt.RegisterSkillWithPrefix(slackSkill)   // slack_send_message
 
 ```go
 rt.RegisterSkill(slidesSkill)  // get_presentation
-rt.RegisterSkill(docsSkill)    // get_document
+rt.RegisterSkill(docsSkill)    // get_document_metadata
 rt.RegisterSkill(slackSkill)   // send_message
 ```
 

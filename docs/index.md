@@ -23,7 +23,7 @@ An MCP (Model Context Protocol) server for reading Google Slides presentations a
 
 | Tool | Description |
 |------|-------------|
-| `get_document` | Get document metadata (title, word count, element counts) |
+| `get_document_metadata` | Get document metadata (title, word count, element counts) |
 | `get_document_content` | Get structured content (headings, paragraphs, images, tables) |
 | `get_document_text` | Get all text as a single plain text string |
 | `get_document_paragraphs` | Get text organized by paragraphs |

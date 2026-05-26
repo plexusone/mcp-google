@@ -44,7 +44,7 @@ Read-only access to Google Slides and Google Docs via MCP tools.
 
 ### Google Docs Tools
 
-- **get_document** - Get document metadata (title, word count, element counts)
+- **get_document_metadata** - Get document metadata (title, word count, element counts)
 - **get_document_content** - Get structured content (headings, paragraphs, images, tables)
 - **get_document_text** - Get all text as a single plain text string
 - **get_document_paragraphs** - Get text organized by paragraphs
@@ -365,7 +365,7 @@ Get all slide content in a single call - ideal for AI analysis of the entire pre
 
 ## Google Docs Tools
 
-### get_document
+### get_document_metadata
 
 Get metadata about a document.
 
