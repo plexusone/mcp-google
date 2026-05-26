@@ -216,6 +216,12 @@ mcp-google --vault bw://org-id --credentials-name google
 mcp-google --vault file:///path/to/secrets --credentials-name google
 ```
 
+The `get-document-content` command can include document metadata along with structured content:
+
+```bash
+mcp-google get-document-content <document-id-or-url> --include-metadata --include-images --include-tables -o pretty
+```
+
 ### Claude Desktop Configuration
 
 Add to your Claude Desktop configuration (`claude_desktop_config.json`):

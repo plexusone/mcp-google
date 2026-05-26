@@ -185,11 +185,12 @@ var getDocumentContentCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return runDocsTool("get_document_content", map[string]any{
-			"document_id":     args[0],
-			"include_images":  includeImages,
-			"include_tables":  includeTables,
-			"include_headers": includeHeaders,
-			"include_footers": includeFooters,
+			"document_id":      args[0],
+			"include_images":   includeImages,
+			"include_tables":   includeTables,
+			"include_headers":  includeHeaders,
+			"include_footers":  includeFooters,
+			"include_metadata": includeMetadata,
 		})
 	},
 }
@@ -227,10 +228,11 @@ var (
 
 // Document command flags
 var (
-	includeImages  bool
-	includeTables  bool
-	includeHeaders bool
-	includeFooters bool
+	includeImages   bool
+	includeTables   bool
+	includeHeaders  bool
+	includeFooters  bool
+	includeMetadata bool
 )
 
 func init() {
@@ -260,6 +262,7 @@ func init() {
 	getDocumentContentCmd.Flags().BoolVar(&includeTables, "include-tables", false, "include table content")
 	getDocumentContentCmd.Flags().BoolVar(&includeHeaders, "include-headers", false, "include document headers")
 	getDocumentContentCmd.Flags().BoolVar(&includeFooters, "include-footers", false, "include document footers")
+	getDocumentContentCmd.Flags().BoolVar(&includeMetadata, "include-metadata", false, "include document metadata and content counts")
 
 	// Add commands
 	rootCmd.AddCommand(serveCmd)

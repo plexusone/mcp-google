@@ -69,6 +69,41 @@ func (s *Skill) getDocument(ctx context.Context, documentID string) (*docs.Docum
 	return s.documents.Get(documentID).Context(ctx).Do()
 }
 
+func documentMetadata(doc *docs.Document) map[string]any {
+	var wordCount, charCount, imageCount, tableCount int
+	if doc.Body != nil {
+		for _, elem := range doc.Body.Content {
+			if elem.Paragraph != nil {
+				for _, pe := range elem.Paragraph.Elements {
+					if pe.TextRun != nil {
+						text := pe.TextRun.Content
+						charCount += len(text)
+						wordCount += len(strings.Fields(text))
+					}
+					if pe.InlineObjectElement != nil {
+						imageCount++
+					}
+				}
+			}
+			if elem.Table != nil {
+				tableCount++
+			}
+		}
+	}
+
+	return map[string]any{
+		"title":        doc.Title,
+		"document_id":  doc.DocumentId,
+		"revision_id":  doc.RevisionId,
+		"word_count":   wordCount,
+		"char_count":   charCount,
+		"image_count":  imageCount,
+		"table_count":  tableCount,
+		"header_count": len(doc.Headers),
+		"footer_count": len(doc.Footers),
+	}
+}
+
 func (s *Skill) getDocumentMetadataTool() skill.Tool {
 	return skill.NewTool(
 		"get_document_metadata",
@@ -96,39 +131,7 @@ func (s *Skill) getDocumentMetadataTool() skill.Tool {
 				return nil, fmt.Errorf("failed to get document: %w", err)
 			}
 
-			// Count elements
-			var wordCount, charCount, imageCount, tableCount int
-			if doc.Body != nil {
-				for _, elem := range doc.Body.Content {
-					if elem.Paragraph != nil {
-						for _, pe := range elem.Paragraph.Elements {
-							if pe.TextRun != nil {
-								text := pe.TextRun.Content
-								charCount += len(text)
-								wordCount += len(strings.Fields(text))
-							}
-							if pe.InlineObjectElement != nil {
-								imageCount++
-							}
-						}
-					}
-					if elem.Table != nil {
-						tableCount++
-					}
-				}
-			}
-
-			return map[string]any{
-				"title":        doc.Title,
-				"document_id":  doc.DocumentId,
-				"revision_id":  doc.RevisionId,
-				"word_count":   wordCount,
-				"char_count":   charCount,
-				"image_count":  imageCount,
-				"table_count":  tableCount,
-				"header_count": len(doc.Headers),
-				"footer_count": len(doc.Footers),
-			}, nil
+			return documentMetadata(doc), nil
 		},
 	)
 }
@@ -167,6 +170,12 @@ func (s *Skill) getDocumentContentTool() skill.Tool {
 				Required:    false,
 				Default:     false,
 			},
+			"include_metadata": {
+				Type:        "boolean",
+				Description: "Include document metadata and content counts in the output",
+				Required:    false,
+				Default:     false,
+			},
 		},
 		func(ctx context.Context, params map[string]any) (any, error) {
 			documentIDOrURL, _ := params["document_id"].(string)
@@ -188,6 +197,7 @@ func (s *Skill) getDocumentContentTool() skill.Tool {
 			includeTables, _ := params["include_tables"].(bool)
 			includeHeaders, _ := params["include_headers"].(bool)
 			includeFooters, _ := params["include_footers"].(bool)
+			includeMetadata, _ := params["include_metadata"].(bool)
 
 			// Extract content using gogoogle helper
 			content := docsutil.ExtractDocumentContent(doc)
@@ -207,6 +217,10 @@ func (s *Skill) getDocumentContentTool() skill.Tool {
 			result := map[string]any{
 				"title":    content.Title,
 				"sections": sections,
+			}
+
+			if includeMetadata {
+				result["metadata"] = documentMetadata(doc)
 			}
 
 			if includeImages {

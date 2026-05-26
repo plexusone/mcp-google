@@ -56,12 +56,22 @@ Get the full structured content of a document including headings, paragraphs, an
 | `include_tables` | boolean | No | Include table content (default: false) |
 | `include_headers` | boolean | No | Include document headers (default: false) |
 | `include_footers` | boolean | No | Include document footers (default: false) |
+| `include_metadata` | boolean | No | Include document metadata and content counts (default: false) |
 
 ### Output
 
 | Field | Type | Description |
 |-------|------|-------------|
 | `title` | string | Document title |
+| `metadata` | object | Document metadata and content counts (if requested) |
+| `metadata.document_id` | string | Document ID |
+| `metadata.revision_id` | string | Current revision ID |
+| `metadata.word_count` | integer | Approximate word count |
+| `metadata.char_count` | integer | Character count |
+| `metadata.image_count` | integer | Number of images |
+| `metadata.table_count` | integer | Number of tables |
+| `metadata.header_count` | integer | Number of headers |
+| `metadata.footer_count` | integer | Number of footers |
 | `sections` | array | Array of content sections |
 | `sections[].type` | string | Section type ("heading", "paragraph") |
 | `sections[].level` | integer | Heading level (1-6, for headings only) |
@@ -88,7 +98,8 @@ Get the full structured content of a document including headings, paragraphs, an
   "arguments": {
     "document_id": "https://docs.google.com/document/d/abc123/edit",
     "include_images": true,
-    "include_tables": true
+    "include_tables": true,
+    "include_metadata": true
   }
 }
 ```
