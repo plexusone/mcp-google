@@ -216,11 +216,18 @@ mcp-google --vault bw://org-id --credentials-name google
 mcp-google --vault file:///path/to/secrets --credentials-name google
 ```
 
-The `get-document-content` command can include document metadata along with structured content:
+### CLI Tool Commands
+
+The CLI exposes one subcommand per MCP tool, plus `serve` and `version`.
 
 ```bash
+mcp-google --help
+mcp-google get-presentation <presentation-id> --credentials /path/to/service-account.json
+mcp-google get-document-metadata <document-id-or-url> --credentials /path/to/service-account.json
 mcp-google get-document-content <document-id-or-url> --include-metadata --include-images --include-tables -o pretty
 ```
+
+Use `mcp-google <command> --help` for command-specific flags. See [docs/cli.md](docs/cli.md) for the full CLI reference.
 
 ### Claude Desktop Configuration
 
