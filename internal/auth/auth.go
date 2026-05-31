@@ -9,14 +9,16 @@ import (
 	"github.com/grokify/goauth/google"
 	"github.com/plexusone/omnitoken"
 	"google.golang.org/api/docs/v1"
+	"google.golang.org/api/sheets/v4"
 	slides "google.golang.org/api/slides/v1"
 )
 
-// Scopes returns the OAuth2 scopes required for read-only access to Google Slides and Docs.
+// Scopes returns the OAuth2 scopes required for read-only access to Google Slides, Docs, and Sheets.
 func Scopes() []string {
 	return []string{
 		slides.PresentationsReadonlyScope,
 		docs.DocumentsReadonlyScope,
+		sheets.SpreadsheetsReadonlyScope,
 		slides.DriveReadonlyScope,
 	}
 }
