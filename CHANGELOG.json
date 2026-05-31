@@ -1,12 +1,64 @@
 {
   "irVersion": "1.0",
-  "project": "google-mcp-server",
-  "repository": "https://github.com/grokify/google-mcp-server",
+  "project": "mcp-google",
+  "repository": "https://github.com/plexusone/mcp-google",
   "versioning": "semver",
   "commitConvention": "conventional",
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "bots": ["dependabot[bot]"],
   "releases": [
+    {
+      "version": "v0.3.0",
+      "date": "2026-05-31",
+      "highlights": [
+        { "description": "Google Sheets support with 5 new tools for reading spreadsheets" }
+      ],
+      "added": [
+        { "description": "`skills/sheets`: New Google Sheets skill with 5 tools", "commit": "c2a6511" },
+        { "description": "`get_spreadsheet_metadata` tool: Get spreadsheet metadata (title, sheet count, locale, time zone)", "commit": "c2a6511" },
+        { "description": "`list_sheets` tool: List all sheets with properties (rows, columns, frozen)", "commit": "c2a6511" },
+        { "description": "`get_sheet_values` tool: Get cell values from a specific range with typed output", "commit": "c2a6511" },
+        { "description": "`get_sheet_data` tool: Get all data from a specific sheet", "commit": "c2a6511" },
+        { "description": "`get_multiple_ranges` tool: Batch get values from multiple ranges", "commit": "c2a6511" },
+        { "description": "CLI: `get-spreadsheet-metadata`, `list-sheets`, `get-sheet-values`, `get-sheet-data` commands", "commit": "e2efda4" },
+        { "description": "Auth: Add `spreadsheets.readonly` OAuth scope", "commit": "cc0bf01" }
+      ],
+      "changed": [
+        { "description": "Upgrade `gogoogle` from v0.10.0 to v0.11.0 for sheetsutil/v4 support", "commit": "6202f7e" }
+      ],
+      "documentation": [
+        { "description": "Add Sheets tools documentation (`docs/tools/sheets.md`)", "commit": "1b8eebc" },
+        { "description": "Update README, CLI reference, and tools overview for Sheets", "commit": "907f936" }
+      ]
+    },
+    {
+      "version": "v0.2.0",
+      "date": "2026-05-26",
+      "highlights": [
+        { "description": "Composable architecture built on omniskill framework" },
+        { "description": "Google Docs support with 4 new tools" },
+        { "description": "Vault-backed credentials via omnitoken" }
+      ],
+      "added": [
+        { "description": "`skills/docs`: Google Docs skill with 4 tools", "commit": "62ed848" },
+        { "description": "`get_document_metadata` tool: Get document metadata (title, word count)", "commit": "62ed848" },
+        { "description": "`get_document_content` tool: Get structured content with images and tables", "commit": "62ed848" },
+        { "description": "`get_document_text` tool: Get all text as plain text", "commit": "62ed848" },
+        { "description": "`get_document_paragraphs` tool: Get text by paragraphs", "commit": "62ed848" },
+        { "description": "Cobra CLI with subcommands and direct tool invocation", "commit": "5baca72" },
+        { "description": "Vault-backed credentials via omnitoken (1Password, Bitwarden)", "commit": "8c1371e" }
+      ],
+      "changed": [
+        { "description": "Migrate to omniskill composable architecture", "commit": "feff3a7", "breaking": true },
+        { "description": "Binary renamed from `google-mcp-server` to `mcp-google`", "commit": "fed94b1", "breaking": true },
+        { "description": "CLI flags changed from `-flag` to `--flag` style", "breaking": true }
+      ],
+      "documentation": [
+        { "description": "Comprehensive MkDocs documentation site", "commit": "0c70bb9" },
+        { "description": "CLI reference documentation", "commit": "c65c69c" },
+        { "description": "Release notes for v0.2.0", "commit": "7b5f2d8" }
+      ]
+    },
     {
       "version": "v0.1.0",
       "date": "2026-02-09",
