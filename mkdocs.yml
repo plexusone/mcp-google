@@ -1,5 +1,5 @@
 site_name: Google MCP Server
-site_description: MCP server for reading Google Slides and Docs, built on omniskill for composability
+site_description: MCP server for reading Google Docs, Sheets, and Slides, built on omniskill for composability
 site_url: https://plexusone.github.io/mcp-google
 repo_url: https://github.com/plexusone/mcp-google
 repo_name: plexusone/mcp-google
@@ -52,8 +52,9 @@ nav:
   - CLI Reference: cli.md
   - Tools Reference:
       - Overview: tools/overview.md
-      - Google Slides: tools/slides.md
       - Google Docs: tools/docs.md
+      - Google Sheets: tools/sheets.md
+      - Google Slides: tools/slides.md
   - Architecture:
       - Overview: architecture/overview.md
       - OmniSkill Integration: architecture/omniskill.md
@@ -66,6 +67,7 @@ nav:
       - Environment Variables: configuration/environment.md
       - Claude Desktop: configuration/claude-desktop.md
   - Releases:
+      - v0.3.0: releases/v0.3.0.md
       - v0.2.0: releases/v0.2.0.md
       - v0.1.0: releases/v0.1.0.md
 

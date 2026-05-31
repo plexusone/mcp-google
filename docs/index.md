@@ -47,9 +47,9 @@ This server is built on **omniskill**, making its Google Docs, Sheets, and Slide
 
 ```go
 import (
-    "github.com/grokify/mcp-google/skills/docs"
-    "github.com/grokify/mcp-google/skills/sheets"
-    "github.com/grokify/mcp-google/skills/slides"
+    "github.com/plexusone/mcp-google/skills/docs"
+    "github.com/plexusone/mcp-google/skills/sheets"
+    "github.com/plexusone/mcp-google/skills/slides"
 )
 
 // Add to any omniskill-based server
@@ -64,7 +64,7 @@ See [Architecture](architecture/overview.md) for more details.
 
 ```bash
 # Install
-go install github.com/grokify/mcp-google/cmd/mcp-google@latest
+go install github.com/plexusone/mcp-google/cmd/mcp-google@latest
 
 # Run with Google service account
 mcp-google --credentials /path/to/service-account.json
