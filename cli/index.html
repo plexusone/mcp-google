@@ -10,22 +10,28 @@
       
       
       
+        <link rel="canonical" href="https://plexusone.github.io/mcp-google/cli/">
       
       
+        <link rel="prev" href="../getting-started/quickstart/">
       
-      <link rel="icon" href="/mcp-google/assets/images/favicon.png">
+      
+        <link rel="next" href="../tools/overview/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
-        <title>Google MCP Server</title>
+        <title>CLI Reference - Google MCP Server</title>
       
     
     
-      <link rel="stylesheet" href="/mcp-google/assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="/mcp-google/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,7 +52,7 @@
     
       <link rel="stylesheet" href="https://plexusone.dev/css/plexusone-mkdocs.css">
     
-    <script>__md_scope=new URL("/mcp-google/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#cli-reference" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -88,7 +99,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/mcp-google/." title="Google MCP Server" class="md-header__button md-logo" aria-label="Google MCP Server" data-md-component="logo">
+    <a href=".." title="Google MCP Server" class="md-header__button md-logo" aria-label="Google MCP Server" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              CLI Reference
             
           </span>
         </div>
@@ -225,7 +236,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/mcp-google/." title="Google MCP Server" class="md-nav__button md-logo" aria-label="Google MCP Server" data-md-component="logo">
+    <a href=".." title="Google MCP Server" class="md-nav__button md-logo" aria-label="Google MCP Server" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -255,7 +266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -322,7 +333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/getting-started/installation/" class="md-nav__link">
+      <a href="../getting-started/installation/" class="md-nav__link">
         
   
   
@@ -345,7 +356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/getting-started/setup/" class="md-nav__link">
+      <a href="../getting-started/setup/" class="md-nav__link">
         
   
   
@@ -368,7 +379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/getting-started/quickstart/" class="md-nav__link">
+      <a href="../getting-started/quickstart/" class="md-nav__link">
         
   
   
@@ -395,10 +406,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/mcp-google/cli/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    CLI Reference
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -409,6 +442,89 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#discover-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discover Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-docs-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Docs Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-sheets-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Sheets Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-slides-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Slides Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Global Flags
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -465,7 +581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/tools/overview/" class="md-nav__link">
+      <a href="../tools/overview/" class="md-nav__link">
         
   
   
@@ -488,7 +604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/tools/slides/" class="md-nav__link">
+      <a href="../tools/slides/" class="md-nav__link">
         
   
   
@@ -511,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/tools/docs/" class="md-nav__link">
+      <a href="../tools/docs/" class="md-nav__link">
         
   
   
@@ -586,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/architecture/overview/" class="md-nav__link">
+      <a href="../architecture/overview/" class="md-nav__link">
         
   
   
@@ -609,7 +725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/architecture/omniskill/" class="md-nav__link">
+      <a href="../architecture/omniskill/" class="md-nav__link">
         
   
   
@@ -632,7 +748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/architecture/composability/" class="md-nav__link">
+      <a href="../architecture/composability/" class="md-nav__link">
         
   
   
@@ -707,7 +823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/skills/using-skills/" class="md-nav__link">
+      <a href="../skills/using-skills/" class="md-nav__link">
         
   
   
@@ -730,7 +846,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/skills/multi-service/" class="md-nav__link">
+      <a href="../skills/multi-service/" class="md-nav__link">
         
   
   
@@ -805,7 +921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/configuration/credentials/" class="md-nav__link">
+      <a href="../configuration/credentials/" class="md-nav__link">
         
   
   
@@ -828,7 +944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/configuration/environment/" class="md-nav__link">
+      <a href="../configuration/environment/" class="md-nav__link">
         
   
   
@@ -851,7 +967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/configuration/claude-desktop/" class="md-nav__link">
+      <a href="../configuration/claude-desktop/" class="md-nav__link">
         
   
   
@@ -926,7 +1042,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/releases/v0.2.0/" class="md-nav__link">
+      <a href="../releases/v0.2.0/" class="md-nav__link">
         
   
   
@@ -949,7 +1065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mcp-google/releases/v0.1.0/" class="md-nav__link">
+      <a href="../releases/v0.1.0/" class="md-nav__link">
         
   
   
@@ -989,6 +1105,79 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#discover-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discover Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-docs-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Docs Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-sheets-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Sheets Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-slides-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Slides Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Global Flags
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1000,8 +1189,207 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+<h1 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h1>
+<p>The <code>mcp-google</code> binary can run as an MCP server or call the same Google Docs, Sheets, and Slides tools directly from the command line.</p>
+<h2 id="discover-commands">Discover Commands<a class="headerlink" href="#discover-commands" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mcp-google<span class="w"> </span>--help
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mcp-google<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
+</code></pre></div>
+<p>The CLI is generated with Cobra, so <code>--help</code> is the easiest way to reference the current command list and flags.</p>
+<h2 id="server-commands">Server Commands<a class="headerlink" href="#server-commands" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp-google</code></td>
+<td>Start the MCP server using stdio</td>
+</tr>
+<tr>
+<td><code>mcp-google serve</code></td>
+<td>Start the MCP server explicitly</td>
+</tr>
+<tr>
+<td><code>mcp-google version</code></td>
+<td>Print version information</td>
+</tr>
+</tbody>
+</table>
+<h2 id="google-docs-commands">Google Docs Commands<a class="headerlink" href="#google-docs-commands" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>MCP tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get-document-metadata &lt;document-id-or-url&gt;</code></td>
+<td><code>get_document_metadata</code></td>
+</tr>
+<tr>
+<td><code>get-document-content &lt;document-id-or-url&gt;</code></td>
+<td><code>get_document_content</code></td>
+</tr>
+<tr>
+<td><code>get-document-text &lt;document-id-or-url&gt;</code></td>
+<td><code>get_document_text</code></td>
+</tr>
+<tr>
+<td><code>get-document-paragraphs &lt;document-id-or-url&gt;</code></td>
+<td><code>get_document_paragraphs</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="google-sheets-commands">Google Sheets Commands<a class="headerlink" href="#google-sheets-commands" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>MCP tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get-spreadsheet-metadata &lt;spreadsheet-id-or-url&gt;</code></td>
+<td><code>get_spreadsheet_metadata</code></td>
+</tr>
+<tr>
+<td><code>list-sheets &lt;spreadsheet-id-or-url&gt;</code></td>
+<td><code>list_sheets</code></td>
+</tr>
+<tr>
+<td><code>get-sheet-values &lt;spreadsheet-id-or-url&gt; &lt;range&gt;</code></td>
+<td><code>get_sheet_values</code></td>
+</tr>
+<tr>
+<td><code>get-sheet-data &lt;spreadsheet-id-or-url&gt;</code></td>
+<td><code>get_sheet_data</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="google-slides-commands">Google Slides Commands<a class="headerlink" href="#google-slides-commands" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>MCP tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get-presentation &lt;presentation-id&gt;</code></td>
+<td><code>get_presentation</code></td>
+</tr>
+<tr>
+<td><code>list-slides &lt;presentation-id&gt;</code></td>
+<td><code>list_slides</code></td>
+</tr>
+<tr>
+<td><code>get-slide &lt;presentation-id&gt;</code></td>
+<td><code>get_slide</code></td>
+</tr>
+<tr>
+<td><code>get-slide-notes &lt;presentation-id&gt;</code></td>
+<td><code>get_slide_notes</code></td>
+</tr>
+<tr>
+<td><code>get-presentation-content &lt;presentation-id&gt;</code></td>
+<td><code>get_presentation_content</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="global-flags">Global Flags<a class="headerlink" href="#global-flags" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Environment variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--credentials</code></td>
+<td><code>GOOGLE_CREDENTIALS_FILE</code></td>
+<td>Google service account credentials JSON file</td>
+</tr>
+<tr>
+<td><code>--goauth-credentials-file</code></td>
+<td><code>GOAUTH_CREDENTIALS_FILE</code></td>
+<td>goauth CredentialsSet JSON file</td>
+</tr>
+<tr>
+<td><code>--goauth-credentials-account</code></td>
+<td><code>GOAUTH_CREDENTIALS_ACCOUNT</code></td>
+<td>Account key in the goauth CredentialsSet</td>
+</tr>
+<tr>
+<td><code>--vault</code></td>
+<td><code>OMNITOKEN_VAULT_URI</code></td>
+<td>Vault URI for credentials</td>
+</tr>
+<tr>
+<td><code>--credentials-name</code></td>
+<td><code>OMNITOKEN_CREDENTIALS_NAME</code></td>
+<td>Credential name in the vault</td>
+</tr>
+<tr>
+<td><code>-o, --output</code></td>
+<td></td>
+<td>Output format: <code>json</code> or <code>pretty</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Google Docs</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>mcp-google<span class="w"> </span>get-document-metadata<span class="w"> </span>https://docs.google.com/document/d/abc123/edit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--credentials<span class="w"> </span>/path/to/service-account.json
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>mcp-google<span class="w"> </span>get-document-content<span class="w"> </span>abc123<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--include-metadata<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>--include-images<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>--include-tables<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>--include-headers<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>--include-footers<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span>-o<span class="w"> </span>pretty
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Google Sheets</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>mcp-google<span class="w"> </span>get-spreadsheet-metadata<span class="w"> </span>https://docs.google.com/spreadsheets/d/xyz789/edit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">  </span>--credentials<span class="w"> </span>/path/to/service-account.json
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>mcp-google<span class="w"> </span>get-sheet-data<span class="w"> </span>xyz789<span class="w"> </span>--sheet-name<span class="w"> </span><span class="s2">&quot;Sheet1&quot;</span><span class="w"> </span>-o<span class="w"> </span>pretty
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>mcp-google<span class="w"> </span>get-sheet-values<span class="w"> </span>xyz789<span class="w"> </span><span class="s2">&quot;A1:D10&quot;</span><span class="w"> </span>--value-format<span class="w"> </span>typed<span class="w"> </span>-o<span class="w"> </span>pretty
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1"># Google Slides</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>mcp-google<span class="w"> </span>get-slide<span class="w"> </span>presentation123<span class="w"> </span>--index<span class="w"> </span><span class="m">0</span><span class="w"> </span>-o<span class="w"> </span>pretty
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -1059,10 +1447,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "/mcp-google/", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "/mcp-google/assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/mcp-google/assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
       
     
   </body>

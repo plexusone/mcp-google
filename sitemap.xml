@@ -2,70 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://plexusone.github.io/mcp-google/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
+    </url>
+    <url>
+         <loc>https://plexusone.github.io/mcp-google/cli/</loc>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/architecture/composability/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/architecture/omniskill/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/architecture/overview/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/configuration/claude-desktop/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/configuration/credentials/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/configuration/environment/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/getting-started/installation/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/getting-started/quickstart/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/getting-started/setup/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/releases/v0.1.0/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/releases/v0.2.0/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/skills/multi-service/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/skills/using-skills/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/tools/docs/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/tools/overview/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
+    </url>
+    <url>
+         <loc>https://plexusone.github.io/mcp-google/tools/sheets/</loc>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://plexusone.github.io/mcp-google/tools/slides/</loc>
-         <lastmod>2026-05-25</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
 </urlset>

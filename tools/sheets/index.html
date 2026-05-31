@@ -10,13 +10,9 @@
       
       
       
-        <link rel="canonical" href="https://plexusone.github.io/mcp-google/getting-started/quickstart/">
+        <link rel="canonical" href="https://plexusone.github.io/mcp-google/tools/sheets/">
       
       
-        <link rel="prev" href="../setup/">
-      
-      
-        <link rel="next" href="../../cli/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +20,7 @@
     
     
       
-        <title>Quick Start - Google MCP Server</title>
+        <title>Google Sheets Tools - Google MCP Server</title>
       
     
     
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#quick-start" class="md-skip">
+        <a href="#google-sheets-tools" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Quick Start
+              Google Sheets Tools
             
           </span>
         </div>
@@ -285,8 +281,6 @@
       
   
   
-    
-  
   
   
     
@@ -299,11 +293,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -319,7 +315,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Getting Started
@@ -333,7 +329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../installation/" class="md-nav__link">
+      <a href="../../getting-started/installation/" class="md-nav__link">
         
   
   
@@ -356,7 +352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../setup/" class="md-nav__link">
+      <a href="../../getting-started/setup/" class="md-nav__link">
         
   
   
@@ -376,32 +372,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Quick Start
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
         
   
   
@@ -412,143 +386,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#running-the-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running the Server
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Running the Server">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#with-google-service-account" class="md-nav__link">
-    <span class="md-ellipsis">
-      With Google Service Account
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#with-environment-variable" class="md-nav__link">
-    <span class="md-ellipsis">
-      With Environment Variable
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#finding-document-ids" class="md-nav__link">
-    <span class="md-ellipsis">
-      Finding Document IDs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Finding Document IDs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#presentations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Presentations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#documents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Documents
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-tool-calls" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example Tool Calls
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example Tool Calls">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get-presentation-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      Get Presentation Metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-document-text" class="md-nav__link">
-    <span class="md-ellipsis">
-      Get Document Text
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-all-slide-content-with-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Get All Slide Content with Notes
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -635,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/overview/" class="md-nav__link">
+      <a href="../overview/" class="md-nav__link">
         
   
   
@@ -658,7 +495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/slides/" class="md-nav__link">
+      <a href="../slides/" class="md-nav__link">
         
   
   
@@ -681,7 +518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/docs/" class="md-nav__link">
+      <a href="../docs/" class="md-nav__link">
         
   
   
@@ -1169,28 +1006,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-the-server" class="md-nav__link">
+  <a href="#get_spreadsheet_metadata" class="md-nav__link">
     <span class="md-ellipsis">
-      Running the Server
+      get_spreadsheet_metadata
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Running the Server">
+    <nav class="md-nav" aria-label="get_spreadsheet_metadata">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#with-google-service-account" class="md-nav__link">
+  <a href="#input" class="md-nav__link">
     <span class="md-ellipsis">
-      With Google Service Account
+      Input
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#with-environment-variable" class="md-nav__link">
+  <a href="#output" class="md-nav__link">
     <span class="md-ellipsis">
-      With Environment Variable
+      Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
     </span>
   </a>
   
@@ -1202,28 +1048,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#finding-document-ids" class="md-nav__link">
+  <a href="#list_sheets" class="md-nav__link">
     <span class="md-ellipsis">
-      Finding Document IDs
+      list_sheets
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Finding Document IDs">
+    <nav class="md-nav" aria-label="list_sheets">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#presentations" class="md-nav__link">
+  <a href="#input_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Presentations
+      Input
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#documents" class="md-nav__link">
+  <a href="#output_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Documents
+      Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
     </span>
   </a>
   
@@ -1235,37 +1090,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-tool-calls" class="md-nav__link">
+  <a href="#get_sheet_values" class="md-nav__link">
     <span class="md-ellipsis">
-      Example Tool Calls
+      get_sheet_values
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Example Tool Calls">
+    <nav class="md-nav" aria-label="get_sheet_values">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get-presentation-metadata" class="md-nav__link">
+  <a href="#input_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Get Presentation Metadata
+      Input
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-document-text" class="md-nav__link">
+  <a href="#output_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Get Document Text
+      Output
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-all-slide-content-with-notes" class="md-nav__link">
+  <a href="#value-formats" class="md-nav__link">
     <span class="md-ellipsis">
-      Get All Slide Content with Notes
+      Value Formats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
     </span>
   </a>
   
@@ -1277,11 +1141,86 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
+  <a href="#get_sheet_data" class="md-nav__link">
     <span class="md-ellipsis">
-      Next Steps
+      get_sheet_data
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="get_sheet_data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_multiple_ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_multiple_ranges
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_multiple_ranges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1304,63 +1243,515 @@
   
 
 
-<h1 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h1>
-<h2 id="running-the-server">Running the Server<a class="headerlink" href="#running-the-server" title="Permanent link">&para;</a></h2>
-<h3 id="with-google-service-account">With Google Service Account<a class="headerlink" href="#with-google-service-account" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mcp-google<span class="w"> </span>--credentials<span class="w"> </span>/path/to/service-account.json
-</code></pre></div>
-<h3 id="with-environment-variable">With Environment Variable<a class="headerlink" href="#with-environment-variable" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_CREDENTIALS_FILE</span><span class="o">=</span>/path/to/service-account.json
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>mcp-google
-</code></pre></div>
-<h2 id="finding-document-ids">Finding Document IDs<a class="headerlink" href="#finding-document-ids" title="Permanent link">&para;</a></h2>
-<h3 id="presentations">Presentations<a class="headerlink" href="#presentations" title="Permanent link">&para;</a></h3>
-<p>The presentation ID is in the URL:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>https://docs.google.com/presentation/d/PRESENTATION_ID_HERE/edit
-</code></pre></div>
-<h3 id="documents">Documents<a class="headerlink" href="#documents" title="Permanent link">&para;</a></h3>
-<p>The document ID is in the URL:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>https://docs.google.com/document/d/DOCUMENT_ID_HERE/edit
-</code></pre></div>
+<h1 id="google-sheets-tools">Google Sheets Tools<a class="headerlink" href="#google-sheets-tools" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
-<p class="admonition-title">URLs Supported</p>
-<p>Google Docs tools accept either the document ID or the full URL, including URLs with query strings and anchors:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>https://docs.google.com/document/d/DOCUMENT_ID_HERE/edit?tab=t.0#heading=h.xyz
+<p class="admonition-title">URL Support</p>
+<p>All Google Sheets tools accept either the spreadsheet ID or the full URL, including URLs with query strings and fragments like:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://docs.google.com/spreadsheets/d/abc123/edit#gid=0
 </code></pre></div></p>
 </div>
-<h2 id="example-tool-calls">Example Tool Calls<a class="headerlink" href="#example-tool-calls" title="Permanent link">&para;</a></h2>
-<p>Once the server is running with an MCP client, you can call tools:</p>
-<h3 id="get-presentation-metadata">Get Presentation Metadata<a class="headerlink" href="#get-presentation-metadata" title="Permanent link">&para;</a></h3>
+<h2 id="get_spreadsheet_metadata">get_spreadsheet_metadata<a class="headerlink" href="#get_spreadsheet_metadata" title="Permanent link">&para;</a></h2>
+<p>Get metadata about a Google Sheets spreadsheet.</p>
+<h3 id="input">Input<a class="headerlink" href="#input" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>The ID or URL of the Google Sheets spreadsheet</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output">Output<a class="headerlink" href="#output" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Spreadsheet ID</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td>Spreadsheet title</td>
+</tr>
+<tr>
+<td><code>locale</code></td>
+<td>string</td>
+<td>Spreadsheet locale</td>
+</tr>
+<tr>
+<td><code>time_zone</code></td>
+<td>string</td>
+<td>Spreadsheet time zone</td>
+</tr>
+<tr>
+<td><code>sheet_count</code></td>
+<td>integer</td>
+<td>Number of sheets</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>string</td>
+<td>Spreadsheet URL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_spreadsheet_metadata&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;spreadsheet_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms&quot;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="list_sheets">list_sheets<a class="headerlink" href="#list_sheets" title="Permanent link">&para;</a></h2>
+<p>List all sheets in a spreadsheet with their properties.</p>
+<h3 id="input_1">Input<a class="headerlink" href="#input_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>The ID or URL of the Google Sheets spreadsheet</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output_1">Output<a class="headerlink" href="#output_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Spreadsheet ID</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td>Spreadsheet title</td>
+</tr>
+<tr>
+<td><code>sheets</code></td>
+<td>array</td>
+<td>Array of sheet information</td>
+</tr>
+<tr>
+<td><code>sheets[].index</code></td>
+<td>integer</td>
+<td>Zero-based sheet index</td>
+</tr>
+<tr>
+<td><code>sheets[].sheet_id</code></td>
+<td>integer</td>
+<td>Sheet GID</td>
+</tr>
+<tr>
+<td><code>sheets[].title</code></td>
+<td>string</td>
+<td>Sheet name</td>
+</tr>
+<tr>
+<td><code>sheets[].sheet_type</code></td>
+<td>string</td>
+<td>Sheet type (GRID, CHART, etc.)</td>
+</tr>
+<tr>
+<td><code>sheets[].hidden</code></td>
+<td>boolean</td>
+<td>Whether the sheet is hidden</td>
+</tr>
+<tr>
+<td><code>sheets[].row_count</code></td>
+<td>integer</td>
+<td>Number of rows</td>
+</tr>
+<tr>
+<td><code>sheets[].column_count</code></td>
+<td>integer</td>
+<td>Number of columns</td>
+</tr>
+<tr>
+<td><code>sheets[].frozen_row_count</code></td>
+<td>integer</td>
+<td>Number of frozen rows (if any)</td>
+</tr>
+<tr>
+<td><code>sheets[].frozen_column_count</code></td>
+<td>integer</td>
+<td>Number of frozen columns (if any)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list_sheets&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">&quot;spreadsheet_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://docs.google.com/spreadsheets/d/abc123/edit&quot;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="get_sheet_values">get_sheet_values<a class="headerlink" href="#get_sheet_values" title="Permanent link">&para;</a></h2>
+<p>Get cell values from a specific range.</p>
+<h3 id="input_2">Input<a class="headerlink" href="#input_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>The ID or URL of the Google Sheets spreadsheet</td>
+</tr>
+<tr>
+<td><code>range</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>A1 notation range (e.g., 'Sheet1!A1:D10', 'A:D', 'A1:D10')</td>
+</tr>
+<tr>
+<td><code>sheet_index</code></td>
+<td>integer</td>
+<td>No</td>
+<td>Zero-based sheet index. Used when range doesn't include sheet name.</td>
+</tr>
+<tr>
+<td><code>sheet_name</code></td>
+<td>string</td>
+<td>No</td>
+<td>Sheet name. Used when range doesn't include sheet name. Mutually exclusive with sheet_index.</td>
+</tr>
+<tr>
+<td><code>value_format</code></td>
+<td>string</td>
+<td>No</td>
+<td>Output format: 'formatted' (default), 'typed', 'raw'</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output_2">Output<a class="headerlink" href="#output_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Spreadsheet ID</td>
+</tr>
+<tr>
+<td><code>range</code></td>
+<td>string</td>
+<td>Resolved range with sheet name</td>
+</tr>
+<tr>
+<td><code>values</code></td>
+<td>array</td>
+<td>2D array of cell values (format depends on value_format)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="value-formats">Value Formats<a class="headerlink" href="#value-formats" title="Permanent link">&para;</a></h3>
+<p><strong><code>formatted</code> (default):</strong> Display values as strings</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Date&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Amount&quot;</span><span class="p">],</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Jan 15, 2024&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;$1,234.56&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong><code>typed</code>:</strong> Values with type information</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="p">[</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">      </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;formatted_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Name&quot;</span><span class="p">},</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;formatted_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Date&quot;</span><span class="p">},</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;formatted_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Amount&quot;</span><span class="p">}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="p">],</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">[</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;formatted_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span><span class="p">},</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;formatted_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;45306&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;number_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45306</span><span class="p">},</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">      </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;formatted_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234.56&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;number_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1234.56</span><span class="p">}</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong><code>raw</code>:</strong> Underlying values as strings</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_presentation&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">&quot;presentation_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms&quot;</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Date&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Amount&quot;</span><span class="p">],</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;45306&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;1234.56&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p">]</span>
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="get-document-text">Get Document Text<a class="headerlink" href="#get-document-text" title="Permanent link">&para;</a></h3>
+<h3 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_document_text&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_sheet_values&quot;</span><span class="p">,</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">&quot;document_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://docs.google.com/document/d/1abc123/edit&quot;</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">}</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">&quot;spreadsheet_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">&quot;range&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sheet1!A1:D10&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="nt">&quot;value_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;typed&quot;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="get-all-slide-content-with-notes">Get All Slide Content with Notes<a class="headerlink" href="#get-all-slide-content-with-notes" title="Permanent link">&para;</a></h3>
+<hr />
+<h2 id="get_sheet_data">get_sheet_data<a class="headerlink" href="#get_sheet_data" title="Permanent link">&para;</a></h2>
+<p>Get all data from a specific sheet.</p>
+<h3 id="input_3">Input<a class="headerlink" href="#input_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>The ID or URL of the Google Sheets spreadsheet</td>
+</tr>
+<tr>
+<td><code>sheet_index</code></td>
+<td>integer</td>
+<td>No</td>
+<td>Zero-based sheet index (default: 0)</td>
+</tr>
+<tr>
+<td><code>sheet_name</code></td>
+<td>string</td>
+<td>No</td>
+<td>Sheet name. Mutually exclusive with sheet_index and sheet_gid.</td>
+</tr>
+<tr>
+<td><code>sheet_gid</code></td>
+<td>integer</td>
+<td>No</td>
+<td>Sheet GID (from URL). Mutually exclusive with sheet_index and sheet_name.</td>
+</tr>
+<tr>
+<td><code>value_format</code></td>
+<td>string</td>
+<td>No</td>
+<td>Output format: 'formatted' (default), 'typed', 'raw'</td>
+</tr>
+<tr>
+<td><code>include_metadata</code></td>
+<td>boolean</td>
+<td>No</td>
+<td>Include sheet metadata (default: false)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output_3">Output<a class="headerlink" href="#output_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Spreadsheet ID</td>
+</tr>
+<tr>
+<td><code>sheet_name</code></td>
+<td>string</td>
+<td>Sheet name</td>
+</tr>
+<tr>
+<td><code>range</code></td>
+<td>string</td>
+<td>Data range</td>
+</tr>
+<tr>
+<td><code>values</code></td>
+<td>array</td>
+<td>2D array of cell values</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td>object</td>
+<td>Sheet metadata (if requested)</td>
+</tr>
+<tr>
+<td><code>metadata.sheet_id</code></td>
+<td>integer</td>
+<td>Sheet GID</td>
+</tr>
+<tr>
+<td><code>metadata.index</code></td>
+<td>integer</td>
+<td>Zero-based sheet index</td>
+</tr>
+<tr>
+<td><code>metadata.row_count</code></td>
+<td>integer</td>
+<td>Total row count</td>
+</tr>
+<tr>
+<td><code>metadata.column_count</code></td>
+<td>integer</td>
+<td>Total column count</td>
+</tr>
+<tr>
+<td><code>metadata.frozen_row_count</code></td>
+<td>integer</td>
+<td>Frozen rows (if any)</td>
+</tr>
+<tr>
+<td><code>metadata.frozen_column_count</code></td>
+<td>integer</td>
+<td>Frozen columns (if any)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_presentation_content&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_sheet_data&quot;</span><span class="p">,</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">&quot;presentation_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms&quot;</span><span class="p">,</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">&quot;include_notes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">}</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">&quot;spreadsheet_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">&quot;sheet_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Data&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="nt">&quot;include_metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="../../tools/overview/">Tools Reference</a> - Full documentation for all 9 tools</li>
-<li><a href="../../configuration/credentials/">Configuration</a> - All credential options</li>
-<li><a href="../../configuration/claude-desktop/">Claude Desktop</a> - Integration with Claude Desktop</li>
-</ul>
+<div class="admonition tip">
+<p class="admonition-title">Best for AI Analysis</p>
+<p>Use this tool with <code>include_metadata: true</code> to get complete sheet data in one call, ideal for AI analysis of spreadsheet content.</p>
+</div>
+<hr />
+<h2 id="get_multiple_ranges">get_multiple_ranges<a class="headerlink" href="#get_multiple_ranges" title="Permanent link">&para;</a></h2>
+<p>Get cell values from multiple ranges in a single request.</p>
+<h3 id="input_4">Input<a class="headerlink" href="#input_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>The ID or URL of the Google Sheets spreadsheet</td>
+</tr>
+<tr>
+<td><code>ranges</code></td>
+<td>array</td>
+<td>Yes</td>
+<td>Array of A1 notation ranges</td>
+</tr>
+<tr>
+<td><code>value_format</code></td>
+<td>string</td>
+<td>No</td>
+<td>Output format: 'formatted' (default), 'typed', 'raw'</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output_4">Output<a class="headerlink" href="#output_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spreadsheet_id</code></td>
+<td>string</td>
+<td>Spreadsheet ID</td>
+</tr>
+<tr>
+<td><code>ranges</code></td>
+<td>array</td>
+<td>Array of range results</td>
+</tr>
+<tr>
+<td><code>ranges[].range</code></td>
+<td>string</td>
+<td>Resolved range</td>
+</tr>
+<tr>
+<td><code>ranges[].values</code></td>
+<td>array</td>
+<td>2D array of cell values</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_multiple_ranges&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">&quot;spreadsheet_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="nt">&quot;ranges&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Sheet1!A1:D10&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Sheet2!A1:B5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Summary!A:A&quot;</span><span class="p">],</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nt">&quot;value_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;formatted&quot;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">}</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Efficient Batch Retrieval</p>
+<p>Use this tool when you need data from multiple ranges to minimize API calls and improve performance.</p>
+</div>
 
 
 
