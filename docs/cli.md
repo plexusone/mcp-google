@@ -1,6 +1,6 @@
 # CLI Reference
 
-The `mcp-google` binary can run as an MCP server or call the same Google Slides and Docs tools directly from the command line.
+The `mcp-google` binary can run as an MCP server or call the same Google Docs, Sheets, and Slides tools directly from the command line.
 
 ## Discover Commands
 
@@ -19,6 +19,24 @@ The CLI is generated with Cobra, so `--help` is the easiest way to reference the
 | `mcp-google serve` | Start the MCP server explicitly |
 | `mcp-google version` | Print version information |
 
+## Google Docs Commands
+
+| Command | MCP tool |
+|---------|----------|
+| `get-document-metadata <document-id-or-url>` | `get_document_metadata` |
+| `get-document-content <document-id-or-url>` | `get_document_content` |
+| `get-document-text <document-id-or-url>` | `get_document_text` |
+| `get-document-paragraphs <document-id-or-url>` | `get_document_paragraphs` |
+
+## Google Sheets Commands
+
+| Command | MCP tool |
+|---------|----------|
+| `get-spreadsheet-metadata <spreadsheet-id-or-url>` | `get_spreadsheet_metadata` |
+| `list-sheets <spreadsheet-id-or-url>` | `list_sheets` |
+| `get-sheet-values <spreadsheet-id-or-url> <range>` | `get_sheet_values` |
+| `get-sheet-data <spreadsheet-id-or-url>` | `get_sheet_data` |
+
 ## Google Slides Commands
 
 | Command | MCP tool |
@@ -28,15 +46,6 @@ The CLI is generated with Cobra, so `--help` is the easiest way to reference the
 | `get-slide <presentation-id>` | `get_slide` |
 | `get-slide-notes <presentation-id>` | `get_slide_notes` |
 | `get-presentation-content <presentation-id>` | `get_presentation_content` |
-
-## Google Docs Commands
-
-| Command | MCP tool |
-|---------|----------|
-| `get-document-metadata <document-id-or-url>` | `get_document_metadata` |
-| `get-document-content <document-id-or-url>` | `get_document_content` |
-| `get-document-text <document-id-or-url>` | `get_document_text` |
-| `get-document-paragraphs <document-id-or-url>` | `get_document_paragraphs` |
 
 ## Global Flags
 
@@ -52,6 +61,7 @@ The CLI is generated with Cobra, so `--help` is the easiest way to reference the
 ## Examples
 
 ```bash
+# Google Docs
 mcp-google get-document-metadata https://docs.google.com/document/d/abc123/edit \
   --credentials /path/to/service-account.json
 
@@ -63,5 +73,14 @@ mcp-google get-document-content abc123 \
   --include-footers \
   -o pretty
 
+# Google Sheets
+mcp-google get-spreadsheet-metadata https://docs.google.com/spreadsheets/d/xyz789/edit \
+  --credentials /path/to/service-account.json
+
+mcp-google get-sheet-data xyz789 --sheet-name "Sheet1" -o pretty
+
+mcp-google get-sheet-values xyz789 "A1:D10" --value-format typed -o pretty
+
+# Google Slides
 mcp-google get-slide presentation123 --index 0 -o pretty
 ```
