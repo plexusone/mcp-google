@@ -1,4 +1,4 @@
-// mcp-google is an MCP server for reading Google Slides and Docs.
+// mcp-google is an MCP server for reading Google Docs, Sheets, and Slides.
 // It can also be used as a CLI tool for testing and scripting.
 package main
 
@@ -13,6 +13,7 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/plexusone/mcp-google/internal/auth"
 	"github.com/plexusone/mcp-google/skills/docs"
+	"github.com/plexusone/mcp-google/skills/sheets"
 	"github.com/plexusone/mcp-google/skills/slides"
 	runtime "github.com/plexusone/omniskill/mcp/server"
 	"github.com/spf13/cobra"
@@ -46,9 +47,10 @@ func main() {
 
 var rootCmd = &cobra.Command{
 	Use:   "mcp-google",
-	Short: "MCP server and CLI for Google Slides and Docs",
-	Long: `An MCP (Model Context Protocol) server for reading Google Slides presentations
-and Google Docs documents. Can also be used as a CLI tool for testing and scripting.
+	Short: "MCP server and CLI for Google Docs, Sheets, and Slides",
+	Long: `An MCP (Model Context Protocol) server for reading Google Docs documents,
+Google Sheets spreadsheets, and Google Slides presentations. Can also be used as a CLI tool
+for testing and scripting.
 
 Running without a subcommand starts the MCP server (default behavior).
 
@@ -62,14 +64,14 @@ Credentials can be provided via:
   # Explicitly start MCP server
   mcp-google serve --credentials /path/to/service-account.json
 
-  # CLI: Get presentation metadata
-  mcp-google get-presentation <id> --credentials /path/to/service-account.json
-
   # CLI: Get document metadata
   mcp-google get-document-metadata <id> --credentials /path/to/service-account.json
 
-  # CLI: Get document text
-  mcp-google get-document-text <id> --credentials /path/to/service-account.json`,
+  # CLI: Get spreadsheet metadata
+  mcp-google get-spreadsheet-metadata <id> --credentials /path/to/service-account.json
+
+  # CLI: Get presentation metadata
+  mcp-google get-presentation <id> --credentials /path/to/service-account.json`,
 	SilenceUsage: true,
 	RunE:         runServer, // Default: run MCP server
 }
@@ -86,6 +88,130 @@ var versionCmd = &cobra.Command{
 	Short: "Print version information",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("%s %s\n", serverName, serverVersion)
+	},
+}
+
+// Docs CLI commands
+var getDocumentMetadataCmd = &cobra.Command{
+	Use:   "get-document-metadata <document-id>",
+	Short: "Get document metadata",
+	Long:  "Get metadata about a Google Doc including title, word count, and element counts.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDocsTool("get_document_metadata", map[string]any{
+			"document_id": args[0],
+		})
+	},
+}
+
+var getDocumentContentCmd = &cobra.Command{
+	Use:   "get-document-content <document-id>",
+	Short: "Get document structured content",
+	Long:  "Get the full structured content of a document including headings, paragraphs, images, and tables.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDocsTool("get_document_content", map[string]any{
+			"document_id":      args[0],
+			"include_images":   includeImages,
+			"include_tables":   includeTables,
+			"include_headers":  includeHeaders,
+			"include_footers":  includeFooters,
+			"include_metadata": includeMetadata,
+		})
+	},
+}
+
+var getDocumentTextCmd = &cobra.Command{
+	Use:   "get-document-text <document-id>",
+	Short: "Get document as plain text",
+	Long:  "Get all text from a document as a single plain text string.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDocsTool("get_document_text", map[string]any{
+			"document_id": args[0],
+		})
+	},
+}
+
+var getDocumentParagraphsCmd = &cobra.Command{
+	Use:   "get-document-paragraphs <document-id>",
+	Short: "Get document paragraphs",
+	Long:  "Get text organized by paragraphs.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDocsTool("get_document_paragraphs", map[string]any{
+			"document_id": args[0],
+		})
+	},
+}
+
+// Sheets CLI commands
+var getSpreadsheetMetadataCmd = &cobra.Command{
+	Use:   "get-spreadsheet-metadata <spreadsheet-id>",
+	Short: "Get spreadsheet metadata",
+	Long:  "Get metadata about a Google Sheets spreadsheet including title, sheet count, locale, and time zone.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runSheetsTool("get_spreadsheet_metadata", map[string]any{
+			"spreadsheet_id": args[0],
+		})
+	},
+}
+
+var listSheetsCmd = &cobra.Command{
+	Use:   "list-sheets <spreadsheet-id>",
+	Short: "List all sheets in a spreadsheet",
+	Long:  "List all sheets in a Google Sheets spreadsheet with their properties.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runSheetsTool("list_sheets", map[string]any{
+			"spreadsheet_id": args[0],
+		})
+	},
+}
+
+var getSheetValuesCmd = &cobra.Command{
+	Use:   "get-sheet-values <spreadsheet-id> <range>",
+	Short: "Get values from a range",
+	Long:  "Get cell values from a specific range in a Google Sheets spreadsheet.",
+	Args:  cobra.ExactArgs(2),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		params := map[string]any{
+			"spreadsheet_id": args[0],
+			"range":          args[1],
+			"value_format":   valueFormat,
+		}
+		if sheetIndex >= 0 {
+			params["sheet_index"] = sheetIndex
+		}
+		if sheetName != "" {
+			params["sheet_name"] = sheetName
+		}
+		return runSheetsTool("get_sheet_values", params)
+	},
+}
+
+var getSheetDataCmd = &cobra.Command{
+	Use:   "get-sheet-data <spreadsheet-id>",
+	Short: "Get all data from a sheet",
+	Long:  "Get all data from a specific sheet in a Google Sheets spreadsheet.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		params := map[string]any{
+			"spreadsheet_id":   args[0],
+			"value_format":     valueFormat,
+			"include_metadata": includeSheetMetadata,
+		}
+		if sheetIndex >= 0 {
+			params["sheet_index"] = sheetIndex
+		}
+		if sheetName != "" {
+			params["sheet_name"] = sheetName
+		}
+		if sheetGID >= 0 {
+			params["sheet_gid"] = sheetGID
+		}
+		return runSheetsTool("get_sheet_data", params)
 	},
 }
 
@@ -165,67 +291,6 @@ var getPresentationContentCmd = &cobra.Command{
 	},
 }
 
-// Docs CLI commands
-var getDocumentMetadataCmd = &cobra.Command{
-	Use:   "get-document-metadata <document-id>",
-	Short: "Get document metadata",
-	Long:  "Get metadata about a Google Doc including title, word count, and element counts.",
-	Args:  cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return runDocsTool("get_document_metadata", map[string]any{
-			"document_id": args[0],
-		})
-	},
-}
-
-var getDocumentContentCmd = &cobra.Command{
-	Use:   "get-document-content <document-id>",
-	Short: "Get document structured content",
-	Long:  "Get the full structured content of a document including headings, paragraphs, images, and tables.",
-	Args:  cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return runDocsTool("get_document_content", map[string]any{
-			"document_id":      args[0],
-			"include_images":   includeImages,
-			"include_tables":   includeTables,
-			"include_headers":  includeHeaders,
-			"include_footers":  includeFooters,
-			"include_metadata": includeMetadata,
-		})
-	},
-}
-
-var getDocumentTextCmd = &cobra.Command{
-	Use:   "get-document-text <document-id>",
-	Short: "Get document as plain text",
-	Long:  "Get all text from a document as a single plain text string.",
-	Args:  cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return runDocsTool("get_document_text", map[string]any{
-			"document_id": args[0],
-		})
-	},
-}
-
-var getDocumentParagraphsCmd = &cobra.Command{
-	Use:   "get-document-paragraphs <document-id>",
-	Short: "Get document paragraphs",
-	Long:  "Get text organized by paragraphs.",
-	Args:  cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return runDocsTool("get_document_paragraphs", map[string]any{
-			"document_id": args[0],
-		})
-	},
-}
-
-// Slide command flags
-var (
-	slideIndex    int
-	slideObjectID string
-	includeNotes  bool
-)
-
 // Document command flags
 var (
 	includeImages   bool
@@ -233,6 +298,22 @@ var (
 	includeHeaders  bool
 	includeFooters  bool
 	includeMetadata bool
+)
+
+// Sheets command flags
+var (
+	sheetIndex           int
+	sheetName            string
+	sheetGID             int64
+	valueFormat          string
+	includeSheetMetadata bool
+)
+
+// Slides command flags
+var (
+	slideIndex    int
+	slideObjectID string
+	includeNotes  bool
 )
 
 func init() {
@@ -250,23 +331,45 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&outputFormat, "output", "o", "json",
 		"output format: json, pretty (default: json)")
 
-	// Slide command flags
-	getSlideCmd.Flags().IntVar(&slideIndex, "index", -1, "zero-based slide index")
-	getSlideCmd.Flags().StringVar(&slideObjectID, "object-id", "", "slide object ID")
-	getSlideNotesCmd.Flags().IntVar(&slideIndex, "index", -1, "zero-based slide index")
-	getSlideNotesCmd.Flags().StringVar(&slideObjectID, "object-id", "", "slide object ID")
-	getPresentationContentCmd.Flags().BoolVar(&includeNotes, "include-notes", false, "include speaker notes")
-
-	// Document command flags
+	// Docs command flags
 	getDocumentContentCmd.Flags().BoolVar(&includeImages, "include-images", false, "include image information")
 	getDocumentContentCmd.Flags().BoolVar(&includeTables, "include-tables", false, "include table content")
 	getDocumentContentCmd.Flags().BoolVar(&includeHeaders, "include-headers", false, "include document headers")
 	getDocumentContentCmd.Flags().BoolVar(&includeFooters, "include-footers", false, "include document footers")
 	getDocumentContentCmd.Flags().BoolVar(&includeMetadata, "include-metadata", false, "include document metadata and content counts")
 
+	// Sheets command flags
+	getSheetValuesCmd.Flags().IntVar(&sheetIndex, "sheet-index", -1, "zero-based sheet index")
+	getSheetValuesCmd.Flags().StringVar(&sheetName, "sheet-name", "", "sheet name")
+	getSheetValuesCmd.Flags().StringVar(&valueFormat, "value-format", "formatted", "output format: formatted, typed, raw")
+	getSheetDataCmd.Flags().IntVar(&sheetIndex, "sheet-index", -1, "zero-based sheet index (default: 0)")
+	getSheetDataCmd.Flags().StringVar(&sheetName, "sheet-name", "", "sheet name")
+	getSheetDataCmd.Flags().Int64Var(&sheetGID, "sheet-gid", -1, "sheet GID from URL")
+	getSheetDataCmd.Flags().StringVar(&valueFormat, "value-format", "formatted", "output format: formatted, typed, raw")
+	getSheetDataCmd.Flags().BoolVar(&includeSheetMetadata, "include-metadata", false, "include sheet metadata")
+
+	// Slides command flags
+	getSlideCmd.Flags().IntVar(&slideIndex, "index", -1, "zero-based slide index")
+	getSlideCmd.Flags().StringVar(&slideObjectID, "object-id", "", "slide object ID")
+	getSlideNotesCmd.Flags().IntVar(&slideIndex, "index", -1, "zero-based slide index")
+	getSlideNotesCmd.Flags().StringVar(&slideObjectID, "object-id", "", "slide object ID")
+	getPresentationContentCmd.Flags().BoolVar(&includeNotes, "include-notes", false, "include speaker notes")
+
 	// Add commands
 	rootCmd.AddCommand(serveCmd)
 	rootCmd.AddCommand(versionCmd)
+
+	// Docs commands
+	rootCmd.AddCommand(getDocumentMetadataCmd)
+	rootCmd.AddCommand(getDocumentContentCmd)
+	rootCmd.AddCommand(getDocumentTextCmd)
+	rootCmd.AddCommand(getDocumentParagraphsCmd)
+
+	// Sheets commands
+	rootCmd.AddCommand(getSpreadsheetMetadataCmd)
+	rootCmd.AddCommand(listSheetsCmd)
+	rootCmd.AddCommand(getSheetValuesCmd)
+	rootCmd.AddCommand(getSheetDataCmd)
 
 	// Slides commands
 	rootCmd.AddCommand(getPresentationCmd)
@@ -274,12 +377,6 @@ func init() {
 	rootCmd.AddCommand(getSlideCmd)
 	rootCmd.AddCommand(getSlideNotesCmd)
 	rootCmd.AddCommand(getPresentationContentCmd)
-
-	// Docs commands
-	rootCmd.AddCommand(getDocumentMetadataCmd)
-	rootCmd.AddCommand(getDocumentContentCmd)
-	rootCmd.AddCommand(getDocumentTextCmd)
-	rootCmd.AddCommand(getDocumentParagraphsCmd)
 }
 
 // applyEnvDefaults applies environment variable defaults to flags
@@ -395,8 +492,8 @@ func outputResult(result any) error {
 	return nil
 }
 
-// runSlidesTool runs a slides tool by name with the given params
-func runSlidesTool(toolName string, params map[string]any) error {
+// runDocsTool runs a docs tool by name with the given params
+func runDocsTool(toolName string, params map[string]any) error {
 	ctx := context.Background()
 
 	httpClient, cleanup, err := getHTTPClient(ctx)
@@ -405,9 +502,9 @@ func runSlidesTool(toolName string, params map[string]any) error {
 	}
 	defer cleanup()
 
-	skill := slides.New(httpClient)
+	skill := docs.New(httpClient)
 	if err := skill.Init(ctx); err != nil {
-		return fmt.Errorf("failed to initialize slides skill: %w", err)
+		return fmt.Errorf("failed to initialize docs skill: %w", err)
 	}
 	defer skill.Close()
 
@@ -424,8 +521,8 @@ func runSlidesTool(toolName string, params map[string]any) error {
 	return fmt.Errorf("tool not found: %s", toolName)
 }
 
-// runDocsTool runs a docs tool by name with the given params
-func runDocsTool(toolName string, params map[string]any) error {
+// runSheetsTool runs a sheets tool by name with the given params
+func runSheetsTool(toolName string, params map[string]any) error {
 	ctx := context.Background()
 
 	httpClient, cleanup, err := getHTTPClient(ctx)
@@ -434,9 +531,38 @@ func runDocsTool(toolName string, params map[string]any) error {
 	}
 	defer cleanup()
 
-	skill := docs.New(httpClient)
+	skill := sheets.New(httpClient)
 	if err := skill.Init(ctx); err != nil {
-		return fmt.Errorf("failed to initialize docs skill: %w", err)
+		return fmt.Errorf("failed to initialize sheets skill: %w", err)
+	}
+	defer skill.Close()
+
+	// Find and call the tool
+	for _, tool := range skill.Tools() {
+		if tool.Name() == toolName {
+			result, err := tool.Call(ctx, params)
+			if err != nil {
+				return err
+			}
+			return outputResult(result)
+		}
+	}
+	return fmt.Errorf("tool not found: %s", toolName)
+}
+
+// runSlidesTool runs a slides tool by name with the given params
+func runSlidesTool(toolName string, params map[string]any) error {
+	ctx := context.Background()
+
+	httpClient, cleanup, err := getHTTPClient(ctx)
+	if err != nil {
+		return err
+	}
+	defer cleanup()
+
+	skill := slides.New(httpClient)
+	if err := skill.Init(ctx); err != nil {
+		return fmt.Errorf("failed to initialize slides skill: %w", err)
 	}
 	defer skill.Close()
 
@@ -468,17 +594,6 @@ func runServer(cmd *cobra.Command, args []string) error {
 		Version: serverVersion,
 	}, nil)
 
-	// Create and initialize Slides skill
-	slidesSkill := slides.New(httpClient)
-	if err := slidesSkill.Init(ctx); err != nil {
-		return fmt.Errorf("failed to initialize Slides skill: %w", err)
-	}
-	defer func() {
-		if err := slidesSkill.Close(); err != nil {
-			log.Printf("Warning: failed to close Slides skill: %v", err)
-		}
-	}()
-
 	// Create and initialize Docs skill
 	docsSkill := docs.New(httpClient)
 	if err := docsSkill.Init(ctx); err != nil {
@@ -490,9 +605,32 @@ func runServer(cmd *cobra.Command, args []string) error {
 		}
 	}()
 
+	// Create and initialize Sheets skill
+	sheetsSkill := sheets.New(httpClient)
+	if err := sheetsSkill.Init(ctx); err != nil {
+		return fmt.Errorf("failed to initialize Sheets skill: %w", err)
+	}
+	defer func() {
+		if err := sheetsSkill.Close(); err != nil {
+			log.Printf("Warning: failed to close Sheets skill: %v", err)
+		}
+	}()
+
+	// Create and initialize Slides skill
+	slidesSkill := slides.New(httpClient)
+	if err := slidesSkill.Init(ctx); err != nil {
+		return fmt.Errorf("failed to initialize Slides skill: %w", err)
+	}
+	defer func() {
+		if err := slidesSkill.Close(); err != nil {
+			log.Printf("Warning: failed to close Slides skill: %v", err)
+		}
+	}()
+
 	// Register skills with the runtime
-	rt.RegisterSkill(slidesSkill)
 	rt.RegisterSkill(docsSkill)
+	rt.RegisterSkill(sheetsSkill)
+	rt.RegisterSkill(slidesSkill)
 
 	// Run server with stdio transport
 	if err := rt.ServeStdio(ctx); err != nil {
