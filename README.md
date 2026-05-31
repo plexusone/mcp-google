@@ -67,9 +67,9 @@ The skills in this repository can be imported and combined with other skills:
 
 ```go
 import (
-    "github.com/grokify/mcp-google/skills/docs"
-    "github.com/grokify/mcp-google/skills/sheets"
-    "github.com/grokify/mcp-google/skills/slides"
+    "github.com/plexusone/mcp-google/skills/docs"
+    "github.com/plexusone/mcp-google/skills/sheets"
+    "github.com/plexusone/mcp-google/skills/slides"
     runtime "github.com/plexusone/omniskill/mcp/server"
 )
 
@@ -110,13 +110,13 @@ This enables building unified MCP servers that combine multiple services while k
 ## Installation
 
 ```bash
-go install github.com/grokify/mcp-google/cmd/mcp-google@latest
+go install github.com/plexusone/mcp-google/cmd/mcp-google@latest
 ```
 
 Or build from source:
 
 ```bash
-git clone https://github.com/grokify/mcp-google.git
+git clone https://github.com/plexusone/mcp-google.git
 cd mcp-google
 go build ./cmd/mcp-google
 ```
