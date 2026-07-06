@@ -90,8 +90,8 @@ github.com/plexusone/omni-bitwarden v0.1.0 h1:psdoipqXcJEipiUyCDsikPajl7N41oGFTU
 github.com/plexusone/omni-bitwarden v0.1.0/go.mod h1:duTYEBBbU80tbX0vSMY3sDhlinRfS197xn9nQlgt9SA=
 github.com/plexusone/omni-onepassword v0.4.0 h1:KKo3iod6BDITDUG/OTou30erE8nHpGccnHk78E8KLR0=
 github.com/plexusone/omni-onepassword v0.4.0/go.mod h1:QhVIdFZJJPO5Togp2Hp5AjpOxHi4mA9ti5U4mn0w2eM=
-github.com/plexusone/omniskill v0.9.0 h1:QrOyJ2BWIpYcaW8lTtYxHQUWmLUq4+nAcW9CJ5OImm4=
-github.com/plexusone/omniskill v0.9.0/go.mod h1:L0MW5av6S0EkgGByFMwDmTJBy/7h8ourBmQ5xxM2vQI=
+github.com/plexusone/omniskill v0.10.0 h1:Nd/zfAGPNmnmRGyBhmMgXFS7lYcWbPtrT0k5cP8eOvY=
+github.com/plexusone/omniskill v0.10.0/go.mod h1:L0MW5av6S0EkgGByFMwDmTJBy/7h8ourBmQ5xxM2vQI=
 github.com/plexusone/omnitoken v0.1.0 h1:jBNIlUwRhI/2lzgGMWwCAi0cyRE5PsohHdXSE9ApUak=
 github.com/plexusone/omnitoken v0.1.0/go.mod h1:rXmiGW0MhyhG6R9jGcR9Gewckuhiitt2vImcaC0mPw4=
 github.com/plexusone/omnivault v0.5.0 h1:7oZwP1KNS+XQ1ksoZoKnLS9PV0TQ93b5NEuxO0T2Hwg=
