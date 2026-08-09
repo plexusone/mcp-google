@@ -7,11 +7,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
+	idjagadapter "github.com/aistandardsio/agent-protocols/adapters/omniskill"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/plexusone/mcp-google/internal/auth"
+	"github.com/plexusone/mcp-google/internal/emauth"
 	"github.com/plexusone/mcp-google/skills/docs"
 	"github.com/plexusone/mcp-google/skills/sheets"
 	"github.com/plexusone/mcp-google/skills/slides"
@@ -37,6 +40,12 @@ var (
 
 	// Output format flag
 	outputFormat string
+
+	// HTTP / ID-JAG (Enterprise-Managed Authorization) flags
+	httpAddr      string
+	idjagIssuer   string
+	idjagAudience string
+	idjagJWKSURL  string
 )
 
 func main() {
@@ -330,6 +339,16 @@ func init() {
 		"name of credentials in vault (env: OMNITOKEN_CREDENTIALS_NAME)")
 	rootCmd.PersistentFlags().StringVarP(&outputFormat, "output", "o", "json",
 		"output format: json, pretty (default: json)")
+
+	// HTTP / ID-JAG flags (serve command; stdio remains the default transport)
+	serveCmd.Flags().StringVar(&httpAddr, "http", "",
+		"serve MCP over HTTP on this address (e.g. :8080) instead of stdio (env: MCP_GOOGLE_HTTP_ADDR)")
+	serveCmd.Flags().StringVar(&idjagIssuer, "idjag-issuer", "",
+		"authorization server issuer URL for ID-JAG-derived access tokens (env: MCP_GOOGLE_IDJAG_ISSUER)")
+	serveCmd.Flags().StringVar(&idjagAudience, "idjag-audience", "",
+		"expected token audience / resource identifier (env: MCP_GOOGLE_IDJAG_AUDIENCE)")
+	serveCmd.Flags().StringVar(&idjagJWKSURL, "idjag-jwks-url", "",
+		"pin the issuer JWKS endpoint, skipping discovery (env: MCP_GOOGLE_IDJAG_JWKS_URL)")
 
 	// Docs command flags
 	getDocumentContentCmd.Flags().BoolVar(&includeImages, "include-images", false, "include image information")
@@ -632,10 +651,75 @@ func runServer(cmd *cobra.Command, args []string) error {
 	rt.RegisterSkill(sheetsSkill)
 	rt.RegisterSkill(slidesSkill)
 
+	// HTTP transport with ID-JAG (Enterprise-Managed Authorization) when
+	// requested; stdio remains the default transport.
+	if httpAddr == "" {
+		httpAddr = os.Getenv("MCP_GOOGLE_HTTP_ADDR")
+	}
+	if httpAddr != "" {
+		return serveHTTPWithIDJAG(ctx, rt)
+	}
+
 	// Run server with stdio transport
 	if err := rt.ServeStdio(ctx); err != nil {
 		return fmt.Errorf("server error: %w", err)
 	}
 
+	return nil
+}
+
+// serveHTTPWithIDJAG serves MCP over streamable HTTP as a pure OAuth
+// resource server: bearer JWTs issued by the configured authorization
+// server are verified via agent-protocols ID-JAG verification, and the
+// verified identity (sub, act chain, scope) is audit-logged and used to
+// gate tool access.
+func serveHTTPWithIDJAG(ctx context.Context, rt *runtime.Runtime) error {
+	if idjagIssuer == "" {
+		idjagIssuer = os.Getenv("MCP_GOOGLE_IDJAG_ISSUER")
+	}
+	if idjagAudience == "" {
+		idjagAudience = os.Getenv("MCP_GOOGLE_IDJAG_AUDIENCE")
+	}
+	if idjagJWKSURL == "" {
+		idjagJWKSURL = os.Getenv("MCP_GOOGLE_IDJAG_JWKS_URL")
+	}
+
+	if idjagIssuer == "" {
+		return fmt.Errorf("HTTP mode requires --idjag-issuer (or MCP_GOOGLE_IDJAG_ISSUER): the authorization server that issues access tokens for this resource")
+	}
+
+	logger := slog.Default()
+	if idjagAudience == "" {
+		logger.Warn("no --idjag-audience configured; token audience will not be validated (do not use in production)")
+	}
+
+	var opts []idjagadapter.Option
+	if idjagJWKSURL != "" {
+		opts = append(opts, idjagadapter.WithJWKSURL(idjagJWKSURL))
+	}
+	verifier := idjagadapter.NewVerifier(idjagIssuer, idjagAudience, opts...)
+
+	// Audit + scope gating at the MCP method layer.
+	rt.MCPServer().AddReceivingMiddleware(emauth.Middleware(logger))
+
+	_, err := rt.ServeHTTP(ctx, &runtime.HTTPServerOptions{
+		Addr: httpAddr,
+		ExternalAuth: &runtime.ExternalAuthOptions{
+			Verifier:             verifier,
+			AuthorizationServers: []string{idjagIssuer},
+			Resource:             idjagAudience,
+			ScopesSupported:      []string{emauth.ScopeDocs, emauth.ScopeSheets, emauth.ScopeSlides},
+		},
+		OnReady: func(result *runtime.HTTPServerResult) {
+			logger.Info("mcp-google serving HTTP with ID-JAG authorization",
+				"url", result.LocalURL,
+				"issuer", idjagIssuer,
+				"audience", idjagAudience,
+			)
+		},
+	})
+	if err != nil {
+		return fmt.Errorf("server error: %w", err)
+	}
 	return nil
 }
