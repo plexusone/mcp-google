@@ -101,7 +101,7 @@ This enables building unified MCP servers that combine multiple services while k
 
 ## Requirements
 
-- Go 1.24+
+- Go 1.26+
 - Google Cloud service account with Docs, Sheets, and Slides API access
 
 ## Installation
@@ -295,6 +295,19 @@ Add to your Claude Desktop configuration (`claude_desktop_config.json`):
 ```
 
 See [docs/configuration/claude-desktop.md](docs/configuration/claude-desktop.md) for more options including Bitwarden.
+
+### HTTP Transport (ID-JAG Authorization)
+
+By default `mcp-google` serves over stdio. It can also serve streamable HTTP as a pure OAuth resource server, verifying bearer tokens issued by an external authorization server (enterprise IdP / [ID-JAG](https://github.com/aistandardsio/agent-protocols) delegation-chain tokens):
+
+```bash
+mcp-google serve \
+  --http :8080 \
+  --idjag-issuer https://idp.example.com \
+  --idjag-audience https://mcp-google.example.com
+```
+
+Verified identity (subject, RFC 8693 `act` chain, scope) is audit-logged on every tool call, and calls are gated by scope (`docs:read`, `sheets:read`, `slides:read`) when the token carries one. See [docs/configuration/http-transport.md](docs/configuration/http-transport.md) for the full flag/env reference.
 
 ## Google Docs Tools
 

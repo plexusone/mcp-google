@@ -16,8 +16,12 @@ The CLI is generated with Cobra, so `--help` is the easiest way to reference the
 | Command | Description |
 |---------|-------------|
 | `mcp-google` | Start the MCP server using stdio |
-| `mcp-google serve` | Start the MCP server explicitly |
+| `mcp-google serve` | Start the MCP server explicitly (stdio, or HTTP with `--http`) |
 | `mcp-google version` | Print version information |
+
+### HTTP Transport
+
+`mcp-google serve --http :8080` serves MCP over streamable HTTP instead of stdio, as an OAuth resource server that verifies externally-issued bearer tokens (ID-JAG / Enterprise-Managed Authorization). See [HTTP Transport & ID-JAG](configuration/http-transport.md) for the full flag reference, scopes, and audit logging.
 
 ## Google Docs Commands
 
@@ -57,6 +61,15 @@ The CLI is generated with Cobra, so `--help` is the easiest way to reference the
 | `--vault` | `OMNITOKEN_VAULT_URI` | Vault URI for credentials |
 | `--credentials-name` | `OMNITOKEN_CREDENTIALS_NAME` | Credential name in the vault |
 | `-o, --output` | | Output format: `json` or `pretty` |
+
+### `serve`-only Flags
+
+| Flag | Environment variable | Description |
+|------|----------------------|-------------|
+| `--http` | `MCP_GOOGLE_HTTP_ADDR` | Serve over HTTP on this address instead of stdio |
+| `--idjag-issuer` | `MCP_GOOGLE_IDJAG_ISSUER` | Authorization server issuer URL (required for `--http`) |
+| `--idjag-audience` | `MCP_GOOGLE_IDJAG_AUDIENCE` | Expected token audience / resource identifier |
+| `--idjag-jwks-url` | `MCP_GOOGLE_IDJAG_JWKS_URL` | Pin the issuer JWKS endpoint, skipping discovery |
 
 ## Examples
 

@@ -22,6 +22,17 @@ All command-line flags can be set via environment variables.
 | `BW_ACCESS_TOKEN` | Bitwarden access token |
 | `BW_ORGANIZATION_ID` | Bitwarden organization ID |
 
+### HTTP Transport / ID-JAG Authorization
+
+| Variable | Flag | Description |
+|----------|------|-------------|
+| `MCP_GOOGLE_HTTP_ADDR` | `--http` | Serve over HTTP on this address instead of stdio |
+| `MCP_GOOGLE_IDJAG_ISSUER` | `--idjag-issuer` | Authorization server issuer URL (required for HTTP mode) |
+| `MCP_GOOGLE_IDJAG_AUDIENCE` | `--idjag-audience` | Expected token audience / resource identifier |
+| `MCP_GOOGLE_IDJAG_JWKS_URL` | `--idjag-jwks-url` | Pin the issuer JWKS endpoint, skipping discovery |
+
+See [HTTP Transport & ID-JAG](http-transport.md) for details.
+
 ## Precedence
 
 Command-line flags take precedence over environment variables.
@@ -122,7 +133,7 @@ Or use a tool like `direnv` for automatic loading.
 ## Docker
 
 ```dockerfile
-FROM golang:1.24 AS builder
+FROM golang:1.26 AS builder
 # ... build steps ...
 
 FROM alpine:latest

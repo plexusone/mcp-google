@@ -2,19 +2,19 @@
 
 ## Requirements
 
-- Go 1.24+
+- Go 1.26+
 - Google Cloud service account with Slides and Docs API access
 
 ## Install from Source
 
 ```bash
-go install github.com/grokify/mcp-google/cmd/mcp-google@latest
+go install github.com/plexusone/mcp-google/cmd/mcp-google@latest
 ```
 
 ## Build from Source
 
 ```bash
-git clone https://github.com/grokify/mcp-google.git
+git clone https://github.com/plexusone/mcp-google.git
 cd mcp-google
 go build ./cmd/mcp-google
 ```
@@ -31,15 +31,15 @@ mcp-google version
 To use the Google skills in your own omniskill-based server:
 
 ```bash
-go get github.com/grokify/mcp-google@latest
+go get github.com/plexusone/mcp-google@latest
 ```
 
 Then import the skills:
 
 ```go
 import (
-    "github.com/grokify/mcp-google/skills/slides"
-    "github.com/grokify/mcp-google/skills/docs"
+    "github.com/plexusone/mcp-google/skills/slides"
+    "github.com/plexusone/mcp-google/skills/docs"
 )
 ```
 
