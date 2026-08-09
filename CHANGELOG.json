@@ -8,6 +8,32 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.4.0",
+      "date": "2026-08-09",
+      "highlights": [
+        { "description": "Streamable-HTTP transport secured by ID-JAG (Enterprise-Managed Authorization) resource-server verification" }
+      ],
+      "added": [
+        { "description": "`serve --http` / `MCP_GOOGLE_HTTP_ADDR`: opt-in streamable-HTTP transport (stdio remains the default)", "commit": "d634f26" },
+        { "description": "`--idjag-issuer`, `--idjag-audience`, `--idjag-jwks-url` flags: verify bearer JWTs as a pure OAuth resource server via the agent-protocols ID-JAG adapter", "commit": "d634f26" },
+        { "description": "`internal/emauth` middleware: audit-logs the verified identity (sub, act chain, scope) on every tool call and gates tools by scope (`docs:read`, `sheets:read`, `slides:read`)", "commit": "d634f26" },
+        { "description": "Skills now report a `Version()` (docs, sheets, slides all at v0.5.0)", "commit": "76528ce" }
+      ],
+      "fixed": [
+        { "description": "Auth: avoid a panic from `omnitoken.NewFromCredentials(name, nil)` when initializing the service-account token manager", "commit": "40c7398" }
+      ],
+      "changed": [
+        { "description": "Upgrade `omniskill` from v0.10.0 to v0.12.0, adding the external resource-server auth support the HTTP transport depends on", "commit": "e0995d0" },
+        { "description": "Upgrade `google.golang.org/api` from v0.282.0 to v0.292.0", "commit": "e0995d0" },
+        { "description": "Upgrade `github.com/modelcontextprotocol/go-sdk` to v1.7.0", "commit": "ffacab6" },
+        { "description": "Require Go 1.26.4", "commit": "e0995d0" }
+      ],
+      "documentation": [
+        { "description": "Add v0.4.0 release notes and HTTP transport / ID-JAG configuration guide" },
+        { "description": "Update README shields", "commit": "56f834e" }
+      ]
+    },
+    {
       "version": "v0.3.0",
       "date": "2026-05-31",
       "highlights": [
