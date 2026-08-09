@@ -8,6 +8,7 @@ import (
 	"github.com/grokify/goauth"
 	"github.com/grokify/goauth/google"
 	"github.com/plexusone/omnitoken"
+	"github.com/plexusone/omnivault/providers/memory"
 	"google.golang.org/api/docs/v1"
 	"google.golang.org/api/sheets/v4"
 	slides "google.golang.org/api/slides/v1"
@@ -64,8 +65,10 @@ func NewTokenManager(ctx context.Context, opts TokenManagerOptions) (*omnitoken.
 		return mgr, nil
 
 	case opts.ServiceAccountFile != "":
-		// Google service account JSON file
-		mgr, err := omnitoken.NewFromCredentials(opts.CredentialsName, nil)
+		// Google service account JSON file. Create an empty in-memory
+		// manager first: NewFromCredentials(name, nil) panics in omnitoken
+		// v0.1.0, and the credentials are loaded from the file below.
+		mgr, err := omnitoken.New(omnitoken.Config{Vault: memory.New()})
 		if err != nil {
 			return nil, err
 		}
