@@ -31,6 +31,11 @@ func (s *Skill) Name() string {
 	return "sheets"
 }
 
+// Version returns the skill version.
+func (s *Skill) Version() string {
+	return "0.5.0"
+}
+
 // Description returns what this skill does.
 func (s *Skill) Description() string {
 	return "Read Google Sheets spreadsheets including cell values, metadata, and sheet properties"

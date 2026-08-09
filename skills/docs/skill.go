@@ -32,6 +32,11 @@ func (s *Skill) Name() string {
 	return "docs"
 }
 
+// Version returns the skill version.
+func (s *Skill) Version() string {
+	return "0.5.0"
+}
+
 // Description returns what this skill does.
 func (s *Skill) Description() string {
 	return "Read Google Docs documents including content, paragraphs, and metadata"
