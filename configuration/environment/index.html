@@ -1077,6 +1077,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#http-transport-id-jag-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Transport / ID-JAG Authorization
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1263,6 +1274,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../http-transport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP Transport & ID-JAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1323,6 +1362,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/v0.4.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v0.4.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1469,6 +1536,17 @@
     <span class="md-ellipsis">
       
         Vault Provider Authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-transport-id-jag-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Transport / ID-JAG Authorization
       
     </span>
   </a>
@@ -1707,6 +1785,39 @@
 </tr>
 </tbody>
 </table>
+<h3 id="http-transport-id-jag-authorization">HTTP Transport / ID-JAG Authorization<a class="headerlink" href="#http-transport-id-jag-authorization" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MCP_GOOGLE_HTTP_ADDR</code></td>
+<td><code>--http</code></td>
+<td>Serve over HTTP on this address instead of stdio</td>
+</tr>
+<tr>
+<td><code>MCP_GOOGLE_IDJAG_ISSUER</code></td>
+<td><code>--idjag-issuer</code></td>
+<td>Authorization server issuer URL (required for HTTP mode)</td>
+</tr>
+<tr>
+<td><code>MCP_GOOGLE_IDJAG_AUDIENCE</code></td>
+<td><code>--idjag-audience</code></td>
+<td>Expected token audience / resource identifier</td>
+</tr>
+<tr>
+<td><code>MCP_GOOGLE_IDJAG_JWKS_URL</code></td>
+<td><code>--idjag-jwks-url</code></td>
+<td>Pin the issuer JWKS endpoint, skipping discovery</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../http-transport/">HTTP Transport &amp; ID-JAG</a> for details.</p>
 <h2 id="precedence">Precedence<a class="headerlink" href="#precedence" title="Permanent link">&para;</a></h2>
 <p>Command-line flags take precedence over environment variables.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Environment variable is used</span>
@@ -1768,7 +1879,7 @@
 </code></pre></div>
 <p>Or use a tool like <code>direnv</code> for automatic loading.</p>
 <h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">golang:1.24</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">builder</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">golang:1.26</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">builder</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c"># ... build steps ...</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:latest</span>

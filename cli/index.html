@@ -519,6 +519,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Server Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Transport
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -562,6 +579,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Global Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serve-only-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        serve-only Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1157,6 +1191,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/http-transport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP Transport & ID-JAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1217,6 +1279,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/v0.4.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v0.4.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1355,6 +1445,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Server Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Transport
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1398,6 +1505,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Global Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serve-only-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        serve-only Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1454,7 +1578,7 @@
 </tr>
 <tr>
 <td><code>mcp-google serve</code></td>
-<td>Start the MCP server explicitly</td>
+<td>Start the MCP server explicitly (stdio, or HTTP with <code>--http</code>)</td>
 </tr>
 <tr>
 <td><code>mcp-google version</code></td>
@@ -1462,6 +1586,8 @@
 </tr>
 </tbody>
 </table>
+<h3 id="http-transport">HTTP Transport<a class="headerlink" href="#http-transport" title="Permanent link">&para;</a></h3>
+<p><code>mcp-google serve --http :8080</code> serves MCP over streamable HTTP instead of stdio, as an OAuth resource server that verifies externally-issued bearer tokens (ID-JAG / Enterprise-Managed Authorization). See <a href="../configuration/http-transport/">HTTP Transport &amp; ID-JAG</a> for the full flag reference, scopes, and audit logging.</p>
 <h2 id="google-docs-commands">Google Docs Commands<a class="headerlink" href="#google-docs-commands" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1586,6 +1712,38 @@
 <td><code>-o, --output</code></td>
 <td></td>
 <td>Output format: <code>json</code> or <code>pretty</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="serve-only-flags"><code>serve</code>-only Flags<a class="headerlink" href="#serve-only-flags" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Environment variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--http</code></td>
+<td><code>MCP_GOOGLE_HTTP_ADDR</code></td>
+<td>Serve over HTTP on this address instead of stdio</td>
+</tr>
+<tr>
+<td><code>--idjag-issuer</code></td>
+<td><code>MCP_GOOGLE_IDJAG_ISSUER</code></td>
+<td>Authorization server issuer URL (required for <code>--http</code>)</td>
+</tr>
+<tr>
+<td><code>--idjag-audience</code></td>
+<td><code>MCP_GOOGLE_IDJAG_AUDIENCE</code></td>
+<td>Expected token audience / resource identifier</td>
+</tr>
+<tr>
+<td><code>--idjag-jwks-url</code></td>
+<td><code>MCP_GOOGLE_IDJAG_JWKS_URL</code></td>
+<td>Pin the issuer JWKS endpoint, skipping discovery</td>
 </tr>
 </tbody>
 </table>

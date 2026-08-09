@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://plexusone.github.io/mcp-google/getting-started/installation/">
+        <link rel="canonical" href="https://plexusone.github.io/mcp-google/configuration/http-transport/">
       
       
-        <link rel="prev" href="../..">
+        <link rel="prev" href="../claude-desktop/">
       
       
-        <link rel="next" href="../setup/">
+        <link rel="next" href="../../releases/v0.4.0/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Installation - Google MCP Server</title>
+        <title>HTTP Transport & ID-JAG - Google MCP Server</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation" class="md-skip">
+        <a href="#http-transport-id-jag-authorization" class="md-skip">
           Skip to content
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installation
+              HTTP Transport & ID-JAG
             
           </span>
         </div>
@@ -292,8 +292,6 @@
       
   
   
-    
-  
   
   
     
@@ -306,11 +304,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -331,7 +331,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -346,37 +346,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Installation
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
         
   
   
@@ -392,81 +365,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Requirements
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-from-source" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Install from Source
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-from-source" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build from Source
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verify-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verify Installation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-as-a-library" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using as a Library
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -479,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../setup/" class="md-nav__link">
+      <a href="../../getting-started/setup/" class="md-nav__link">
         
   
   
@@ -507,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../quickstart/" class="md-nav__link">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
         
   
   
@@ -1001,8 +899,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -1013,13 +913,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
@@ -1040,7 +938,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1058,7 +956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configuration/credentials/" class="md-nav__link">
+      <a href="../credentials/" class="md-nav__link">
         
   
   
@@ -1086,7 +984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configuration/environment/" class="md-nav__link">
+      <a href="../environment/" class="md-nav__link">
         
   
   
@@ -1114,7 +1012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configuration/claude-desktop/" class="md-nav__link">
+      <a href="../claude-desktop/" class="md-nav__link">
         
   
   
@@ -1139,10 +1037,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../configuration/http-transport/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP Transport & ID-JAG
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1158,6 +1083,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-http-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling HTTP mode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scopes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit logging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-credentials-still-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google credentials still required
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdio-is-unaffected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stdio is unaffected
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1370,10 +1381,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#enabling-http-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Requirements
+        Enabling HTTP mode
       
     </span>
   </a>
@@ -1381,10 +1392,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-from-source" class="md-nav__link">
+  <a href="#flags" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install from Source
+        Flags
       
     </span>
   </a>
@@ -1392,10 +1403,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-from-source" class="md-nav__link">
+  <a href="#scopes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Build from Source
+        Scopes
       
     </span>
   </a>
@@ -1403,10 +1414,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verify-installation" class="md-nav__link">
+  <a href="#audit-logging" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verify Installation
+        Audit logging
       
     </span>
   </a>
@@ -1414,10 +1425,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-as-a-library" class="md-nav__link">
+  <a href="#google-credentials-still-required" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using as a Library
+        Google credentials still required
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdio-is-unaffected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stdio is unaffected
       
     </span>
   </a>
@@ -1444,35 +1466,83 @@
   
 
 
-<h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Go 1.26+</li>
-<li>Google Cloud service account with Slides and Docs API access</li>
-</ul>
-<h2 id="install-from-source">Install from Source<a class="headerlink" href="#install-from-source" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/plexusone/mcp-google/cmd/mcp-google@latest
+<h1 id="http-transport-id-jag-authorization">HTTP Transport &amp; ID-JAG Authorization<a class="headerlink" href="#http-transport-id-jag-authorization" title="Permanent link">&para;</a></h1>
+<p>By default <code>mcp-google</code> serves MCP over stdio, with no network exposure. As of v0.4.0 it can also serve over streamable HTTP, secured as a pure OAuth 2.1 resource server that verifies externally-issued bearer tokens (an enterprise IdP, or an <a href="https://github.com/aistandardsio/agent-protocols">ID-JAG</a> delegation-chain token) instead of running its own authorization server.</p>
+<p>This is <strong>Enterprise-Managed Authorization</strong>: your identity provider issues the tokens and owns the trust relationship; <code>mcp-google</code> only verifies them and enforces scope.</p>
+<h2 id="enabling-http-mode">Enabling HTTP mode<a class="headerlink" href="#enabling-http-mode" title="Permanent link">&para;</a></h2>
+<p>HTTP mode is opt-in. Passing <code>--http</code> (or setting <code>MCP_GOOGLE_HTTP_ADDR</code>) switches the <code>serve</code> command from stdio to streamable HTTP:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mcp-google<span class="w"> </span>serve<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--http<span class="w"> </span>:8080<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--idjag-issuer<span class="w"> </span>https://idp.example.com<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--idjag-audience<span class="w"> </span>https://mcp-google.example.com
 </code></pre></div>
-<h2 id="build-from-source">Build from Source<a class="headerlink" href="#build-from-source" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/plexusone/mcp-google.git
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>mcp-google
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>go<span class="w"> </span>build<span class="w"> </span>./cmd/mcp-google
+<p><code>--idjag-issuer</code> is required in HTTP mode — it's the authorization server whose tokens will be accepted. <code>--idjag-audience</code> should always be set in production; without it, token audience is not validated and a token minted for a different resource would be accepted.</p>
+<h2 id="flags">Flags<a class="headerlink" href="#flags" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Environment variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--http</code></td>
+<td><code>MCP_GOOGLE_HTTP_ADDR</code></td>
+<td>Serve MCP over HTTP on this address (e.g. <code>:8080</code>) instead of stdio</td>
+</tr>
+<tr>
+<td><code>--idjag-issuer</code></td>
+<td><code>MCP_GOOGLE_IDJAG_ISSUER</code></td>
+<td>Authorization server issuer URL for ID-JAG-derived access tokens (required for HTTP mode)</td>
+</tr>
+<tr>
+<td><code>--idjag-audience</code></td>
+<td><code>MCP_GOOGLE_IDJAG_AUDIENCE</code></td>
+<td>Expected token audience / resource identifier</td>
+</tr>
+<tr>
+<td><code>--idjag-jwks-url</code></td>
+<td><code>MCP_GOOGLE_IDJAG_JWKS_URL</code></td>
+<td>Pin the issuer's JWKS endpoint, skipping discovery</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scopes">Scopes<a class="headerlink" href="#scopes" title="Permanent link">&para;</a></h2>
+<p>Verified tokens that carry a <code>scope</code> claim are enforced per tool call. Tokens without a <code>scope</code> claim are not gated — the call is allowed, and the identity is still audit-logged.</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Gates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs:read</code></td>
+<td>Google Docs tools (<code>get_document_*</code>)</td>
+</tr>
+<tr>
+<td><code>sheets:read</code></td>
+<td>Google Sheets tools (<code>get_spreadsheet_*</code>, <code>list_sheets</code>, <code>get_sheet_*</code>, <code>get_multiple_ranges</code>)</td>
+</tr>
+<tr>
+<td><code>slides:read</code></td>
+<td>Google Slides tools (<code>get_presentation*</code>, <code>list_slides</code>, <code>get_slide*</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>A call to a tool whose required scope isn't present in the token's <code>scope</code> claim is denied with an <code>access denied</code> error before it reaches the Google API.</p>
+<h2 id="audit-logging">Audit logging<a class="headerlink" href="#audit-logging" title="Permanent link">&para;</a></h2>
+<p>Every <code>tools/call</code> request in HTTP mode is logged via the configured <code>*slog.Logger</code>, including the verified subject, the RFC 8693 <code>act</code> delegation chain (if the token represents a delegated call), the client ID, and the granted scope:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;tool_call&quot;</span><span class="p">,</span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="s2">&quot;get_document_text&quot;</span><span class="p">,</span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span><span class="nt">&quot;act&quot;</span><span class="p">:</span><span class="s2">&quot;agent-123&quot;</span><span class="p">,</span><span class="nt">&quot;client_id&quot;</span><span class="p">:</span><span class="s2">&quot;mcp-google-client&quot;</span><span class="p">,</span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="s2">&quot;docs:read&quot;</span><span class="p">}</span>
 </code></pre></div>
-<h2 id="verify-installation">Verify Installation<a class="headerlink" href="#verify-installation" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mcp-google<span class="w"> </span>version
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># Output: mcp-google v0.4.0</span>
-</code></pre></div>
-<h2 id="using-as-a-library">Using as a Library<a class="headerlink" href="#using-as-a-library" title="Permanent link">&para;</a></h2>
-<p>To use the Google skills in your own omniskill-based server:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/plexusone/mcp-google@latest
-</code></pre></div>
-<p>Then import the skills:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="s">&quot;github.com/plexusone/mcp-google/skills/slides&quot;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="s">&quot;github.com/plexusone/mcp-google/skills/docs&quot;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">)</span>
-</code></pre></div>
-<p>See <a href="../../skills/using-skills/">Using Skills</a> for details.</p>
+<p>Denied calls are logged separately as <code>tool_call_denied</code> with the required scope that was missing.</p>
+<h2 id="google-credentials-still-required">Google credentials still required<a class="headerlink" href="#google-credentials-still-required" title="Permanent link">&para;</a></h2>
+<p>ID-JAG / HTTP mode authorizes <em>access to mcp-google's tools</em>. It is independent of how <code>mcp-google</code> itself authenticates to the Google APIs — you still need one of the credential sources described in <a href="../credentials/">Credentials</a> (service account, goauth CredentialsSet, or vault-backed).</p>
+<h2 id="stdio-is-unaffected">stdio is unaffected<a class="headerlink" href="#stdio-is-unaffected" title="Permanent link">&para;</a></h2>
+<p>If <code>--http</code> / <code>MCP_GOOGLE_HTTP_ADDR</code> is not set, <code>mcp-google</code> behaves exactly as before: it serves over stdio with no token verification, suitable for local use (e.g. Claude Desktop).</p>
 
 
 
