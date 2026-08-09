@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/grokify/goauth v0.23.30
 	github.com/grokify/gogoogle v0.11.0
-	github.com/modelcontextprotocol/go-sdk v1.6.1
+	github.com/modelcontextprotocol/go-sdk v1.7.0
 	github.com/plexusone/omniskill v0.10.0
 	github.com/plexusone/omnitoken v0.1.0
 	github.com/plexusone/omnivault-desktop v0.1.0
