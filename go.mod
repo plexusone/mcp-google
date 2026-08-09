@@ -6,7 +6,7 @@ require (
 	github.com/grokify/goauth v0.23.30
 	github.com/grokify/gogoogle v0.11.0
 	github.com/modelcontextprotocol/go-sdk v1.7.0
-	github.com/plexusone/omniskill v0.10.0
+	github.com/plexusone/omniskill v0.11.0
 	github.com/plexusone/omnitoken v0.1.0
 	github.com/plexusone/omnivault-desktop v0.1.0
 	github.com/spf13/cobra v1.10.2
@@ -45,7 +45,7 @@ require (
 	github.com/jpillora/backoff v1.0.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
-	github.com/mattn/go-isatty v0.0.22 // indirect
+	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/plexusone/omni-bitwarden v0.1.0 // indirect
 	github.com/plexusone/omni-onepassword v0.4.0 // indirect
 	github.com/plexusone/omnivault v0.5.0 // indirect
@@ -65,7 +65,7 @@ require (
 	golang.ngrok.com/muxado/v2 v2.0.1 // indirect
 	golang.ngrok.com/ngrok v1.13.0 // indirect
 	golang.org/x/crypto v0.54.0 // indirect
-	golang.org/x/exp v0.0.0-20260611194520-c48552f49976 // indirect
+	golang.org/x/exp v0.0.0-20260727155853-b88d891fe743 // indirect
 	golang.org/x/net v0.57.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect
