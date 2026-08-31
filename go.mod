@@ -3,8 +3,8 @@ module github.com/plexusone/mcp-google
 go 1.26.4
 
 require (
-	github.com/grokify/goauth v0.23.30
-	github.com/grokify/gogoogle v0.11.1
+	github.com/grokify/goauth v0.24.0
+	github.com/grokify/gogoogle v0.11.0
 	github.com/modelcontextprotocol/go-sdk v1.7.0
 	github.com/plexusone/omniskill v0.12.0
 	github.com/plexusone/omnitoken v0.1.0
