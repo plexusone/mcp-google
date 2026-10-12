@@ -3,7 +3,7 @@ module github.com/plexusone/mcp-google
 go 1.26.4
 
 require (
-	github.com/grokify/goauth v0.24.0
+	github.com/grokify/goauth v0.25.0
 	github.com/grokify/gogoogle v0.11.1
 	github.com/modelcontextprotocol/go-sdk v1.8.0
 	github.com/plexusone/omniskill v0.12.0
@@ -40,9 +40,9 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.3.22 // indirect
 	github.com/googleapis/gax-go/v2 v2.26.2 // indirect
 	github.com/grokify/gocharts/v2 v2.27.1 // indirect
-	github.com/grokify/mogo v0.74.8 // indirect
+	github.com/grokify/mogo v0.74.9 // indirect
 	github.com/grokify/oscompat v0.5.0 // indirect
-	github.com/huandu/xstrings v1.5.0 // indirect
+	github.com/huandu/xstrings v1.6.1 // indirect
 	github.com/ianlancetaylor/demangle v0.0.0-20260724033716-83e58baca724 // indirect
 	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
 	github.com/inconshreveable/log15/v3 v3.1.0 // indirect
@@ -71,7 +71,7 @@ require (
 	golang.ngrok.com/muxado/v2 v2.0.1 // indirect
 	golang.ngrok.com/ngrok v1.13.0 // indirect
 	golang.org/x/crypto v0.57.0 // indirect
-	golang.org/x/exp v0.0.0-20260824195058-e88cd73687aa // indirect
+	golang.org/x/exp v0.0.0-20260908205506-85c1c2202aba // indirect
 	golang.org/x/net v0.59.0 // indirect
 	golang.org/x/oauth2 v0.37.0 // indirect
 	golang.org/x/sync v0.23.0 // indirect
