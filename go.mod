@@ -10,7 +10,7 @@ require (
 	github.com/plexusone/omnitoken v0.1.0
 	github.com/plexusone/omnivault-desktop v0.1.0
 	github.com/spf13/cobra v1.10.2
-	google.golang.org/api v0.307.0
+	google.golang.org/api v0.308.0
 )
 
 require (
@@ -24,7 +24,7 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.3.0 // indirect
 	cloud.google.com/go/compute/metadata v0.10.0 // indirect
 	github.com/1password/onepassword-sdk-go v0.4.1 // indirect
-	github.com/aistandardsio/agent-protocols v0.7.0
+	github.com/aistandardsio/agent-protocols v0.8.0
 	github.com/bitwarden/sdk-go/v2 v2.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dylibso/observe-sdk/go v0.0.0-20240828172851-9145d8ad07e1 // indirect
@@ -42,7 +42,7 @@ require (
 	github.com/googleapis/gax-go/v2 v2.27.0 // indirect
 	github.com/grokify/gocharts/v2 v2.27.1 // indirect
 	github.com/grokify/mogo v0.75.0 // indirect
-	github.com/grokify/oscompat v0.5.0 // indirect
+	github.com/grokify/oscompat v0.8.0 // indirect
 	github.com/huandu/xstrings v1.6.3 // indirect
 	github.com/ianlancetaylor/demangle v0.0.0-20260724033716-83e58baca724 // indirect
 	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
@@ -67,7 +67,7 @@ require (
 	go.opentelemetry.io/otel v1.47.0 // indirect
 	go.opentelemetry.io/otel/metric v1.47.0 // indirect
 	go.opentelemetry.io/otel/trace v1.47.0 // indirect
-	go.opentelemetry.io/proto/otlp v1.11.0 // indirect
+	go.opentelemetry.io/proto/otlp v1.11.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.ngrok.com/muxado/v2 v2.0.1 // indirect
 	golang.ngrok.com/ngrok v1.13.0 // indirect
