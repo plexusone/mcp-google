@@ -67,6 +67,12 @@ nav:
       - Environment Variables: configuration/environment.md
       - Claude Desktop: configuration/claude-desktop.md
       - HTTP Transport & ID-JAG: configuration/http-transport.md
+  - Specs:
+      - INIT-MCPGOOGLE-001:
+          - PRD: specs/initiatives/INIT-MCPGOOGLE-001/PRD.md
+          - TRD: specs/initiatives/INIT-MCPGOOGLE-001/TRD.md
+          - Plan: specs/initiatives/INIT-MCPGOOGLE-001/PLAN.md
+          - Roadmap: specs/initiatives/INIT-MCPGOOGLE-001/ROADMAP.md
   - Releases:
       - v0.4.0: releases/v0.4.0.md
       - v0.3.0: releases/v0.3.0.md
