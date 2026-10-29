@@ -307,7 +307,7 @@ mcp-google serve \
   --idjag-audience https://mcp-google.example.com
 ```
 
-Verified identity (subject, RFC 8693 `act` chain, scope) is audit-logged on every tool call, and calls are gated by scope (`docs:read`, `sheets:read`, `slides:read`) when the token carries one. See [docs/configuration/http-transport.md](docs/configuration/http-transport.md) for the full flag/env reference.
+Verified identity (subject, RFC 8693 `act` chain, scope) is audit-logged on every tool call, and calls are gated by scope (`docs:read`, `sheets:read`, `slides:read`) when the token carries one. Each tool maps to exactly one required scope through an explicit per-tool table; when a scope claim is present, a tool without a mapping is denied. See [docs/configuration/http-transport.md](docs/configuration/http-transport.md) for the full flag/env reference.
 
 ## Google Docs Tools
 

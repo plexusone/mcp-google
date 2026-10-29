@@ -30,13 +30,18 @@ mcp-google serve \
 
 Verified tokens that carry a `scope` claim are enforced per tool call. Tokens without a `scope` claim are not gated — the call is allowed, and the identity is still audit-logged.
 
-| Scope | Gates |
-|-------|-------|
-| `docs:read` | Google Docs tools (`get_document_*`) |
-| `sheets:read` | Google Sheets tools (`get_spreadsheet_*`, `list_sheets`, `get_sheet_*`, `get_multiple_ranges`) |
-| `slides:read` | Google Slides tools (`get_presentation*`, `list_slides`, `get_slide*`) |
+Authorization uses an explicit map keyed by exact tool name. Every registered tool has exactly one required scope:
 
-A call to a tool whose required scope isn't present in the token's `scope` claim is denied with an `access denied` error before it reaches the Google API.
+| Scope | Tools |
+|-------|-------|
+| `docs:read` | `get_document_metadata`, `get_document_content`, `get_document_text`, `get_document_paragraphs` |
+| `sheets:read` | `get_spreadsheet_metadata`, `list_sheets`, `get_sheet_values`, `get_sheet_data`, `get_multiple_ranges` |
+| `slides:read` | `get_presentation`, `list_slides`, `get_slide`, `get_slide_notes`, `get_presentation_content` |
+
+When the token carries a `scope` claim, a call is denied with an `access denied` error before it reaches the Google API if:
+
+- the token's `scope` claim does not include the tool's required scope (`access denied: tool <name> requires scope <scope>`), or
+- the tool has no entry in the map (`access denied: tool <name> has no scope mapping`). Unmapped tools are denied by default rather than allowed.
 
 ## Audit logging
 
@@ -46,7 +51,7 @@ Every `tools/call` request in HTTP mode is logged via the configured `*slog.Logg
 {"msg":"tool_call","tool":"get_document_text","sub":"user@example.com","act":"agent-123","client_id":"mcp-google-client","scope":"docs:read"}
 ```
 
-Denied calls are logged separately as `tool_call_denied` with the required scope that was missing.
+Denied calls are logged separately as `tool_call_denied`, with the `required_scope` that was missing, or with `reason` set to `unmapped_tool` when the tool has no scope mapping.
 
 ## Google credentials still required
 
