@@ -18,7 +18,7 @@ import (
 )
 
 // Scopes understood by mcp-google. When the verified token carries a scope
-// claim, tool calls require the matching skill scope; tokens without a
+// claim, every tool call requires the tool's mapped scope; tokens without a
 // scope claim are not gated (identity is still audit-logged).
 const (
 	ScopeDocs   = "docs:read"
@@ -26,19 +26,47 @@ const (
 	ScopeSlides = "slides:read"
 )
 
-// RequiredScope maps a tool name to the scope that authorizes it. Returns
-// an empty string for tools with no scope mapping (allowed by default).
-func RequiredScope(toolName string) string {
-	switch {
-	case strings.Contains(toolName, "document"):
-		return ScopeDocs
-	case strings.Contains(toolName, "spreadsheet"), strings.Contains(toolName, "sheet"):
-		return ScopeSheets
-	case strings.Contains(toolName, "presentation"), strings.Contains(toolName, "slide"):
-		return ScopeSlides
-	default:
-		return ""
+// toolScopes is the authorization map: every registered tool, keyed by its
+// exact name, maps to exactly one required policy scope. A tool that is not
+// listed here is denied whenever the token carries a scope claim, so a new
+// tool must be added to this table before scoped callers can use it.
+var toolScopes = map[string]string{
+	// Google Docs
+	"get_document_metadata":   ScopeDocs,
+	"get_document_content":    ScopeDocs,
+	"get_document_text":       ScopeDocs,
+	"get_document_paragraphs": ScopeDocs,
+
+	// Google Sheets
+	"get_spreadsheet_metadata": ScopeSheets,
+	"list_sheets":              ScopeSheets,
+	"get_sheet_values":         ScopeSheets,
+	"get_sheet_data":           ScopeSheets,
+	"get_multiple_ranges":      ScopeSheets,
+
+	// Google Slides
+	"get_presentation":         ScopeSlides,
+	"list_slides":              ScopeSlides,
+	"get_slide":                ScopeSlides,
+	"get_slide_notes":          ScopeSlides,
+	"get_presentation_content": ScopeSlides,
+}
+
+// RequiredScope returns the policy scope that authorizes the tool with the
+// given exact name, and whether the tool is mapped at all. Unmapped tools
+// report ok == false and are denied when a scope claim is present.
+func RequiredScope(toolName string) (scope string, ok bool) {
+	scope, ok = toolScopes[toolName]
+	return scope, ok
+}
+
+// ToolScopes returns a copy of the tool → scope authorization map.
+func ToolScopes() map[string]string {
+	out := make(map[string]string, len(toolScopes))
+	for tool, scope := range toolScopes {
+		out[tool] = scope
 	}
+	return out
 }
 
 // HasScope reports whether the space-delimited scope string contains the
@@ -53,8 +81,9 @@ func HasScope(scopes, required string) bool {
 }
 
 // Middleware returns an MCP receiving middleware that audit-logs the
-// verified identity on every tool call and denies calls whose token scope
-// does not cover the tool. Non-tool methods pass through untouched.
+// verified identity on every tool call and, when the token carries a scope
+// claim, denies calls to unmapped tools and calls whose token scope does not
+// cover the tool's mapped scope. Non-tool methods pass through untouched.
 func Middleware(logger *slog.Logger) mcp.Middleware {
 	if logger == nil {
 		logger = slog.Default()
@@ -87,7 +116,17 @@ func Middleware(logger *slog.Logger) mcp.Middleware {
 			)
 
 			if info.Scope != "" {
-				if required := RequiredScope(toolName); required != "" && !HasScope(info.Scope, required) {
+				required, ok := RequiredScope(toolName)
+				if !ok {
+					logger.Warn("tool_call_denied",
+						"tool", toolName,
+						"sub", info.Subject,
+						"act", info.Actor,
+						"reason", "unmapped_tool",
+					)
+					return nil, fmt.Errorf("access denied: tool %s has no scope mapping", toolName)
+				}
+				if !HasScope(info.Scope, required) {
 					logger.Warn("tool_call_denied",
 						"tool", toolName,
 						"sub", info.Subject,
