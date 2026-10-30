@@ -16,6 +16,7 @@ import (
 	"github.com/plexusone/mcp-google/internal/auth"
 	"github.com/plexusone/mcp-google/internal/emauth"
 	"github.com/plexusone/mcp-google/skills/docs"
+	"github.com/plexusone/mcp-google/skills/drive"
 	"github.com/plexusone/mcp-google/skills/sheets"
 	"github.com/plexusone/mcp-google/skills/slides"
 	runtime "github.com/plexusone/omniskill/mcp/server"
@@ -150,6 +151,20 @@ var getDocumentSuggestionsCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return runDocsTool("get_document_suggestions", map[string]any{
 			"document_id": args[0],
+		})
+	},
+}
+
+// Drive CLI commands
+var getFileCommentsCmd = &cobra.Command{
+	Use:   "get-file-comments <file-id>",
+	Short: "List the comments on a Drive file",
+	Long:  "List the comments on a Google Drive file (a Doc, Sheet, or Slides file), with the text each is anchored to, whether it is resolved, and its replies.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDriveTool("get_file_comments", map[string]any{
+			"file_id":         args[0],
+			"include_deleted": includeDeleted,
 		})
 	},
 }
@@ -321,6 +336,9 @@ var (
 	includeMetadata bool
 )
 
+// Drive command flags
+var includeDeleted bool
+
 // Sheets command flags
 var (
 	sheetIndex           int
@@ -369,6 +387,9 @@ func init() {
 	getDocumentContentCmd.Flags().BoolVar(&includeFooters, "include-footers", false, "include document footers")
 	getDocumentContentCmd.Flags().BoolVar(&includeMetadata, "include-metadata", false, "include document metadata and content counts")
 
+	// Drive command flags
+	getFileCommentsCmd.Flags().BoolVar(&includeDeleted, "include-deleted", false, "include deleted comments")
+
 	// Sheets command flags
 	getSheetValuesCmd.Flags().IntVar(&sheetIndex, "sheet-index", -1, "zero-based sheet index")
 	getSheetValuesCmd.Flags().StringVar(&sheetName, "sheet-name", "", "sheet name")
@@ -396,6 +417,7 @@ func init() {
 	rootCmd.AddCommand(getDocumentTextCmd)
 	rootCmd.AddCommand(getDocumentParagraphsCmd)
 	rootCmd.AddCommand(getDocumentSuggestionsCmd)
+	rootCmd.AddCommand(getFileCommentsCmd)
 
 	// Sheets commands
 	rootCmd.AddCommand(getSpreadsheetMetadataCmd)
@@ -553,6 +575,34 @@ func runDocsTool(toolName string, params map[string]any) error {
 	return fmt.Errorf("tool not found: %s", toolName)
 }
 
+// runDriveTool runs a drive tool by name with the given params
+func runDriveTool(toolName string, params map[string]any) error {
+	ctx := context.Background()
+
+	httpClient, cleanup, err := getHTTPClient(ctx)
+	if err != nil {
+		return err
+	}
+	defer cleanup()
+
+	skill := drive.New(httpClient)
+	if err := skill.Init(ctx); err != nil {
+		return fmt.Errorf("failed to initialize drive skill: %w", err)
+	}
+	defer skill.Close()
+
+	for _, tool := range skill.Tools() {
+		if tool.Name() == toolName {
+			result, err := tool.Call(ctx, params)
+			if err != nil {
+				return err
+			}
+			return outputResult(result)
+		}
+	}
+	return fmt.Errorf("tool not found: %s", toolName)
+}
+
 // runSheetsTool runs a sheets tool by name with the given params
 func runSheetsTool(toolName string, params map[string]any) error {
 	ctx := context.Background()
@@ -637,6 +687,17 @@ func runServer(cmd *cobra.Command, args []string) error {
 		}
 	}()
 
+	// Create and initialize Drive skill
+	driveSkill := drive.New(httpClient)
+	if err := driveSkill.Init(ctx); err != nil {
+		return fmt.Errorf("failed to initialize Drive skill: %w", err)
+	}
+	defer func() {
+		if err := driveSkill.Close(); err != nil {
+			log.Printf("Warning: failed to close Drive skill: %v", err)
+		}
+	}()
+
 	// Create and initialize Sheets skill
 	sheetsSkill := sheets.New(httpClient)
 	if err := sheetsSkill.Init(ctx); err != nil {
@@ -661,6 +722,7 @@ func runServer(cmd *cobra.Command, args []string) error {
 
 	// Register skills with the runtime
 	rt.RegisterSkill(docsSkill)
+	rt.RegisterSkill(driveSkill)
 	rt.RegisterSkill(sheetsSkill)
 	rt.RegisterSkill(slidesSkill)
 
@@ -721,7 +783,7 @@ func serveHTTPWithIDJAG(ctx context.Context, rt *runtime.Runtime) error {
 			Verifier:             verifier,
 			AuthorizationServers: []string{idjagIssuer},
 			Resource:             idjagAudience,
-			ScopesSupported:      []string{emauth.ScopeDocs, emauth.ScopeSheets, emauth.ScopeSlides},
+			ScopesSupported:      []string{emauth.ScopeDocs, emauth.ScopeSheets, emauth.ScopeSlides, emauth.ScopeDrive},
 		},
 		OnReady: func(result *runtime.HTTPServerResult) {
 			logger.Info("mcp-google serving HTTP with ID-JAG authorization",

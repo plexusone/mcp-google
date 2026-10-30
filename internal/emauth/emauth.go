@@ -24,6 +24,7 @@ const (
 	ScopeDocs   = "docs:read"
 	ScopeSheets = "sheets:read"
 	ScopeSlides = "slides:read"
+	ScopeDrive  = "drive:read"
 )
 
 // toolScopes is the authorization map: every registered tool, keyed by its
@@ -44,6 +45,9 @@ var toolScopes = map[string]string{
 	"get_sheet_values":         ScopeSheets,
 	"get_sheet_data":           ScopeSheets,
 	"get_multiple_ranges":      ScopeSheets,
+
+	// Google Drive (comments on any file)
+	"get_file_comments": ScopeDrive,
 
 	// Google Slides
 	"get_presentation":         ScopeSlides,
