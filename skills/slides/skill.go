@@ -11,19 +11,25 @@ import (
 
 	"github.com/grokify/gogoogle/slidesutil/v1"
 	"github.com/plexusone/omniskill/skill"
-	"google.golang.org/api/option"
 	gslides "google.golang.org/api/slides/v1"
 )
 
 // Skill provides Google Slides reading tools.
 type Skill struct {
-	httpClient    *http.Client
-	presentations *gslides.PresentationsService
+	httpClient *http.Client
+	svc        *slidesutil.GoogleSlidesService
 }
 
 // New creates a new Slides skill with the given authenticated HTTP client.
 func New(httpClient *http.Client) *Skill {
 	return &Skill{httpClient: httpClient}
+}
+
+// NewWithService creates a Slides skill that uses an existing gogoogle
+// service, for callers that build the service themselves (tests use a fake
+// endpoint).
+func NewWithService(svc *slidesutil.GoogleSlidesService) *Skill {
+	return &Skill{svc: svc}
 }
 
 // Name returns the skill identifier.
@@ -43,11 +49,14 @@ func (s *Skill) Description() string {
 
 // Init initializes the Google Slides API client.
 func (s *Skill) Init(ctx context.Context) error {
-	svc, err := gslides.NewService(ctx, option.WithHTTPClient(s.httpClient))
+	if s.svc != nil {
+		return nil
+	}
+	svc, err := slidesutil.NewGoogleSlidesService(s.httpClient)
 	if err != nil {
 		return fmt.Errorf("failed to create Slides service: %w", err)
 	}
-	s.presentations = gslides.NewPresentationsService(svc)
+	s.svc = svc
 	return nil
 }
 
@@ -71,7 +80,7 @@ func (s *Skill) Tools() []skill.Tool {
 var _ skill.Skill = (*Skill)(nil)
 
 func (s *Skill) getPresentation(ctx context.Context, presentationID string) (*gslides.Presentation, error) {
-	return s.presentations.Get(presentationID).Context(ctx).Do()
+	return s.svc.GetPresentation(ctx, presentationID)
 }
 
 func (s *Skill) getPresentationTool() skill.Tool {

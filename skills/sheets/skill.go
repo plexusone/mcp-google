@@ -11,19 +11,25 @@ import (
 
 	sheetsutil "github.com/grokify/gogoogle/sheetsutil/v4"
 	"github.com/plexusone/omniskill/skill"
-	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 )
 
 // Skill provides Google Sheets reading tools.
 type Skill struct {
-	httpClient   *http.Client
-	spreadsheets *sheets.SpreadsheetsService
+	httpClient *http.Client
+	svc        *sheetsutil.Service
 }
 
 // New creates a new Sheets skill with the given authenticated HTTP client.
 func New(httpClient *http.Client) *Skill {
 	return &Skill{httpClient: httpClient}
+}
+
+// NewWithService creates a Sheets skill that uses an existing gogoogle
+// service, for callers that build the service themselves (tests use a fake
+// endpoint).
+func NewWithService(svc *sheetsutil.Service) *Skill {
+	return &Skill{svc: svc}
 }
 
 // Name returns the skill identifier.
@@ -41,13 +47,16 @@ func (s *Skill) Description() string {
 	return "Read Google Sheets spreadsheets including cell values, metadata, and sheet properties"
 }
 
-// Init initializes the Google Sheets API client.
+// Init creates the gogoogle Sheets service unless one was supplied.
 func (s *Skill) Init(ctx context.Context) error {
-	svc, err := sheets.NewService(ctx, option.WithHTTPClient(s.httpClient))
+	if s.svc != nil {
+		return nil
+	}
+	svc, err := sheetsutil.NewService(ctx, s.httpClient)
 	if err != nil {
 		return fmt.Errorf("failed to create Sheets service: %w", err)
 	}
-	s.spreadsheets = sheets.NewSpreadsheetsService(svc)
+	s.svc = svc
 	return nil
 }
 
@@ -71,7 +80,7 @@ func (s *Skill) Tools() []skill.Tool {
 var _ skill.Skill = (*Skill)(nil)
 
 func (s *Skill) getSpreadsheet(ctx context.Context, spreadsheetID string) (*sheets.Spreadsheet, error) {
-	return s.spreadsheets.Get(spreadsheetID).Context(ctx).Do()
+	return s.svc.GetSpreadsheet(ctx, spreadsheetID)
 }
 
 func (s *Skill) getSpreadsheetMetadataTool() skill.Tool {
@@ -240,10 +249,7 @@ func (s *Skill) getSheetValuesTool() skill.Tool {
 				valueRenderOption = "UNFORMATTED_VALUE"
 			}
 
-			vr, err := s.spreadsheets.Values.Get(spreadsheetID, fullRange).
-				ValueRenderOption(valueRenderOption).
-				Context(ctx).
-				Do()
+			vr, err := s.svc.GetValues(ctx, spreadsheetID, fullRange, valueRenderOption)
 			if err != nil {
 				return nil, fmt.Errorf("failed to get values: %w", err)
 			}
@@ -345,10 +351,7 @@ func (s *Skill) getSheetDataTool() skill.Tool {
 				valueRenderOption = "UNFORMATTED_VALUE"
 			}
 
-			vr, err := s.spreadsheets.Values.Get(spreadsheetID, fullRange).
-				ValueRenderOption(valueRenderOption).
-				Context(ctx).
-				Do()
+			vr, err := s.svc.GetValues(ctx, spreadsheetID, fullRange, valueRenderOption)
 			if err != nil {
 				return nil, fmt.Errorf("failed to get values: %w", err)
 			}
@@ -447,11 +450,7 @@ func (s *Skill) getMultipleRangesTool() skill.Tool {
 				valueRenderOption = "UNFORMATTED_VALUE"
 			}
 
-			resp, err := s.spreadsheets.Values.BatchGet(spreadsheetID).
-				Ranges(ranges...).
-				ValueRenderOption(valueRenderOption).
-				Context(ctx).
-				Do()
+			resp, err := s.svc.BatchGetValues(ctx, spreadsheetID, ranges, valueRenderOption)
 			if err != nil {
 				return nil, fmt.Errorf("failed to get values: %w", err)
 			}
