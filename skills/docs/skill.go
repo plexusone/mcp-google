@@ -72,6 +72,7 @@ func (s *Skill) Tools() []skill.Tool {
 		s.getDocumentContentTool(),
 		s.getDocumentTextTool(),
 		s.getDocumentParagraphsTool(),
+		s.getDocumentSuggestionsTool(),
 	}
 }
 
@@ -320,6 +321,42 @@ func (s *Skill) getDocumentTextTool() skill.Tool {
 				"title": doc.Title,
 				"text":  text,
 			}, nil
+		},
+	)
+}
+
+// suggestionsViewMode shows every pending suggestion inline in the document
+// body, which is what ExtractSuggestionContent classifies.
+const suggestionsViewMode = "SUGGESTIONS_INLINE"
+
+func (s *Skill) getDocumentSuggestionsTool() skill.Tool {
+	return skill.NewTool(
+		"get_document_suggestions",
+		"Get a Google Doc's text split by pending suggested edits. Each paragraph and table cell is a block with segments of original, inserted, and deleted text in document order, plus the block's original text and its text as if every suggestion were accepted. Suggestion authors are not available from the Docs API; use get_file_comments for comments. Accepts document ID or full URL.",
+		map[string]skill.Parameter{
+			"document_id": {
+				Type:        "string",
+				Description: "The ID or URL of the Google Doc document",
+				Required:    true,
+			},
+		},
+		func(ctx context.Context, params map[string]any) (any, error) {
+			documentIDOrURL, _ := params["document_id"].(string)
+			if documentIDOrURL == "" {
+				return nil, fmt.Errorf("document_id is required")
+			}
+
+			docID, err := docsutil.ParseDocumentURL(documentIDOrURL)
+			if err != nil {
+				return nil, fmt.Errorf("invalid document ID or URL: %w", err)
+			}
+
+			doc, err := s.svc.GetDocumentWithSuggestions(ctx, docID, suggestionsViewMode)
+			if err != nil {
+				return nil, fmt.Errorf("failed to get document: %w", err)
+			}
+
+			return docsutil.ExtractSuggestionContent(doc), nil
 		},
 	)
 }

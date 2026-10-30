@@ -142,6 +142,18 @@ var getDocumentTextCmd = &cobra.Command{
 	},
 }
 
+var getDocumentSuggestionsCmd = &cobra.Command{
+	Use:   "get-document-suggestions <document-id>",
+	Short: "Get a document's text split by suggested edits",
+	Long:  "Get a Google Doc's paragraphs and table cells split into original, inserted, and deleted text, with the original and as-if-accepted text of each block.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDocsTool("get_document_suggestions", map[string]any{
+			"document_id": args[0],
+		})
+	},
+}
+
 var getDocumentParagraphsCmd = &cobra.Command{
 	Use:   "get-document-paragraphs <document-id>",
 	Short: "Get document paragraphs",
@@ -383,6 +395,7 @@ func init() {
 	rootCmd.AddCommand(getDocumentContentCmd)
 	rootCmd.AddCommand(getDocumentTextCmd)
 	rootCmd.AddCommand(getDocumentParagraphsCmd)
+	rootCmd.AddCommand(getDocumentSuggestionsCmd)
 
 	// Sheets commands
 	rootCmd.AddCommand(getSpreadsheetMetadataCmd)

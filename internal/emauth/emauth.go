@@ -32,10 +32,11 @@ const (
 // tool must be added to this table before scoped callers can use it.
 var toolScopes = map[string]string{
 	// Google Docs
-	"get_document_metadata":   ScopeDocs,
-	"get_document_content":    ScopeDocs,
-	"get_document_text":       ScopeDocs,
-	"get_document_paragraphs": ScopeDocs,
+	"get_document_metadata":    ScopeDocs,
+	"get_document_content":     ScopeDocs,
+	"get_document_text":        ScopeDocs,
+	"get_document_paragraphs":  ScopeDocs,
+	"get_document_suggestions": ScopeDocs,
 
 	// Google Sheets
 	"get_spreadsheet_metadata": ScopeSheets,
