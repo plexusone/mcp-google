@@ -33,7 +33,7 @@ func TestRequiredScope(t *testing.T) {
 
 	// Exact-name matching: names that merely contain a mapped substring
 	// must not inherit a scope.
-	for _, tool := range []string{"unknown_tool", "get_file_comments", "upload_file", "get_document_suggestions", "get_document", "GET_DOCUMENT_TEXT"} {
+	for _, tool := range []string{"unknown_tool", "get_file_permissions", "delete_file", "get_document", "GET_DOCUMENT_TEXT"} {
 		if got, ok := RequiredScope(tool); ok {
 			t.Errorf("RequiredScope(%q) = %q, want unmapped", tool, got)
 		}
@@ -121,15 +121,15 @@ func TestMiddleware(t *testing.T) {
 			Subject: "user:alice",
 			Scope:   "docs:read sheets:read slides:read",
 		})
-		err := callViaMiddlewareWithLogger(t, ctx, "get_file_comments", logger)
+		err := callViaMiddlewareWithLogger(t, ctx, "get_file_permissions", logger)
 		if err == nil {
 			t.Fatal("expected denial for unmapped tool with scoped token")
 		}
-		if !strings.Contains(err.Error(), "access denied: tool get_file_comments") {
+		if !strings.Contains(err.Error(), "access denied: tool get_file_permissions") {
 			t.Errorf("unexpected denial message: %v", err)
 		}
 		logs := buf.String()
-		if !strings.Contains(logs, `"msg":"tool_call_denied"`) || !strings.Contains(logs, `"tool":"get_file_comments"`) {
+		if !strings.Contains(logs, `"msg":"tool_call_denied"`) || !strings.Contains(logs, `"tool":"get_file_permissions"`) {
 			t.Errorf("expected tool_call_denied audit log for unmapped tool, got %s", logs)
 		}
 	})
@@ -155,7 +155,7 @@ func TestMiddleware(t *testing.T) {
 	})
 
 	t.Run("no_identity_unmapped_tool_passes", func(t *testing.T) {
-		if err := callViaMiddleware(t, context.Background(), "get_file_comments"); err != nil {
+		if err := callViaMiddleware(t, context.Background(), "get_file_permissions"); err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
 	})
@@ -164,7 +164,7 @@ func TestMiddleware(t *testing.T) {
 		ctx := oauth2.SetTokenInfoContext(context.Background(), &oauth2.TokenInfo{
 			Subject: "user:bob",
 		})
-		if err := callViaMiddleware(t, ctx, "get_file_comments"); err != nil {
+		if err := callViaMiddleware(t, ctx, "get_file_permissions"); err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
 	})

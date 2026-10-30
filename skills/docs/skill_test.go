@@ -2,8 +2,10 @@ package docs
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	docsutil "github.com/grokify/gogoogle/docsutil/v1"
@@ -83,6 +85,77 @@ func TestDocumentToolsRejectMissingID(t *testing.T) {
 	for _, tl := range s.Tools() {
 		if _, err := tl.Call(context.Background(), map[string]any{}); err == nil {
 			t.Errorf("%s accepted a call with no document_id", tl.Name())
+		}
+	}
+}
+
+// suggestionDoc is a documents.get response with SUGGESTIONS_INLINE: a
+// paragraph with a deletion and an insertion, and a table cell that is wholly
+// inserted.
+const suggestionDoc = `{"documentId":"d1","title":"Plan","body":{"content":[
+  {"sectionBreak":{}},
+  {"paragraph":{"elements":[
+    {"textRun":{"content":"We will "}},
+    {"textRun":{"content":"quickly ","suggestedDeletionIds":["s.del1"]}},
+    {"textRun":{"content":"train "}},
+    {"textRun":{"content":"all ","suggestedInsertionIds":["s.ins1"]}},
+    {"textRun":{"content":"staff.\n"}}]}},
+  {"table":{"tableRows":[{"tableCells":[
+    {"content":[{"paragraph":{"elements":[{"textRun":{"content":"Monthly count\n","suggestedInsertionIds":["s.ins2"]}}]}}]}]}]}}
+]}}`
+
+func TestGetDocumentSuggestions(t *testing.T) {
+	s, reqs := newSkill(t, suggestionDoc)
+	got, err := tool(t, s, "get_document_suggestions").Call(context.Background(), map[string]any{"document_id": "d1"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	sc, ok := got.(*docsutil.SuggestionContent)
+	if !ok {
+		t.Fatalf("result is %T, want the gogoogle SuggestionContent", got)
+	}
+	if sc.DocumentID != "d1" || len(sc.Blocks) != 2 {
+		t.Fatalf("content = %+v", sc)
+	}
+	if p := sc.Blocks[0]; p.Original != "We will quickly train staff.\n" || p.Accepted != "We will train all staff.\n" {
+		t.Errorf("paragraph original %q accepted %q", p.Original, p.Accepted)
+	}
+	if c := sc.Blocks[1]; c.Location != "body/table/2/r/0/c/0" || c.Original != "" || c.Accepted != "Monthly count\n" {
+		t.Errorf("cell = %+v", c)
+	}
+	if got := strings.Join(sc.SuggestionIDs, ","); got != "s.del1,s.ins1,s.ins2" {
+		t.Errorf("suggestion IDs = %s", got)
+	}
+	if q := (*reqs)[0].URL.Query().Get("suggestionsViewMode"); q != "SUGGESTIONS_INLINE" {
+		t.Errorf("suggestionsViewMode = %q, want SUGGESTIONS_INLINE", q)
+	}
+}
+
+// The tool output is the gogoogle JSON, unchanged, so clients see the same
+// fields as the gogoogle command line.
+func TestGetDocumentSuggestionsJSONShape(t *testing.T) {
+	s, _ := newSkill(t, suggestionDoc)
+	got, err := tool(t, s, "get_document_suggestions").Call(context.Background(), map[string]any{"document_id": "d1"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	raw, err := json.Marshal(got)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var m map[string]any
+	if err := json.Unmarshal(raw, &m); err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"document_id", "blocks", "suggestion_ids"} {
+		if _, ok := m[key]; !ok {
+			t.Errorf("output lacks %q: %s", key, raw)
+		}
+	}
+	block := m["blocks"].([]any)[0].(map[string]any)
+	for _, key := range []string{"location", "segments", "original", "accepted"} {
+		if _, ok := block[key]; !ok {
+			t.Errorf("block lacks %q", key)
 		}
 	}
 }
