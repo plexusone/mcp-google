@@ -74,8 +74,10 @@ Not applicable — stateless request/response tools.
 ### 6.2 `get_file_comments`
 
 - **Input:** `{ "file_id": string, "include_deleted"?: bool }`.
-- **Output:** a JSON array of gogoogle `Comment`, with `quoted_text`,
-  `resolved`, `author`, `replies[]`, and timestamps.
+- **Output:** `{ "file_id": string, "comments": [Comment] }`, where each
+  gogoogle `Comment` has `quoted_text`, `resolved`, `author`, `replies[]`, and
+  timestamps. The list is a field of an object because MCP structured tool
+  results are objects.
 - **Scope:** works for Docs, Sheets, and Slides files.
 
 ### 6.3 Write tools (opt-in)
