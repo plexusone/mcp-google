@@ -6,6 +6,7 @@ import (
 
 	"github.com/plexusone/mcp-google/internal/emauth"
 	"github.com/plexusone/mcp-google/skills/docs"
+	"github.com/plexusone/mcp-google/skills/drive"
 	"github.com/plexusone/mcp-google/skills/sheets"
 	"github.com/plexusone/mcp-google/skills/slides"
 	"github.com/plexusone/omniskill/skill"
@@ -18,6 +19,7 @@ func registeredToolNames(t *testing.T) []string {
 	t.Helper()
 	skills := []skill.Skill{
 		docs.New(nil),
+		drive.New(nil),
 		sheets.New(nil),
 		slides.New(nil),
 	}
