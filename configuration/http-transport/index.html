@@ -16,7 +16,7 @@
         <link rel="prev" href="../claude-desktop/">
       
       
-        <link rel="next" href="../../releases/v0.4.0/">
+        <link rel="next" href="../../specs/initiatives/INIT-MCPGOOGLE-001/PRD/">
       
       
         
@@ -557,6 +557,34 @@
     
   
     Google Docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/drive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Drive
   
 
     
@@ -1213,7 +1241,7 @@
   <span class="md-ellipsis">
     
   
-    Releases
+    Specs
   
 
     
@@ -1229,11 +1257,271 @@
             <span class="md-nav__icon md-icon"></span>
             
   
+    Specs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    INIT-MCPGOOGLE-001
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    INIT-MCPGOOGLE-001
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/initiatives/INIT-MCPGOOGLE-001/PRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/initiatives/INIT-MCPGOOGLE-001/TRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/initiatives/INIT-MCPGOOGLE-001/PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/initiatives/INIT-MCPGOOGLE-001/ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
     Releases
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/v0.5.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v0.5.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1511,34 +1799,57 @@
 </table>
 <h2 id="scopes">Scopes<a class="headerlink" href="#scopes" title="Permanent link">&para;</a></h2>
 <p>Verified tokens that carry a <code>scope</code> claim are enforced per tool call. Tokens without a <code>scope</code> claim are not gated — the call is allowed, and the identity is still audit-logged.</p>
+<p>Authorization uses an explicit map keyed by exact tool name. Every registered tool has exactly one required scope:</p>
 <table>
 <thead>
 <tr>
 <th>Scope</th>
-<th>Gates</th>
+<th>Tools</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>docs:read</code></td>
-<td>Google Docs tools (<code>get_document_*</code>)</td>
+<td><code>get_document_metadata</code>, <code>get_document_content</code>, <code>get_document_text</code>, <code>get_document_paragraphs</code>, <code>get_document_suggestions</code></td>
 </tr>
 <tr>
 <td><code>sheets:read</code></td>
-<td>Google Sheets tools (<code>get_spreadsheet_*</code>, <code>list_sheets</code>, <code>get_sheet_*</code>, <code>get_multiple_ranges</code>)</td>
+<td><code>get_spreadsheet_metadata</code>, <code>list_sheets</code>, <code>get_sheet_values</code>, <code>get_sheet_data</code>, <code>get_multiple_ranges</code></td>
 </tr>
 <tr>
 <td><code>slides:read</code></td>
-<td>Google Slides tools (<code>get_presentation*</code>, <code>list_slides</code>, <code>get_slide*</code>)</td>
+<td><code>get_presentation</code>, <code>list_slides</code>, <code>get_slide</code>, <code>get_slide_notes</code>, <code>get_presentation_content</code></td>
+</tr>
+<tr>
+<td><code>drive:read</code></td>
+<td><code>get_file_comments</code></td>
+</tr>
+<tr>
+<td><code>drive:write</code></td>
+<td><code>upload_file</code>, <code>update_file</code> (registered only with <code>--enable-write</code>)</td>
 </tr>
 </tbody>
 </table>
-<p>A call to a tool whose required scope isn't present in the token's <code>scope</code> claim is denied with an <code>access denied</code> error before it reaches the Google API.</p>
+<div class="admonition warning">
+<p class="admonition-title">Authorization change in v0.5.0</p>
+<p><code>get_document_suggestions</code> needs <code>docs:read</code>, like the other Docs tools. The
+new <code>get_file_comments</code> needs <code>drive:read</code>, and the upload tools need
+<code>drive:write</code>. A deployment that issues scoped tokens must add <code>drive:read</code>
+and, if it enables write mode, <code>drive:write</code> before callers can use them;
+until then those calls are denied with a message naming the missing scope.
+Tokens with no <code>scope</code> claim are not gated, as before. <code>drive:write</code> is
+advertised in the resource metadata only when write mode is on.</p>
+</div>
+<p>When the token carries a <code>scope</code> claim, a call is denied with an <code>access denied</code> error before it reaches the Google API if:</p>
+<ul>
+<li>the token's <code>scope</code> claim does not include the tool's required scope (<code>access denied: tool &lt;name&gt; requires scope &lt;scope&gt;</code>), or</li>
+<li>the tool has no entry in the map (<code>access denied: tool &lt;name&gt; has no scope mapping</code>). Unmapped tools are denied by default rather than allowed.</li>
+</ul>
 <h2 id="audit-logging">Audit logging<a class="headerlink" href="#audit-logging" title="Permanent link">&para;</a></h2>
 <p>Every <code>tools/call</code> request in HTTP mode is logged via the configured <code>*slog.Logger</code>, including the verified subject, the RFC 8693 <code>act</code> delegation chain (if the token represents a delegated call), the client ID, and the granted scope:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;tool_call&quot;</span><span class="p">,</span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="s2">&quot;get_document_text&quot;</span><span class="p">,</span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span><span class="nt">&quot;act&quot;</span><span class="p">:</span><span class="s2">&quot;agent-123&quot;</span><span class="p">,</span><span class="nt">&quot;client_id&quot;</span><span class="p">:</span><span class="s2">&quot;mcp-google-client&quot;</span><span class="p">,</span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="s2">&quot;docs:read&quot;</span><span class="p">}</span>
 </code></pre></div>
-<p>Denied calls are logged separately as <code>tool_call_denied</code> with the required scope that was missing.</p>
+<p>Denied calls are logged separately as <code>tool_call_denied</code>, with the <code>required_scope</code> that was missing, or with <code>reason</code> set to <code>unmapped_tool</code> when the tool has no scope mapping.</p>
 <h2 id="google-credentials-still-required">Google credentials still required<a class="headerlink" href="#google-credentials-still-required" title="Permanent link">&para;</a></h2>
 <p>ID-JAG / HTTP mode authorizes <em>access to mcp-google's tools</em>. It is independent of how <code>mcp-google</code> itself authenticates to the Google APIs — you still need one of the credential sources described in <a href="../credentials/">Credentials</a> (service account, goauth CredentialsSet, or vault-backed).</p>
 <h2 id="stdio-is-unaffected">stdio is unaffected<a class="headerlink" href="#stdio-is-unaffected" title="Permanent link">&para;</a></h2>
