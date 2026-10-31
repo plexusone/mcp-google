@@ -115,6 +115,11 @@ mapping is denied at call time.
   and symlinks that leave the root.
 - **PRD-FR-7** Documentation (tools reference, configuration, credentials
   scopes) and release notes MUST cover the new tools, flags, and scopes.
+- **PRD-FR-8** Each write call MUST open its local file once, inside the
+  root, through an open the operating system confines, check the file it
+  holds, and send that file's content with the number of bytes capped at the
+  size limit. A link swapped in after the open MUST NOT be followed, and a
+  file that grows MUST be cut off and refused.
 
 ## 5. Success Metrics (required)
 
