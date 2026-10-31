@@ -8,6 +8,39 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.5.0",
+      "date": "2026-10-30",
+      "highlights": [
+        { "description": "Read a Google Doc's suggested edits and any file's comments" },
+        { "description": "Opt-in upload and update tools, off by default, confined to an upload root, and audit-logged" },
+        { "description": "Deny-by-default tool authorization with `drive:read` and `drive:write` scopes" }
+      ],
+      "added": [
+        { "description": "`get_document_suggestions`: a Google Doc's text split into original, inserted, and deleted segments by suggested edits, with each block's original and accepted text", "commit": "107042d" },
+        { "description": "Drive skill with `get_file_comments`: comments on any file with quoted text, resolved state, and replies", "commit": "f3434e3" },
+        { "description": "`upload_file` and `update_file`: upload or replace a Drive file, optionally converting it to a Doc, Sheet, or Slides file, registered only with `--enable-write`", "commit": "a971b1b" },
+        { "description": "`--enable-write` / `MCP_GOOGLE_ENABLE_WRITE` and `--upload-root` / `MCP_GOOGLE_UPLOAD_ROOT`; write mode also requests the `drive.file` Google scope", "commit": "62263a6" },
+        { "description": "Write tools confine local paths to the upload root (including symbolic links) with oscompat, refuse files over 50 MB, return `{code,message}` errors, and audit-log every call", "commit": "a971b1b" },
+        { "description": "`drive:read` and `drive:write` policy scopes", "commit": "62263a6" },
+        { "description": "CLI commands `get-document-suggestions`, `get-file-comments`, `upload-file`, and `update-file`", "commit": "da2a8a3" },
+        { "description": "Authorization through an explicit tool-to-scope table; a tool with no entry is denied when a token carries a scope claim", "commit": "70eb67b" }
+      ],
+      "changed": [
+        { "description": "Docs, Sheets, and Slides skills call gogoogle instead of building Google API clients; a test fails on any direct client use", "commit": "d00aa63" },
+        { "description": "Upgrade `github.com/grokify/gogoogle` from v0.11.1 to v0.13.0 and add `github.com/grokify/oscompat` v0.10.0", "commit": "8959804" },
+        { "description": "Upgrade `google.golang.org/api` to v0.310.0", "commit": "8959804" }
+      ],
+      "tests": [
+        { "description": "Guard that fails if a skill imports API client options, builds an API service, or finishes a request itself, and fake-API tests for every skill", "commit": "ec71d0b" },
+        { "description": "Every registered tool has exactly one scope mapping, including the write tools", "commit": "1812cbf" },
+        { "description": "Write mode: confinement, error codes, audit records, scopes, and an MCP round trip", "commit": "04040ad" }
+      ],
+      "documentation": [
+        { "description": "Add the tools reference for Drive and suggestions, write-mode configuration and scope documentation, and v0.5.0 release notes" },
+        { "description": "Describe the per-tool scope map and deny-unmapped behavior", "commit": "e297661" }
+      ]
+    },
+    {
       "version": "v0.4.0",
       "date": "2026-08-09",
       "highlights": [

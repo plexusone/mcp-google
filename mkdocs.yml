@@ -53,6 +53,7 @@ nav:
   - Tools Reference:
       - Overview: tools/overview.md
       - Google Docs: tools/docs.md
+      - Google Drive: tools/drive.md
       - Google Sheets: tools/sheets.md
       - Google Slides: tools/slides.md
   - Architecture:
@@ -74,6 +75,7 @@ nav:
           - Plan: specs/initiatives/INIT-MCPGOOGLE-001/PLAN.md
           - Roadmap: specs/initiatives/INIT-MCPGOOGLE-001/ROADMAP.md
   - Releases:
+      - v0.5.0: releases/v0.5.0.md
       - v0.4.0: releases/v0.4.0.md
       - v0.3.0: releases/v0.3.0.md
       - v0.2.0: releases/v0.2.0.md
