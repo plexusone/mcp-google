@@ -62,6 +62,7 @@ type writeConfig struct {
 	root     string // as configured
 	realRoot string // resolved in Init
 	maxBytes int64
+	maxSet   bool // WithMaxUploadBytes ran, so the default does not apply
 }
 
 // Option configures a Drive skill.
@@ -73,7 +74,7 @@ func WithWrite(root string) Option {
 	return func(s *Skill) {
 		s.write.enabled = true
 		s.write.root = root
-		if s.write.maxBytes == 0 {
+		if !s.write.maxSet {
 			s.write.maxBytes = DefaultMaxUploadBytes
 		}
 	}
@@ -81,7 +82,10 @@ func WithWrite(root string) Option {
 
 // WithMaxUploadBytes sets the largest file the write tools will send.
 func WithMaxUploadBytes(n int64) Option {
-	return func(s *Skill) { s.write.maxBytes = n }
+	return func(s *Skill) {
+		s.write.maxBytes = n
+		s.write.maxSet = true
+	}
 }
 
 // WithLogger sets the logger that receives the audit record of each write call.
@@ -110,16 +114,17 @@ func (s *Skill) uploadFileTool() skill.Tool {
 			},
 		},
 		func(ctx context.Context, params map[string]any) (any, error) {
-			path, _ := params["path"].(string)
-			name, _ := params["name"].(string)
-			folder, _ := params["folder_id"].(string)
-			convert, _ := params["convert_to"].(string)
-			label := name
-			if label == "" {
-				label = filepath.Base(path)
+			p, err := stringParams(params, "path", "name", "folder_id", "convert_to")
+			if err != nil {
+				s.audit(ctx, "upload_file", "", "", nil, err)
+				return nil, err
 			}
-			f, err := s.upload(ctx, path, name, folder, "", convert)
-			s.audit(ctx, "upload_file", label, f, err)
+			label := p["name"]
+			if label == "" {
+				label = filepath.Base(p["path"])
+			}
+			f, err := s.upload(ctx, p["path"], p["name"], p["folder_id"], "", p["convert_to"])
+			s.audit(ctx, "upload_file", label, "", f, err)
 			if err != nil {
 				return nil, err
 			}
@@ -142,23 +147,44 @@ func (s *Skill) updateFileTool() skill.Tool {
 			},
 		},
 		func(ctx context.Context, params map[string]any) (any, error) {
-			idOrURL, _ := params["file_id"].(string)
-			path, _ := params["path"].(string)
-			convert, _ := params["convert_to"].(string)
-			id, err := fileID(idOrURL)
+			p, err := stringParams(params, "file_id", "path", "convert_to")
+			if err != nil {
+				s.audit(ctx, "update_file", "", "", nil, err)
+				return nil, err
+			}
+			id, err := fileID(p["file_id"])
 			if err != nil {
 				e := toolErr(CodeInvalidRequest, "file_id: %v", err)
-				s.audit(ctx, "update_file", filepath.Base(path), nil, e)
+				s.audit(ctx, "update_file", filepath.Base(p["path"]), "", nil, e)
 				return nil, e
 			}
-			f, err := s.upload(ctx, path, "", "", id, convert)
-			s.audit(ctx, "update_file", filepath.Base(path), f, err)
+			f, err := s.upload(ctx, p["path"], "", "", id, p["convert_to"])
+			s.audit(ctx, "update_file", filepath.Base(p["path"]), id, f, err)
 			if err != nil {
 				return nil, err
 			}
 			return f, nil
 		},
 	)
+}
+
+// stringParams reads optional string parameters. A missing or null value is
+// "". Any other type is an invalid_request, since dropping it would change what
+// the call does: a numeric folder_id would otherwise put the file in the Drive
+// root.
+func stringParams(params map[string]any, keys ...string) (map[string]string, error) {
+	out := make(map[string]string, len(keys))
+	for _, k := range keys {
+		switch v := params[k].(type) {
+		case nil:
+			out[k] = ""
+		case string:
+			out[k] = v
+		default:
+			return nil, toolErr(CodeInvalidRequest, "%s: want a string, got %T", k, v)
+		}
+	}
+	return out, nil
 }
 
 // upload resolves the local path inside the upload root, checks it, and calls
@@ -249,8 +275,11 @@ func driveError(err error) *ToolError {
 // audit records a write call: who made it, which tool, the file name, and the
 // resulting file ID or the failure code. Credentials and paths on the server's
 // disk are not logged.
-func (s *Skill) audit(ctx context.Context, tool, name string, f *driveutil.File, err error) {
+func (s *Skill) audit(ctx context.Context, tool, name, target string, f *driveutil.File, err error) {
 	attrs := []any{"tool", tool, "name", name}
+	if target != "" {
+		attrs = append(attrs, "target", target)
+	}
 	if info := oauth2.GetTokenInfoContext(ctx); info != nil {
 		attrs = append(attrs, "sub", info.Subject, "client_id", info.ClientID, "scope", info.Scope)
 	} else {

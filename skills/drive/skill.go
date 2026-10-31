@@ -107,14 +107,18 @@ var (
 	rxID = regexp.MustCompile(`^[A-Za-z0-9_-]+$`)
 )
 
+// googleHosts are the hosts whose links name a Drive file: Drive itself, and
+// Docs, which serves Docs, Sheets, and Slides.
+var googleHosts = map[string]bool{"drive.google.com": true, "docs.google.com": true}
+
 // fileID extracts a Drive file ID from an ID or from a Drive, Docs, Sheets, or
-// Slides URL (/d/<id>/..., or an open?id=<id> link).
+// Slides URL (/d/<id>/..., or an open?id=<id> link) on a Google host.
 func fileID(input string) (string, error) {
 	if rxID.MatchString(input) {
 		return input, nil
 	}
 	u, err := url.Parse(input)
-	if err == nil && (u.Scheme == "http" || u.Scheme == "https") {
+	if err == nil && (u.Scheme == "http" || u.Scheme == "https") && googleHosts[u.Hostname()] {
 		if m := rxPathID.FindStringSubmatch(u.Path); m != nil {
 			return m[1], nil
 		}

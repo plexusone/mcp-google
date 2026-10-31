@@ -119,7 +119,12 @@ func TestFileID(t *testing.T) {
 			t.Errorf("fileID(%q) = %q, %v; want %q", in, got, err, want)
 		}
 	}
-	for _, in := range []string{"", "not a url", "https://example.org/x", "a/b", "file://d/x"} {
+	for _, in := range []string{
+		"", "not a url", "https://example.org/x", "a/b", "file://d/x",
+		// A Drive-shaped path or id on another host is not a Drive link.
+		"https://example.org/d/FILE1", "https://example.org/open?id=FILE1",
+		"https://docs.google.com.example.org/document/d/DOC1/edit",
+	} {
 		if _, err := fileID(in); err == nil {
 			t.Errorf("fileID(%q) was accepted", in)
 		}

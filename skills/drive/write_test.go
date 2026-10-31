@@ -323,3 +323,101 @@ func TestOverMCP(t *testing.T) {
 		t.Errorf("error content %q, want path_outside_root JSON (%v)", text, err)
 	}
 }
+
+// A value of the wrong type is refused, not dropped: a numeric folder_id that
+// became "" would put the file in the Drive root.
+func TestNonStringParametersAreRefused(t *testing.T) {
+	f := &fakeDrive{status: 200, body: created}
+	s, _, audit := writeSkill(t, f)
+	cases := map[string]struct {
+		tool   string
+		params map[string]any
+	}{
+		"upload folder_id":  {"upload_file", map[string]any{"path": "review.docx", "folder_id": 42}},
+		"upload name":       {"upload_file", map[string]any{"path": "review.docx", "name": 7.5}},
+		"upload convert_to": {"upload_file", map[string]any{"path": "review.docx", "convert_to": true}},
+		"upload path":       {"upload_file", map[string]any{"path": []any{"review.docx"}}},
+		"update file_id":    {"update_file", map[string]any{"file_id": 5, "path": "review.docx"}},
+		"update path":       {"update_file", map[string]any{"file_id": "f1", "path": 5}},
+		"update convert_to": {"update_file", map[string]any{"file_id": "f1", "path": "review.docx", "convert_to": 1}},
+	}
+	for name, c := range cases {
+		_, err := writeTool(t, s, c.tool).Call(context.Background(), c.params)
+		var te *ToolError
+		if !errors.As(err, &te) || te.Code != CodeInvalidRequest {
+			t.Errorf("%s: error = %v, want %s", name, err, CodeInvalidRequest)
+		}
+	}
+	if len(f.calls) != 0 {
+		t.Errorf("a refused call reached Drive: %+v", f.calls)
+	}
+	if got := strings.Count(audit.String(), `"code":"invalid_request"`); got != len(cases) {
+		t.Errorf("audit holds %d invalid_request records, want %d:\n%s", got, len(cases), audit.String())
+	}
+}
+
+// A null optional parameter is the same as an absent one.
+func TestNullOptionalParametersAreAbsent(t *testing.T) {
+	f := &fakeDrive{status: 200, body: created}
+	s, _, _ := writeSkill(t, f)
+	_, err := writeTool(t, s, "upload_file").Call(context.Background(),
+		map[string]any{"path": "review.docx", "name": nil, "folder_id": nil, "convert_to": nil})
+	if err != nil {
+		t.Fatalf("null optional parameters were refused: %v", err)
+	}
+}
+
+// Failed and successful updates both name the Drive file, so records for
+// different targets are told apart.
+func TestUpdateAuditNamesTheTargetFile(t *testing.T) {
+	f := &fakeDrive{status: 200, body: created}
+	s, _, audit := writeSkill(t, f)
+	if _, err := writeTool(t, s, "update_file").Call(context.Background(),
+		map[string]any{"file_id": "f1", "path": "missing.docx"}); err == nil {
+		t.Fatal("a missing local file was accepted")
+	}
+	if _, err := writeTool(t, s, "update_file").Call(context.Background(),
+		map[string]any{"file_id": "f2", "path": "review.docx"}); err != nil {
+		t.Fatal(err)
+	}
+	out := audit.String()
+	for _, want := range []string{`"msg":"write_call_failed"`, `"target":"f1"`, `"msg":"write_call"`, `"target":"f2"`} {
+		if !strings.Contains(out, want) {
+			t.Errorf("audit log lacks %s:\n%s", want, out)
+		}
+	}
+}
+
+// An explicit limit holds whichever order the options are given in, including
+// a limit of zero.
+func TestUploadLimitSurvivesOptionOrder(t *testing.T) {
+	for name, order := range map[string]func(root string) []Option{
+		"limit first": func(root string) []Option { return []Option{WithMaxUploadBytes(0), WithWrite(root)} },
+		"limit last":  func(root string) []Option { return []Option{WithWrite(root), WithMaxUploadBytes(0)} },
+	} {
+		t.Run(name, func(t *testing.T) {
+			f := &fakeDrive{status: 200, body: created}
+			root := t.TempDir()
+			if err := os.WriteFile(filepath.Join(root, "review.docx"), []byte("PAYLOAD"), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			s := NewWithService(f.service(t), order(root)...)
+			if err := s.Init(context.Background()); err != nil {
+				t.Fatal(err)
+			}
+			_, err := writeTool(t, s, "upload_file").Call(context.Background(), map[string]any{"path": "review.docx"})
+			var te *ToolError
+			if !errors.As(err, &te) || te.Code != CodeFileTooLarge {
+				t.Errorf("error = %v, want %s: the limit of zero was replaced by the default", err, CodeFileTooLarge)
+			}
+		})
+	}
+}
+
+func TestDefaultUploadLimitApplies(t *testing.T) {
+	f := &fakeDrive{status: 200, body: created}
+	s, _, _ := writeSkill(t, f)
+	if got := s.write.maxBytes; got != DefaultMaxUploadBytes {
+		t.Errorf("maxBytes = %d, want the default %d", got, DefaultMaxUploadBytes)
+	}
+}
