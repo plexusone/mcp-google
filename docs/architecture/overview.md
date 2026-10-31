@@ -68,6 +68,7 @@ Each skill is self-contained:
 | [omniskill](https://github.com/plexusone/omniskill) | Skill framework and MCP runtime |
 | [omnitoken](https://github.com/plexusone/omnitoken) | Token management with vault backends |
 | [gogoogle](https://github.com/grokify/gogoogle) | Google API utilities |
+| [oscompat](https://github.com/grokify/oscompat) | Confined, size-checked file open and capped reader for the upload root |
 | [goauth](https://github.com/grokify/goauth) | Authentication utilities |
 
 ## Data Flow
