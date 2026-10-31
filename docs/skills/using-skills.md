@@ -35,6 +35,16 @@ func docs.New(httpClient *http.Client) *docs.Skill
 
 Creates a new Docs skill. The HTTP client must be authenticated with Google OAuth credentials that have the `documents.readonly` scope.
 
+### Drive Skill
+
+```go
+func drive.New(httpClient *http.Client, opts ...drive.Option) *drive.Skill
+```
+
+Creates a new Drive skill. By default it is read-only and provides only `get_file_comments`, which needs the `drive.readonly` scope. Pass `drive.WithWrite(root)` to also provide `upload_file` and `update_file`, which read local files only from `root` and need the `drive.file` scope. Other options are `drive.WithMaxUploadBytes(n)` (default 50 MB) and `drive.WithLogger(l)`, which receives the audit record of each write call. In write mode `Init` fails if `root` is not an existing directory.
+
+All of the skills go through [gogoogle](https://github.com/grokify/gogoogle) for Google API access; a skill built from an existing gogoogle service is available as `NewWithService`.
+
 ## Lifecycle
 
 ### 1. Create

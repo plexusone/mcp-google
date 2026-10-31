@@ -5,7 +5,7 @@ An MCP (Model Context Protocol) server for reading Google Docs, Sheets, and Slid
 ## Features
 
 - **Read-only access** to Google Docs, Sheets, and Slides via MCP tools
-- **14 tools** for comprehensive document access
+- **16 tools** for comprehensive document access, plus 2 upload tools you turn on with `--enable-write`
 - **Composable architecture** built on [omniskill](https://github.com/plexusone/omniskill)
 - **Multiple credential options** including vault-backed credentials via [omnitoken](https://github.com/plexusone/omnitoken)
 
@@ -17,6 +17,15 @@ An MCP (Model Context Protocol) server for reading Google Docs, Sheets, and Slid
 | `get_document_content` | Get structured content (headings, paragraphs, images, tables) |
 | `get_document_text` | Get all text as a single plain text string |
 | `get_document_paragraphs` | Get text organized by paragraphs |
+| `get_document_suggestions` | Get text split into original, inserted, and deleted by suggested edits |
+
+## Google Drive Tools
+
+| Tool | Description |
+|------|-------------|
+| `get_file_comments` | List a file's comments with quoted text, resolved state, and replies |
+| `upload_file` | Upload a local file, optionally converting it (write mode only) |
+| `update_file` | Replace a Drive file's content, keeping its ID (write mode only) |
 
 ## Google Sheets Tools
 

@@ -15,7 +15,9 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/plexusone/mcp-google/internal/auth"
 	"github.com/plexusone/mcp-google/internal/emauth"
+	"github.com/plexusone/mcp-google/internal/envflag"
 	"github.com/plexusone/mcp-google/skills/docs"
+	"github.com/plexusone/mcp-google/skills/drive"
 	"github.com/plexusone/mcp-google/skills/sheets"
 	"github.com/plexusone/mcp-google/skills/slides"
 	runtime "github.com/plexusone/omniskill/mcp/server"
@@ -138,6 +140,61 @@ var getDocumentTextCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return runDocsTool("get_document_text", map[string]any{
 			"document_id": args[0],
+		})
+	},
+}
+
+var getDocumentSuggestionsCmd = &cobra.Command{
+	Use:   "get-document-suggestions <document-id>",
+	Short: "Get a document's text split by suggested edits",
+	Long:  "Get a Google Doc's paragraphs and table cells split into original, inserted, and deleted text, with the original and as-if-accepted text of each block.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDocsTool("get_document_suggestions", map[string]any{
+			"document_id": args[0],
+		})
+	},
+}
+
+// Drive CLI commands
+var getFileCommentsCmd = &cobra.Command{
+	Use:   "get-file-comments <file-id>",
+	Short: "List the comments on a Drive file",
+	Long:  "List the comments on a Google Drive file (a Doc, Sheet, or Slides file), with the text each is anchored to, whether it is resolved, and its replies.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDriveTool("get_file_comments", map[string]any{
+			"file_id":         args[0],
+			"include_deleted": includeDeleted,
+		})
+	},
+}
+
+var uploadFileCmd = &cobra.Command{
+	Use:   "upload-file <path>",
+	Short: "Upload a local file to Drive (needs --enable-write)",
+	Long:  "Upload a local file to Google Drive, optionally converting it to a Google Doc, Sheet, or Slides file. The path is relative to --upload-root, and paths that leave it are refused. Requires --enable-write.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDriveTool("upload_file", map[string]any{
+			"path":       args[0],
+			"name":       uploadName,
+			"folder_id":  uploadFolderID,
+			"convert_to": convertTo,
+		})
+	},
+}
+
+var updateFileCmd = &cobra.Command{
+	Use:   "update-file <file-id> <path>",
+	Short: "Replace a Drive file's content with a local file (needs --enable-write)",
+	Long:  "Replace the content of an existing Google Drive file with a local file, keeping its ID, link, sharing, and comments. The path is relative to --upload-root. Requires --enable-write.",
+	Args:  cobra.ExactArgs(2),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return runDriveTool("update_file", map[string]any{
+			"file_id":    args[0],
+			"path":       args[1],
+			"convert_to": convertTo,
 		})
 	},
 }
@@ -309,6 +366,23 @@ var (
 	includeMetadata bool
 )
 
+// Drive command flags
+var includeDeleted bool
+
+// Write mode (off by default): upload_file and update_file exist only when
+// enabled, and the server then also requests the drive.file Google scope.
+var (
+	enableWrite bool
+	uploadRoot  string
+)
+
+// Write tool flags
+var (
+	uploadName     string
+	uploadFolderID string
+	convertTo      string
+)
+
 // Sheets command flags
 var (
 	sheetIndex           int
@@ -333,6 +407,11 @@ func init() {
 		"path to goauth CredentialsSet JSON file (env: GOAUTH_CREDENTIALS_FILE)")
 	rootCmd.PersistentFlags().StringVar(&goauthCredentialsKey, "goauth-credentials-account", "",
 		"account key within goauth CredentialsSet file (env: GOAUTH_CREDENTIALS_ACCOUNT)")
+	rootCmd.PersistentFlags().BoolVar(&enableWrite, "enable-write", false,
+		"register upload_file and update_file and request the drive.file Google scope (env: MCP_GOOGLE_ENABLE_WRITE=true); off by default")
+	enableWriteGiven = func() bool { return rootCmd.PersistentFlags().Changed("enable-write") }
+	rootCmd.PersistentFlags().StringVar(&uploadRoot, "upload-root", "",
+		"directory the write tools may read local files from (env: MCP_GOOGLE_UPLOAD_ROOT; default: the working directory)")
 	rootCmd.PersistentFlags().StringVar(&vaultURI, "vault", "",
 		"vault URI for credentials (env: OMNITOKEN_VAULT_URI)")
 	rootCmd.PersistentFlags().StringVar(&credentialsName, "credentials-name", "",
@@ -356,6 +435,13 @@ func init() {
 	getDocumentContentCmd.Flags().BoolVar(&includeHeaders, "include-headers", false, "include document headers")
 	getDocumentContentCmd.Flags().BoolVar(&includeFooters, "include-footers", false, "include document footers")
 	getDocumentContentCmd.Flags().BoolVar(&includeMetadata, "include-metadata", false, "include document metadata and content counts")
+
+	// Drive command flags
+	getFileCommentsCmd.Flags().BoolVar(&includeDeleted, "include-deleted", false, "include deleted comments")
+	uploadFileCmd.Flags().StringVar(&uploadName, "name", "", "name for the Drive file")
+	uploadFileCmd.Flags().StringVar(&uploadFolderID, "folder-id", "", "ID of the Drive folder to put the file in")
+	uploadFileCmd.Flags().StringVar(&convertTo, "convert-to", "", "convert to a Google file: doc, sheet, or slides")
+	updateFileCmd.Flags().StringVar(&convertTo, "convert-to", "", "convert to a Google file: doc, sheet, or slides")
 
 	// Sheets command flags
 	getSheetValuesCmd.Flags().IntVar(&sheetIndex, "sheet-index", -1, "zero-based sheet index")
@@ -383,6 +469,10 @@ func init() {
 	rootCmd.AddCommand(getDocumentContentCmd)
 	rootCmd.AddCommand(getDocumentTextCmd)
 	rootCmd.AddCommand(getDocumentParagraphsCmd)
+	rootCmd.AddCommand(getDocumentSuggestionsCmd)
+	rootCmd.AddCommand(getFileCommentsCmd)
+	rootCmd.AddCommand(uploadFileCmd)
+	rootCmd.AddCommand(updateFileCmd)
 
 	// Sheets commands
 	rootCmd.AddCommand(getSpreadsheetMetadataCmd)
@@ -398,6 +488,11 @@ func init() {
 	rootCmd.AddCommand(getPresentationContentCmd)
 }
 
+// enableWriteGiven reports whether --enable-write was given on the command
+// line. It is set in init, since rootCmd reaches applyEnvDefaults and cannot be
+// named from it.
+var enableWriteGiven func() bool
+
 // applyEnvDefaults applies environment variable defaults to flags
 func applyEnvDefaults() {
 	if credentialsFile == "" {
@@ -411,6 +506,10 @@ func applyEnvDefaults() {
 	}
 	if vaultURI == "" {
 		vaultURI = os.Getenv("OMNITOKEN_VAULT_URI")
+	}
+	enableWrite = envflag.Bool(enableWriteGiven(), enableWrite, os.Getenv("MCP_GOOGLE_ENABLE_WRITE"))
+	if uploadRoot == "" {
+		uploadRoot = os.Getenv("MCP_GOOGLE_UPLOAD_ROOT")
 	}
 	if credentialsName == "" {
 		credentialsName = os.Getenv("OMNITOKEN_CREDENTIALS_NAME")
@@ -455,6 +554,7 @@ func getHTTPClient(ctx context.Context) (*http.Client, func(), error) {
 
 	opts := auth.TokenManagerOptions{
 		CredentialsName: credentialsName,
+		EnableWrite:     enableWrite,
 	}
 
 	// Determine which credentials name to use for GetClient
@@ -528,6 +628,60 @@ func runDocsTool(toolName string, params map[string]any) error {
 	defer skill.Close()
 
 	// Find and call the tool
+	for _, tool := range skill.Tools() {
+		if tool.Name() == toolName {
+			result, err := tool.Call(ctx, params)
+			if err != nil {
+				return err
+			}
+			return outputResult(result)
+		}
+	}
+	return fmt.Errorf("tool not found: %s", toolName)
+}
+
+// driveOptions returns the Drive skill options for the current flags. Write
+// mode is off unless --enable-write (or MCP_GOOGLE_ENABLE_WRITE=true) is set.
+func driveOptions() ([]drive.Option, error) {
+	applyEnvDefaults()
+	if !enableWrite {
+		return nil, nil
+	}
+	root := uploadRoot
+	if root == "" {
+		wd, err := os.Getwd()
+		if err != nil {
+			return nil, fmt.Errorf("upload root: %w", err)
+		}
+		root = wd
+	}
+	return []drive.Option{drive.WithWrite(root)}, nil
+}
+
+// runDriveTool runs a drive tool by name with the given params
+func runDriveTool(toolName string, params map[string]any) error {
+	ctx := context.Background()
+
+	driveOpts, err := driveOptions()
+	if err != nil {
+		return err
+	}
+	if (toolName == "upload_file" || toolName == "update_file") && !enableWrite {
+		return drive.WriteDisabledError()
+	}
+
+	httpClient, cleanup, err := getHTTPClient(ctx)
+	if err != nil {
+		return err
+	}
+	defer cleanup()
+
+	skill := drive.New(httpClient, driveOpts...)
+	if err := skill.Init(ctx); err != nil {
+		return fmt.Errorf("failed to initialize drive skill: %w", err)
+	}
+	defer skill.Close()
+
 	for _, tool := range skill.Tools() {
 		if tool.Name() == toolName {
 			result, err := tool.Call(ctx, params)
@@ -624,6 +778,21 @@ func runServer(cmd *cobra.Command, args []string) error {
 		}
 	}()
 
+	// Create and initialize Drive skill
+	driveOpts, err := driveOptions()
+	if err != nil {
+		return err
+	}
+	driveSkill := drive.New(httpClient, driveOpts...)
+	if err := driveSkill.Init(ctx); err != nil {
+		return fmt.Errorf("failed to initialize Drive skill: %w", err)
+	}
+	defer func() {
+		if err := driveSkill.Close(); err != nil {
+			log.Printf("Warning: failed to close Drive skill: %v", err)
+		}
+	}()
+
 	// Create and initialize Sheets skill
 	sheetsSkill := sheets.New(httpClient)
 	if err := sheetsSkill.Init(ctx); err != nil {
@@ -648,6 +817,7 @@ func runServer(cmd *cobra.Command, args []string) error {
 
 	// Register skills with the runtime
 	rt.RegisterSkill(docsSkill)
+	rt.RegisterSkill(driveSkill)
 	rt.RegisterSkill(sheetsSkill)
 	rt.RegisterSkill(slidesSkill)
 
@@ -666,6 +836,16 @@ func runServer(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+// scopesSupported lists the policy scopes the server advertises. drive:write
+// appears only in write mode.
+func scopesSupported() []string {
+	scopes := []string{emauth.ScopeDocs, emauth.ScopeSheets, emauth.ScopeSlides, emauth.ScopeDrive}
+	if enableWrite {
+		scopes = append(scopes, emauth.ScopeDriveWrite)
+	}
+	return scopes
 }
 
 // serveHTTPWithIDJAG serves MCP over streamable HTTP as a pure OAuth
@@ -708,7 +888,7 @@ func serveHTTPWithIDJAG(ctx context.Context, rt *runtime.Runtime) error {
 			Verifier:             verifier,
 			AuthorizationServers: []string{idjagIssuer},
 			Resource:             idjagAudience,
-			ScopesSupported:      []string{emauth.ScopeDocs, emauth.ScopeSheets, emauth.ScopeSlides},
+			ScopesSupported:      scopesSupported(),
 		},
 		OnReady: func(result *runtime.HTTPServerResult) {
 			logger.Info("mcp-google serving HTTP with ID-JAG authorization",

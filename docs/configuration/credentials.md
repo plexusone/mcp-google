@@ -25,7 +25,7 @@ mcp-google --credentials /path/to/service-account.json
   "type": "service_account",
   "project_id": "your-project",
   "private_key_id": "key-id",
-  "private_key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+  "private_key": "<the private_key value from your key file>",
   "client_email": "mcp-server@your-project.iam.gserviceaccount.com",
   "client_id": "123456789",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
@@ -51,7 +51,7 @@ Create a CredentialsSet JSON file with your Google credentials:
           "type": "service_account",
           "project_id": "your-project",
           "private_key_id": "key-id",
-          "private_key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+          "private_key": "<the private_key value from your key file>",
           "client_email": "mcp-server@your-project.iam.gserviceaccount.com",
           "client_id": "123456789"
         },
@@ -73,6 +73,12 @@ mcp-google \
   --goauth-credentials-file /path/to/credentials.json \
   --goauth-credentials-account myaccount
 ```
+
+!!! note "Write mode needs `drive.file` in the credentials"
+    With a goauth file or a vault, the scopes are the ones configured in the
+    credentials. To use [write mode](../tools/drive.md#write-mode), add
+    `https://www.googleapis.com/auth/drive.file` to them. For a plain service
+    account file, the server adds it for you when `--enable-write` is set.
 
 ### Benefits
 
