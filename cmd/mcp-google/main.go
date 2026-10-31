@@ -408,6 +408,7 @@ func init() {
 		"account key within goauth CredentialsSet file (env: GOAUTH_CREDENTIALS_ACCOUNT)")
 	rootCmd.PersistentFlags().BoolVar(&enableWrite, "enable-write", false,
 		"register upload_file and update_file and request the drive.file Google scope (env: MCP_GOOGLE_ENABLE_WRITE=true); off by default")
+	enableWriteGiven = func() bool { return rootCmd.PersistentFlags().Changed("enable-write") }
 	rootCmd.PersistentFlags().StringVar(&uploadRoot, "upload-root", "",
 		"directory the write tools may read local files from (env: MCP_GOOGLE_UPLOAD_ROOT; default: the working directory)")
 	rootCmd.PersistentFlags().StringVar(&vaultURI, "vault", "",
@@ -486,6 +487,22 @@ func init() {
 	rootCmd.AddCommand(getPresentationContentCmd)
 }
 
+// enableWriteGiven reports whether --enable-write was given on the command
+// line. It is set in init, since rootCmd reaches applyEnvDefaults and cannot be
+// named from it.
+var enableWriteGiven func() bool
+
+// writeEnabled resolves write mode. A flag given on the command line wins
+// over MCP_GOOGLE_ENABLE_WRITE, so --enable-write=false turns write mode off
+// even when the environment turns it on; without the flag, the environment
+// decides.
+func writeEnabled(flagSet, flagValue bool, env string) bool {
+	if flagSet {
+		return flagValue
+	}
+	return env == "true"
+}
+
 // applyEnvDefaults applies environment variable defaults to flags
 func applyEnvDefaults() {
 	if credentialsFile == "" {
@@ -500,9 +517,7 @@ func applyEnvDefaults() {
 	if vaultURI == "" {
 		vaultURI = os.Getenv("OMNITOKEN_VAULT_URI")
 	}
-	if !enableWrite {
-		enableWrite = os.Getenv("MCP_GOOGLE_ENABLE_WRITE") == "true"
-	}
+	enableWrite = writeEnabled(enableWriteGiven(), enableWrite, os.Getenv("MCP_GOOGLE_ENABLE_WRITE"))
 	if uploadRoot == "" {
 		uploadRoot = os.Getenv("MCP_GOOGLE_UPLOAD_ROOT")
 	}
