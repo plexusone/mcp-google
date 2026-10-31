@@ -15,6 +15,7 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/plexusone/mcp-google/internal/auth"
 	"github.com/plexusone/mcp-google/internal/emauth"
+	"github.com/plexusone/mcp-google/internal/envflag"
 	"github.com/plexusone/mcp-google/skills/docs"
 	"github.com/plexusone/mcp-google/skills/drive"
 	"github.com/plexusone/mcp-google/skills/sheets"
@@ -492,17 +493,6 @@ func init() {
 // named from it.
 var enableWriteGiven func() bool
 
-// writeEnabled resolves write mode. A flag given on the command line wins
-// over MCP_GOOGLE_ENABLE_WRITE, so --enable-write=false turns write mode off
-// even when the environment turns it on; without the flag, the environment
-// decides.
-func writeEnabled(flagSet, flagValue bool, env string) bool {
-	if flagSet {
-		return flagValue
-	}
-	return env == "true"
-}
-
 // applyEnvDefaults applies environment variable defaults to flags
 func applyEnvDefaults() {
 	if credentialsFile == "" {
@@ -517,7 +507,7 @@ func applyEnvDefaults() {
 	if vaultURI == "" {
 		vaultURI = os.Getenv("OMNITOKEN_VAULT_URI")
 	}
-	enableWrite = writeEnabled(enableWriteGiven(), enableWrite, os.Getenv("MCP_GOOGLE_ENABLE_WRITE"))
+	enableWrite = envflag.Bool(enableWriteGiven(), enableWrite, os.Getenv("MCP_GOOGLE_ENABLE_WRITE"))
 	if uploadRoot == "" {
 		uploadRoot = os.Getenv("MCP_GOOGLE_UPLOAD_ROOT")
 	}
