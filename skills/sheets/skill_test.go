@@ -24,7 +24,7 @@ func newSkill(t *testing.T) (*Skill, *[]*http.Request) {
 		case r.URL.Path == "/v4/spreadsheets/ss1":
 			body = `{"spreadsheetId":"ss1","properties":{"title":"Round 1","locale":"en_US"},"sheets":[{"properties":{"title":"Sheet1","sheetId":0}}]}`
 		case r.URL.Path == "/v4/spreadsheets/ss1/values:batchGet":
-			body = `{"valueRanges":[{"range":"A1:B1","values":[["a","b"]]},{"range":"C1","values":[["c"]]}]}`
+			body = `{"spreadsheetId":"ss1","valueRanges":[{"range":"A1:B1","values":[["a","b"]]},{"range":"C1","values":[["c"]]}]}`
 		}
 		if _, err := w.Write([]byte(body)); err != nil {
 			t.Errorf("write response: %v", err)
@@ -83,6 +83,9 @@ func TestGetMultipleRanges(t *testing.T) {
 		t.Fatal(err)
 	}
 	m := got.(map[string]any)
+	if m["spreadsheet_id"] != "ss1" {
+		t.Errorf("spreadsheet_id = %v, want ss1", m["spreadsheet_id"])
+	}
 	if rs, ok := m["ranges"].([]map[string]any); !ok || len(rs) != 2 {
 		t.Errorf("result = %v", m)
 	}

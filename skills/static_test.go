@@ -63,8 +63,10 @@ func TestSkillsCallGoogleOnlyThroughGogoogle(t *testing.T) {
 					t.Errorf("%s: calls %s.%s: build services through gogoogle", fset.Position(call.Pos()), id.Name, sel.Sel.Name)
 				}
 			}
-			// X.Do() with no arguments finishes a Google API request.
-			if sel.Sel.Name == "Do" && len(call.Args) == 0 {
+			// X.Do(...) finishes a Google API request, with or without call
+			// options. A skill has no other use for a method named Do; if one
+			// is added, review it here and exempt it.
+			if sel.Sel.Name == "Do" {
 				t.Errorf("%s: calls .Do(): API requests belong in gogoogle", fset.Position(call.Pos()))
 			}
 			return true

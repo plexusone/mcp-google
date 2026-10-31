@@ -19,6 +19,10 @@ func TestRequiredScope(t *testing.T) {
 		"get_sheet_values":         ScopeSheets,
 		"get_presentation":         ScopeSlides,
 		"get_slide_notes":          ScopeSlides,
+		"get_document_suggestions": ScopeDocs,
+		"get_file_comments":        ScopeDrive,
+		"upload_file":              ScopeDriveWrite,
+		"update_file":              ScopeDriveWrite,
 	}
 	for tool, want := range tests {
 		got, ok := RequiredScope(tool)
@@ -78,6 +82,9 @@ func callViaMiddlewareWithLogger(t *testing.T, ctx context.Context, toolName str
 	_, err := handler(ctx, "tools/call", req)
 	if err == nil && !called {
 		t.Fatal("next handler not called despite no error")
+	}
+	if err != nil && called {
+		t.Fatalf("next handler was called although the call was denied: %v", err)
 	}
 	return err
 }

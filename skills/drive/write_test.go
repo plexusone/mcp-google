@@ -57,6 +57,9 @@ func (f *fakeDrive) service(t *testing.T) *driveutil.Service {
 	return svc
 }
 
+// updated is the reply to an update of file f1: the same ID comes back.
+const updated = `{"id":"f1","name":"review","mimeType":"application/vnd.google-apps.document","webViewLink":"https://example.org/d/f1","modifiedTime":"2026-01-02T03:04:05Z"}`
+
 const created = `{"id":"new1","name":"review","mimeType":"application/vnd.google-apps.document","webViewLink":"https://example.org/d/new1","modifiedTime":"2026-01-02T03:04:05Z"}`
 
 // writeSkill returns a write-mode skill over a fake Drive, with an upload
@@ -152,12 +155,15 @@ func TestUploadConvertsAndReturnsTheFile(t *testing.T) {
 }
 
 func TestUpdateKeepsTheFileID(t *testing.T) {
-	f := &fakeDrive{status: 200, body: created}
+	f := &fakeDrive{status: 200, body: updated}
 	s, _, _ := writeSkill(t, f)
-	_, err := writeTool(t, s, "update_file").Call(context.Background(),
+	got, err := writeTool(t, s, "update_file").Call(context.Background(),
 		map[string]any{"file_id": "https://docs.google.com/document/d/f1/edit", "path": "review.docx", "convert_to": "doc"})
 	if err != nil {
 		t.Fatal(err)
+	}
+	if file, ok := got.(*driveutil.File); !ok || file.ID != "f1" {
+		t.Errorf("update returned %+v, want the file with ID f1", got)
 	}
 	if len(f.calls) != 1 || f.calls[0].method != "PATCH" || f.calls[0].path != "/upload/drive/v3/files/f1" {
 		t.Errorf("calls = %+v", f.calls)
@@ -166,7 +172,7 @@ func TestUpdateKeepsTheFileID(t *testing.T) {
 
 func TestAuditRecordsTheCallerAndFailures(t *testing.T) {
 	f := &fakeDrive{status: 200, body: created}
-	s, _, audit := writeSkill(t, f)
+	s, root, audit := writeSkill(t, f)
 	ctx := oauth2.SetTokenInfoContext(context.Background(), &oauth2.TokenInfo{Subject: "user:alice", ClientID: "client-1", Scope: "drive:write"})
 	if _, err := writeTool(t, s, "upload_file").Call(ctx, map[string]any{"path": "../secret", "name": "x"}); err == nil {
 		t.Fatal("a path outside the root was accepted")
@@ -177,8 +183,8 @@ func TestAuditRecordsTheCallerAndFailures(t *testing.T) {
 			t.Errorf("audit log lacks %s:\n%s", want, out)
 		}
 	}
-	if strings.Contains(out, "PAYLOAD") || strings.Contains(out, "secret") && strings.Contains(out, os.TempDir()) {
-		t.Errorf("audit log leaks content or server paths:\n%s", out)
+	if strings.Contains(out, "PAYLOAD") || strings.Contains(out, root) {
+		t.Errorf("audit log leaks content or the server's upload root:\n%s", out)
 	}
 }
 

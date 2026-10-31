@@ -32,7 +32,9 @@ func TestWriteScopesAddOnlyDriveFile(t *testing.T) {
 	if slices.Contains(write, drive.DriveScope) {
 		t.Error("write mode requests the full drive scope")
 	}
-	if len(Scopes()) != len(read) {
-		t.Error("ScopesWrite changed the default scopes")
+	for _, s := range read {
+		if !slices.Contains(write, s) {
+			t.Errorf("write mode drops the default scope %q", s)
+		}
 	}
 }

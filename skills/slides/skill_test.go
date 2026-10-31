@@ -62,7 +62,17 @@ func TestGetPresentation(t *testing.T) {
 
 func TestListSlides(t *testing.T) {
 	s, _ := newSkill(t)
-	if _, err := tool(t, s, "list_slides").Call(context.Background(), map[string]any{"presentation_id": "p1"}); err != nil {
+	got, err := tool(t, s, "list_slides").Call(context.Background(), map[string]any{"presentation_id": "p1"})
+	if err != nil {
 		t.Fatal(err)
+	}
+	slides, ok := got.(map[string]any)["slides"].([]map[string]any)
+	if !ok || len(slides) != 2 {
+		t.Fatalf("slides = %v, want the two slides of the deck", got)
+	}
+	for i, want := range []string{"s1", "s2"} {
+		if slides[i]["object_id"] != want || slides[i]["index"] != i {
+			t.Errorf("slide %d = %v, want object_id %s at index %d", i, slides[i], want, i)
+		}
 	}
 }
