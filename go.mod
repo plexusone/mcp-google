@@ -27,7 +27,6 @@ require (
 	github.com/felixge/httpsnoop v1.1.0 // indirect
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/gobwas/glob v1.1.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/google/jsonschema-go v0.4.3 // indirect
@@ -39,15 +38,12 @@ require (
 	github.com/grokify/mogo v0.75.0 // indirect
 	github.com/huandu/xstrings v1.6.3 // indirect
 	github.com/ianlancetaylor/demangle v0.0.0-20261012173340-cbb8aaea4290 // indirect
-	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
 	github.com/inconshreveable/log15/v3 v3.2.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jessevdk/go-flags v1.6.1 // indirect
 	github.com/jpillora/backoff v1.1.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.4.1 // indirect
-	github.com/mattn/go-colorable v0.1.16 // indirect
-	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/plexusone/omni-bitwarden v0.1.0 // indirect
 	github.com/plexusone/omni-onepassword v0.4.0 // indirect
 	github.com/plexusone/omnivault v0.6.0
@@ -82,6 +78,3 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-// Force log15/v3 to version compatible with ngrok (required by omniskill)
-replace github.com/inconshreveable/log15/v3 => github.com/inconshreveable/log15/v3 v3.0.0-testing.5
