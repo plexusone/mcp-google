@@ -1373,6 +1373,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#phase-3-confined-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3 — Confined Uploads
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1646,6 +1657,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#phase-3-confined-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3 — Confined Uploads
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1669,7 +1691,7 @@
 <h1 id="roadmap-review-aware-tools-comments-suggestions-and-opt-in-upload-over-gogoogle">ROADMAP — Review-aware tools — comments, suggestions, and opt-in upload over gogoogle<a class="headerlink" href="#roadmap-review-aware-tools-comments-suggestions-and-opt-in-upload-over-gogoogle" title="Permanent link">&para;</a></h1>
 <p><strong>Initiative:</strong> <code>INIT-MCPGOOGLE-001</code>
 <strong>Repository:</strong> <code>github.com/plexusone/mcp-google</code>
-<strong>Status:</strong> In progress — 1 of 2 phases completed</p>
+<strong>Status:</strong> In progress — 2 of 3 phases completed</p>
 <blockquote>
 <p>RMI IDs are stable and permanent. Commits implementing an item carry the trailer <code>Refs: RMI-MCPGOOGLE-&lt;NNN&gt;</code>. Phase status is derived from member RMIs. RMI <code>NNN</code> corresponds to PLAN step <code>P-NN</code>.</p>
 </blockquote>
@@ -1708,9 +1730,19 @@
 <li>Acceptance: tools absent without <code>--enable-write</code>; path escapes rejected; a token with a <code>scope</code> claim but no <code>drive:write</code> is denied (tokens with no <code>scope</code> claim are not gated)</li>
 <li>[ ] <code>RMI-MCPGOOGLE-007</code> Tools reference, configuration and scope docs, release notes, v0.5.0</li>
 <li>Type: release · Status: planned</li>
-<li>Depends on: <code>RMI-MCPGOOGLE-004</code>, <code>RMI-MCPGOOGLE-006</code></li>
+<li>Depends on: <code>RMI-MCPGOOGLE-004</code>, <code>RMI-MCPGOOGLE-008</code></li>
 <li>Satisfies: PRD-FR-7, TRD-006</li>
 <li>Acceptance: CI green before tag; release notes call out the authorization change</li>
+</ul>
+<h2 id="phase-3-confined-uploads">Phase 3 — Confined Uploads<a class="headerlink" href="#phase-3-confined-uploads" title="Permanent link">&para;</a></h2>
+<p><strong>Theme:</strong> Open each upload once through a confined, size-checked handle and stream it to Drive
+<strong>Status:</strong> Completed — 1 of 1 items completed</p>
+<ul>
+<li>[x] <code>RMI-MCPGOOGLE-008</code> Open uploads once through a confined, size-checked handle and stream them</li>
+<li>Type: capability · Status: completed</li>
+<li>Depends on: <code>RMI-MCPGOOGLE-006</code>, <code>RMI-GOGOOGLE-008</code></li>
+<li>Satisfies: PRD-FR-8, TRD-007</li>
+<li>Acceptance: <code>upload_file</code> and <code>update_file</code> open the file once inside the upload root, refuse links out of it, and cap the stream at the size limit; a file that grows is refused as <code>file_too_large</code> and a link swapped in after the open is not followed</li>
 </ul>
 
 

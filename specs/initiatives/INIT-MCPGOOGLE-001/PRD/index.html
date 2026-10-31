@@ -1947,6 +1947,11 @@ mapping is denied at call time.</p>
   and symlinks that leave the root.</li>
 <li><strong>PRD-FR-7</strong> Documentation (tools reference, configuration, credentials
   scopes) and release notes MUST cover the new tools, flags, and scopes.</li>
+<li><strong>PRD-FR-8</strong> Each write call MUST open its local file once, inside the
+  root, through an open the operating system confines, check the file it
+  holds, and send that file's content with the number of bytes capped at the
+  size limit. A link swapped in after the open MUST NOT be followed, and a
+  file that grows MUST be cut off and refused.</li>
 </ul>
 <h2 id="5-success-metrics-required">5. Success Metrics (required)<a class="headerlink" href="#5-success-metrics-required" title="Permanent link">&para;</a></h2>
 <table>

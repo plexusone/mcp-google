@@ -2157,6 +2157,12 @@ released in the gogoogle version this work bumps to.</p>
 <td>PRD-FR-7</td>
 <td>Docs review; mkdocs build</td>
 </tr>
+<tr>
+<td>TRD-007</td>
+<td>Write tools open each file once through a confined open, check the handle, and stream it capped at the limit (§6.3)</td>
+<td>PRD-FR-8</td>
+<td>Growth, swapped-path, and link tests</td>
+</tr>
 </tbody>
 </table>
 <h2 id="3-system-invariants">3. System Invariants<a class="headerlink" href="#3-system-invariants" title="Permanent link">&para;</a></h2>
@@ -2167,6 +2173,9 @@ released in the gogoogle version this work bumps to.</p>
   call to a tool without one is denied.</li>
 <li><strong>INV-3</strong> Skills contain no Google API request logic; they translate MCP
   inputs and outputs around gogoogle calls.</li>
+<li><strong>INV-4</strong> A write call opens its local file once. What is sent is the
+  content of that open handle, never more than the size limit, and a link
+  created at the path afterwards is never followed.</li>
 </ul>
 <h2 id="4-architecture">4. Architecture<a class="headerlink" href="#4-architecture" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MCP client ─► mcp-google (omniskill runtime, stdio or HTTP + ID-JAG policy)
@@ -2189,7 +2198,7 @@ released in the gogoogle version this work bumps to.</p>
 </tr>
 <tr>
 <td><code>skills/drive</code> (new)</td>
-<td><code>get_file_comments</code>; <code>upload_file</code>, <code>update_file</code> behind opt-in</td>
+<td><code>get_file_comments</code>; <code>upload_file</code>, <code>update_file</code> behind opt-in, reading the file through oscompat's confined, size-checked open and streaming the handle to gogoogle</td>
 </tr>
 <tr>
 <td><code>internal/auth</code></td>
@@ -2249,13 +2258,29 @@ released in the gogoogle version this work bumps to.</p>
 </table>
 <p><strong>Registration.</strong> These tools are registered only when <code>--enable-write</code> is
 set or <code>MCP_GOOGLE_ENABLE_WRITE=true</code>.</p>
-<p><strong>Path handling.</strong> <code>path</code> is resolved against <code>--upload-root</code>. A request is
-rejected when:</p>
+<p><strong>Path handling.</strong> <code>path</code> is taken from <code>--upload-root</code> and the file is
+opened once, through oscompat's <code>OpenRegularInRoot</code>, which uses the
+operating system's confined open (<code>os.Root</code>). A request is rejected, before
+anything is sent to Google, when:</p>
 <ul>
-<li>the cleaned path escapes the root;</li>
-<li>the path or any parent is a symlink resolving outside the root;</li>
-<li>the file is larger than 50 MB.</li>
+<li>the name has a <code>..</code> element, contains a NUL, or is rooted or
+  drive-qualified without being inside the root (<code>path_outside_root</code>);</li>
+<li>the path is empty (<code>invalid_request</code>);</li>
+<li>any element of the path is a symlink that leads out of the root. The open
+  itself refuses it, so there is no gap between the check and the open
+  (<code>path_outside_root</code>);</li>
+<li>the path is not a regular file (<code>invalid_request</code>);</li>
+<li>the file is larger than 50 MB (<code>file_too_large</code>).</li>
 </ul>
+<p>A symlink whose target is relative and stays inside the root is followed. A
+symlink with an absolute target is refused even when it points back into the
+root, because the confined open does not follow absolute links.</p>
+<p><strong>Streaming.</strong> The checks are made on the open handle, not on the path. The
+handle is wrapped in oscompat's <code>CapReader</code> and passed to gogoogle as
+<code>UploadRequest.Content</code> or <code>UpdateContent</code>, so gogoogle never opens the path.
+A file that grows after the size check is cut off at the limit and refused as
+<code>file_too_large</code>. A link swapped in at the path after the open is never
+followed, because the content sent is the handle's.</p>
 <p><strong>Audit.</strong> Every write call is audit-logged with the identity, tool, file
 name, and resulting file ID.</p>
 <h3 id="64-authorization-map">6.4 Authorization map<a class="headerlink" href="#64-authorization-map" title="Permanent link">&para;</a></h3>
@@ -2347,7 +2372,9 @@ wrapper adds no schema of its own.</p>
   (INV-1). Write mode adds only <code>drive.file</code>, never full <code>drive</code>.</li>
 <li><strong>Deny-by-default.</strong> Explicit per-tool scopes (INV-2) close the current gap
   where unmapped tools are allowed.</li>
-<li><strong>Filesystem confinement.</strong> Upload paths are confined to <code>--upload-root</code>.</li>
+<li><strong>Filesystem confinement.</strong> Upload paths are confined to <code>--upload-root</code>
+  by a single, operating-system-confined open (INV-4). The size check and the
+  read cap apply to the file that is actually sent.</li>
 <li><strong>Personal data.</strong> Comment author emails are passed through only when the
   API returns them. The docs advise treating them as personal data.</li>
 <li><strong>Not applicable.</strong> Encryption at rest (no storage); in transit, Google
@@ -2373,8 +2400,13 @@ wrapper adds no schema of its own.</p>
 <tbody>
 <tr>
 <td><code>github.com/grokify/gogoogle</code></td>
-<td>v0.13.0 or later (adds <code>driveutil/v3</code>, <code>ExtractSuggestionContent</code>)</td>
+<td>v0.14.0 or later (adds <code>driveutil/v3</code>, <code>ExtractSuggestionContent</code>, and upload and update from an <code>io.Reader</code>)</td>
 <td>Google API SDK</td>
+</tr>
+<tr>
+<td><code>github.com/grokify/oscompat</code></td>
+<td>v0.11.0 or later (adds <code>OpenRegularInRoot</code> and <code>CapReader</code>)</td>
+<td>Confined, size-checked file open and capped reader</td>
 </tr>
 <tr>
 <td><code>github.com/plexusone/omniskill</code></td>
@@ -2396,12 +2428,16 @@ wrapper adds no schema of its own.</p>
 <li><strong>Static test.</strong> Asserts INV-3 (no direct Google API calls in skills).</li>
 <li><strong>Write mode.</strong> <code>tools/list</code> snapshots with and without <code>--enable-write</code>.</li>
 <li><strong>Path confinement.</strong> Tests cover <code>..</code>, absolute paths outside the root,
-  and symlinks.</li>
+  and symlinks, including links with relative and absolute targets.</li>
+<li><strong>Single open.</strong> Tests change the file after it is opened: one grows it past
+  the limit, one replaces the path with a link to a file outside the root. The
+  first is refused as <code>file_too_large</code>, and the second still sends the file
+  that was opened (INV-4).</li>
 </ul>
 <h2 id="13-deployment">13. Deployment<a class="headerlink" href="#13-deployment" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Release.</strong> Ship as a minor release (v0.5.0) after the gogoogle release
-  is tagged.</li>
+<li><strong>Release.</strong> Ship as a minor release (v0.5.0) after the gogoogle and
+  oscompat releases are tagged.</li>
 <li><strong>Rollout.</strong> Write mode is off by default.</li>
 <li><strong>Rollback.</strong> Pin v0.4.0.</li>
 </ul>
@@ -2426,6 +2462,14 @@ wrapper adds no schema of its own.</p>
 <td>Always register write tools, relying on Google scopes to fail</td>
 <td>Exposes write intent to every client and widens requested OAuth scopes by default</td>
 </tr>
+<tr>
+<td>Check the path, then let gogoogle open it</td>
+<td>Leaves a gap between the check and the open: a link swapped in is followed, and a file that grows is sent whole. Closing it needs the open handle, so the content is sent from the handle</td>
+</tr>
+<tr>
+<td>Copy the file to a private temporary file and pass its path</td>
+<td>Closes the same gap but copies up to 50 MB and adds temporary-file handling that streaming the handle does not need</td>
+</tr>
 </tbody>
 </table>
 <h2 id="15-risks-and-open-questions">15. Risks and Open Questions<a class="headerlink" href="#15-risks-and-open-questions" title="Permanent link">&para;</a></h2>
@@ -2448,6 +2492,16 @@ wrapper adds no schema of its own.</p>
 <td>Service accounts cannot see files not shared with them</td>
 <td>Documented in setup guide (share the folder with the service account)</td>
 </tr>
+<tr>
+<td>R-3</td>
+<td>A symlink with an absolute target is refused even when it points inside the root</td>
+<td>Documented in the tools reference and release notes; a relative link inside the root works</td>
+</tr>
+<tr>
+<td>R-4</td>
+<td><code>drive.file</code> lets <code>update_file</code> reach only files the server's credentials created</td>
+<td>Documented; publish with <code>upload_file</code> and update the copy it created</td>
+</tr>
 </tbody>
 </table>
 <p>No open question blocks implementation.</p>
@@ -2467,6 +2521,12 @@ wrapper adds no schema of its own.</p>
 <td>2026-10-29</td>
 <td>John Wang</td>
 <td>Initial draft</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2026-10-31</td>
+<td>John Wang</td>
+<td>Add the single confined open and streamed upload (INV-4, TRD-007)</td>
 </tr>
 </tbody>
 </table>

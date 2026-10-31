@@ -1896,18 +1896,27 @@ opt-in write tools. Docs and release come last.</p>
 <td>Docs, release notes, v0.5.0</td>
 <td>PRD-FR-7; TRD-006</td>
 <td>CI green, then tag</td>
-<td>P-04, P-06</td>
+<td>P-04, P-06, P-08</td>
+</tr>
+<tr>
+<td>P-08</td>
+<td>Open uploads once through oscompat's confined, size-checked open and stream the handle to gogoogle</td>
+<td>PRD-FR-8; TRD-007</td>
+<td>Growth, swapped-path, and link tests</td>
+<td>P-06; gogoogle and oscompat releases</td>
 </tr>
 </tbody>
 </table>
 <p>(Step numbers follow RMI numbers; <code>RMI-MCPGOOGLE-001</code> belongs to an earlier
 initiative.)</p>
 <h2 id="4-sequencing-and-dependencies">4. Sequencing and Dependencies<a class="headerlink" href="#4-sequencing-and-dependencies" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>P-02 → P-03 → {P-04, P-05};  P-05 → P-06;  {P-04, P-06} → P-07
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>P-02 → P-03 → {P-04, P-05};  P-05 → P-06 → P-08;  {P-04, P-08} → P-07
 </code></pre></div>
 <p><strong>Cross-repository dependency:</strong> P-03 waits for the gogoogle release that
 contains <code>driveutil/v3</code> and <code>ExtractSuggestionContent</code>. P-02 can proceed
-immediately.</p>
+immediately. P-08 waits for the oscompat release that adds
+<code>OpenRegularInRoot</code> and <code>CapReader</code>, and the gogoogle release that uploads and
+updates from an <code>io.Reader</code>; the two are independent of each other.</p>
 <h2 id="5-data-and-migration">5. Data and Migration<a class="headerlink" href="#5-data-and-migration" title="Permanent link">&para;</a></h2>
 <p>Not applicable — no persistence.</p>
 <p>Deployments that issue scoped tokens need policy updates for the new tools
@@ -1942,6 +1951,12 @@ immediately.</p>
 <td>Scoped-token users surprised by deny-unmapped</td>
 <td>Low / Medium</td>
 <td>Release notes; denial messages name the scope</td>
+</tr>
+<tr>
+<td>PR-3</td>
+<td>The oscompat or gogoogle release for P-08 slips</td>
+<td>Low / Medium</td>
+<td>The path-based upload from P-06 remains correct for a trusted upload root, and is documented as such until P-08 lands</td>
 </tr>
 </tbody>
 </table>
