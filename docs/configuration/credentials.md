@@ -74,6 +74,12 @@ mcp-google \
   --goauth-credentials-account myaccount
 ```
 
+!!! note "Write mode needs `drive.file` in the credentials"
+    With a goauth file or a vault, the scopes are the ones configured in the
+    credentials. To use [write mode](../tools/drive.md#write-mode), add
+    `https://www.googleapis.com/auth/drive.file` to them. For a plain service
+    account file, the server adds it for you when `--enable-write` is set.
+
 ### Benefits
 
 - Store multiple accounts in one file

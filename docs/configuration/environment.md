@@ -14,6 +14,16 @@ All command-line flags can be set via environment variables.
 | `OMNITOKEN_VAULT_URI` | `--vault` | Vault URI for credentials |
 | `OMNITOKEN_CREDENTIALS_NAME` | `--credentials-name` | Name of credentials in vault |
 
+### Write Mode
+
+Write mode is off by default. These settings turn it on; see
+[Google Drive tools](../tools/drive.md#write-mode).
+
+| Variable | Flag | Description |
+|----------|------|-------------|
+| `MCP_GOOGLE_ENABLE_WRITE` | `--enable-write` | Set to `true` to register `upload_file` and `update_file` and request the `drive.file` Google scope |
+| `MCP_GOOGLE_UPLOAD_ROOT` | `--upload-root` | The directory the write tools may read local files from (default: the working directory) |
+
 ### Vault Provider Authentication
 
 | Variable | Description |

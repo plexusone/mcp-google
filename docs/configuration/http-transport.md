@@ -37,6 +37,17 @@ Authorization uses an explicit map keyed by exact tool name. Every registered to
 | `docs:read` | `get_document_metadata`, `get_document_content`, `get_document_text`, `get_document_paragraphs` |
 | `sheets:read` | `get_spreadsheet_metadata`, `list_sheets`, `get_sheet_values`, `get_sheet_data`, `get_multiple_ranges` |
 | `slides:read` | `get_presentation`, `list_slides`, `get_slide`, `get_slide_notes`, `get_presentation_content` |
+| `drive:read` | `get_file_comments` |
+| `drive:write` | `upload_file`, `update_file` (registered only with `--enable-write`) |
+
+!!! warning "Authorization change in v0.5.0"
+    `get_document_suggestions` needs `docs:read`, like the other Docs tools. The
+    new `get_file_comments` needs `drive:read`, and the upload tools need
+    `drive:write`. A deployment that issues scoped tokens must add `drive:read`
+    and, if it enables write mode, `drive:write` before callers can use them;
+    until then those calls are denied with a message naming the missing scope.
+    Tokens with no `scope` claim are not gated, as before. `drive:write` is
+    advertised in the resource metadata only when write mode is on.
 
 When the token carries a `scope` claim, a call is denied with an `access denied` error before it reaches the Google API if:
 
