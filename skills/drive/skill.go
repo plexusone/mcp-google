@@ -11,6 +11,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/url"
+	"os"
 	"regexp"
 
 	driveutil "github.com/grokify/gogoogle/driveutil/v3"
@@ -24,12 +25,16 @@ type Skill struct {
 	svc        *driveutil.Service
 	write      writeConfig
 	logger     *slog.Logger
+
+	// openFile is the confined, size-checked open; tests replace it to change
+	// the file between the check and the read.
+	openFile func(root, name string, maxBytes int64) (*os.File, error)
 }
 
 // New creates a Drive skill with the given authenticated HTTP client. By
 // default it is read-only: it registers no tool that can change Google data.
 func New(httpClient *http.Client, opts ...Option) *Skill {
-	s := &Skill{httpClient: httpClient, logger: slog.Default()}
+	s := &Skill{httpClient: httpClient, logger: slog.Default(), openFile: oscfs.OpenRegularInRoot}
 	for _, o := range opts {
 		o(s)
 	}

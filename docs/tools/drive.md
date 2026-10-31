@@ -27,7 +27,7 @@ never a partial list.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `file_id` | string | Yes | The file ID, or a Drive, Docs, Sheets, or Slides URL |
+| `file_id` | string | Yes | The file ID, or a Drive, Docs, Sheets, or Slides link on `drive.google.com` or `docs.google.com` |
 | `include_deleted` | boolean | No | Include deleted comments (default: false) |
 
 ### Output
@@ -133,7 +133,7 @@ document.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `file_id` | string | Yes | The ID or URL of the Drive file |
+| `file_id` | string | Yes | The ID or link of the Drive file, on `drive.google.com` or `docs.google.com` |
 | `path` | string | Yes | Path of the local file, relative to the upload root |
 | `convert_to` | string | No | `doc`, `sheet`, or `slides`. Omit to store the file unchanged |
 
@@ -165,17 +165,24 @@ Google:
 - a `..` element, with `/` or `\` as the separator;
 - a rooted or drive-qualified path that is not inside the root, such as
   `/etc/passwd`, `C:x`, or a UNC path;
-- a path that leads outside the root through a symbolic link.
+- a path that leads outside the root through a symbolic link, in any element of
+  the path.
 
 The path must name a regular file no larger than **50 MB**.
 
-!!! note "The check is made when the tool runs"
-    The path, the file type, and the size are checked, and the file is then
-    handed to the upload. A symbolic link created inside the upload root after
-    the check, but before the file is read, could still be followed, and a file
-    that grows in that interval could exceed the size limit. Keep the upload
-    root writable only by people who are allowed to upload from anywhere the
-    server can read.
+!!! note "The file is opened once"
+    The server opens the file once, inside the upload root, and the operating
+    system refuses a symbolic link that leads out of the root at the moment of
+    the open. The file type and size are checked on that open handle, and the
+    handle itself is streamed to Drive, so the path is not opened a second time.
+    A link swapped in at the path after the open is never followed, and a file
+    that grows while it is being sent is cut off at the limit and refused as
+    `file_too_large`.
+
+    A symbolic link with an **absolute** target is refused even when it points
+    back inside the root, because the operating system's confined open does not
+    follow absolute links. A link with a relative target that stays inside the
+    root is followed.
 
 ### Errors
 
@@ -188,7 +195,7 @@ A failed write returns an error result whose text is JSON,
 | `not_found` | No such local file, or Drive says the file does not exist or is not shared with the credentials |
 | `permission_denied` | Drive refused the request. Check the credentials' access and that `drive.file` was granted |
 | `unsupported_conversion` | `convert_to` is not `doc`, `sheet`, or `slides`, or the extension does not match |
-| `file_too_large` | The file is over the 50 MB limit |
+| `file_too_large` | The file is over the 50 MB limit, or grew past it while it was being sent |
 | `invalid_request` | A missing or malformed argument, or a path that is not a regular file |
 | `write_disabled` | A write was requested with write mode off (the CLI commands) |
 | `api_error` | Any other Drive failure |

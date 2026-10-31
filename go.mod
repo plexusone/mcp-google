@@ -4,7 +4,8 @@ go 1.26.4
 
 require (
 	github.com/grokify/goauth v0.25.0
-	github.com/grokify/gogoogle v0.13.0
+	github.com/grokify/gogoogle v0.14.0
+	github.com/grokify/oscompat v0.11.0
 	github.com/modelcontextprotocol/go-sdk v1.8.0
 	github.com/plexusone/omniskill v0.12.1
 	github.com/plexusone/omnitoken v0.1.0
@@ -36,7 +37,6 @@ require (
 	github.com/googleapis/gax-go/v2 v2.27.0 // indirect
 	github.com/grokify/gocharts/v2 v2.27.1 // indirect
 	github.com/grokify/mogo v0.75.0 // indirect
-	github.com/grokify/oscompat v0.10.0
 	github.com/huandu/xstrings v1.6.3 // indirect
 	github.com/ianlancetaylor/demangle v0.0.0-20261012173340-cbb8aaea4290 // indirect
 	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
