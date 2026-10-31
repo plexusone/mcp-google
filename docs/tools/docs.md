@@ -139,6 +139,53 @@ Get all text content from a document as a single plain text string.
 
 ---
 
+## get_document_suggestions
+
+Get a document's text split by pending suggested edits. Each paragraph and table
+cell is a block, with segments of original, inserted, and deleted text in
+document order, plus the block's original text and its text as if every
+suggestion were accepted.
+
+### Input
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `document_id` | string | Yes | The ID or URL of the Google Doc |
+
+### Output
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `document_id` | string | The document ID |
+| `blocks` | array | One block per paragraph and table cell, in document order, including blocks with no suggestions |
+| `suggestion_ids` | array | The distinct suggestion IDs, in document order |
+
+Each block has:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `location` | string | `body/p/<n>` for a paragraph, or `body/table/<n>/r/<row>/c/<col>` for a table cell |
+| `segments` | array | Segments with `kind` (`original`, `insertion`, or `deletion`), `text`, and `suggestion_ids` |
+| `original` | string | The original and deleted text: the block before any suggestion |
+| `accepted` | string | The original and inserted text: the block with every suggestion accepted |
+
+### Example
+
+```json
+{
+  "name": "get_document_suggestions",
+  "arguments": {
+    "document_id": "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
+  }
+}
+```
+
+!!! note "Authors are not available"
+    The Google Docs API does not say who made a suggestion, so blocks carry no
+    author. Comments do: use [`get_file_comments`](drive.md#get_file_comments).
+
+---
+
 ## get_document_paragraphs
 
 Get text organized by paragraphs.
