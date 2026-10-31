@@ -6,8 +6,8 @@ cloud.google.com/go/compute/metadata v0.10.0 h1:pyKMUQSwchgkIBBJGdILqQbs/BNJXqwS
 cloud.google.com/go/compute/metadata v0.10.0/go.mod h1:rGFHRrIif570kSibjFTMbt6/4/tzgJWFGI/HVol4GIk=
 github.com/1password/onepassword-sdk-go v0.4.1 h1:My/Q2QXemep0I0qHgGrOs7EEzpPh2QZ1/II+S3YqOG0=
 github.com/1password/onepassword-sdk-go v0.4.1/go.mod h1:j/CbzhucTywjlYrd6SE6k0LcQaFZ2l8OLBsAsOYtvD0=
-github.com/aistandardsio/agent-protocols v0.7.0 h1:k8zuMsHh8UfMou2J4sEovydgJjz7v65bjpqLJFplaU0=
-github.com/aistandardsio/agent-protocols v0.7.0/go.mod h1:lZ986hbIb4A7svAMsF4ciMMuHhe0gKbWltVeEq0xDps=
+github.com/aistandardsio/agent-protocols v0.8.0 h1:FuZLWoShdcUHn+JV7enhivcCWpkaQucGBud1MNy+2Qs=
+github.com/aistandardsio/agent-protocols v0.8.0/go.mod h1:NlbPGnG7v+J/n8lCSjhr+asR8n/MaMPCRaYavk0JvgE=
 github.com/bitwarden/sdk-go/v2 v2.1.0 h1:DtgklUXNA3GcP5t1eXEEefd0UY6Gv5041/+gZHD2174=
 github.com/bitwarden/sdk-go/v2 v2.1.0/go.mod h1:6Sfb4IdZ9tnggeFj8Ty4MLkWUyC2pNlFUoAZE0Dapfw=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
@@ -85,8 +85,8 @@ github.com/mattn/go-colorable v0.1.16 h1:+2YjeAe7xP1OQbZW1jERPWWCDLlNqFNCvjiqGiA
 github.com/mattn/go-colorable v0.1.16/go.mod h1:6LmQG8QLFO4G5z1gPvYEzlUgJ2wF+stgPZH1UqBm1s8=
 github.com/mattn/go-isatty v0.0.24 h1:tGZZoVgT/KiqK1c8ocVLeDS8BSWMRd47J3Lbz7vsReI=
 github.com/mattn/go-isatty v0.0.24/go.mod h1:nMCL3Zebbrt45jsMDgnfIwz6ydEQApk5oEI3HqDio6A=
-github.com/modelcontextprotocol/go-sdk v1.7.0 h1:yqjY2dsbKAC0LSuWZVBMrHgiG8ukXv6NRo0JiALay44=
-github.com/modelcontextprotocol/go-sdk v1.7.0/go.mod h1:dL7u98E/zjJTGzEq+j30jQ8K2k1mb6LeAH4inEcSGts=
+github.com/modelcontextprotocol/go-sdk v1.8.0 h1:KIvahhYqwtbeniWVPs3TcXEA7b8jEtwfBpOTAI+Urx4=
+github.com/modelcontextprotocol/go-sdk v1.8.0/go.mod h1:dL7u98E/zjJTGzEq+j30jQ8K2k1mb6LeAH4inEcSGts=
 github.com/plexusone/omni-bitwarden v0.1.0 h1:psdoipqXcJEipiUyCDsikPajl7N41oGFTUrtODpaF6Q=
 github.com/plexusone/omni-bitwarden v0.1.0/go.mod h1:duTYEBBbU80tbX0vSMY3sDhlinRfS197xn9nQlgt9SA=
 github.com/plexusone/omni-onepassword v0.4.0 h1:KKo3iod6BDITDUG/OTou30erE8nHpGccnHk78E8KLR0=
@@ -95,8 +95,8 @@ github.com/plexusone/omniskill v0.12.0 h1:MFGlpB2/Tp7SWcrn2kNHQ+h8j9lfdChvCi4nty
 github.com/plexusone/omniskill v0.12.0/go.mod h1:cTKqpqEDbTCAqKBsYHdBd7+LySO2dPHJE1S1VlnOovI=
 github.com/plexusone/omnitoken v0.1.0 h1:jBNIlUwRhI/2lzgGMWwCAi0cyRE5PsohHdXSE9ApUak=
 github.com/plexusone/omnitoken v0.1.0/go.mod h1:rXmiGW0MhyhG6R9jGcR9Gewckuhiitt2vImcaC0mPw4=
-github.com/plexusone/omnivault v0.5.0 h1:7oZwP1KNS+XQ1ksoZoKnLS9PV0TQ93b5NEuxO0T2Hwg=
-github.com/plexusone/omnivault v0.5.0/go.mod h1:LQNyI6gTygb3ht4yLhLpHIdcOVALOTGnaO1oJn6+2KE=
+github.com/plexusone/omnivault v0.6.0 h1:a0virroALv1WTOpCYGfq4NUChfkqksnY0ON9rEHg7Ig=
+github.com/plexusone/omnivault v0.6.0/go.mod h1:So6UyUzZkR+c7GvfEFjkGiVRI6Z7I1YzLHieEfgyIFo=
 github.com/plexusone/omnivault-desktop v0.1.0 h1:dfQ0pe4+Dh14MwTX8xlvaS//r55gg/QmkfKNcBqchxY=
 github.com/plexusone/omnivault-desktop v0.1.0/go.mod h1:IKS1xhsjVUp9ETTdHCdqoIKtcJaqTEWxz3CtwTDYnLo=
 github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=

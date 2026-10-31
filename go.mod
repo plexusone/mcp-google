@@ -24,7 +24,7 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.3.1 // indirect
 	cloud.google.com/go/compute/metadata v0.10.0 // indirect
 	github.com/1password/onepassword-sdk-go v0.4.1 // indirect
-	github.com/aistandardsio/agent-protocols v0.7.0
+	github.com/aistandardsio/agent-protocols v0.8.0
 	github.com/bitwarden/sdk-go/v2 v2.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dylibso/observe-sdk/go v0.0.0-20240828172851-9145d8ad07e1 // indirect
@@ -55,7 +55,7 @@ require (
 	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/plexusone/omni-bitwarden v0.1.0 // indirect
 	github.com/plexusone/omni-onepassword v0.4.0 // indirect
-	github.com/plexusone/omnivault v0.5.0
+	github.com/plexusone/omnivault v0.6.0
 	github.com/segmentio/asm v1.2.1 // indirect
 	github.com/segmentio/encoding v0.5.4 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
