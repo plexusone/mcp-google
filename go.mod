@@ -5,7 +5,7 @@ go 1.26.4
 require (
 	github.com/grokify/goauth v0.25.0
 	github.com/grokify/gogoogle v0.13.0
-	github.com/modelcontextprotocol/go-sdk v1.7.0
+	github.com/modelcontextprotocol/go-sdk v1.8.0
 	github.com/plexusone/omniskill v0.12.0
 	github.com/plexusone/omnitoken v0.1.0
 	github.com/plexusone/omnivault-desktop v0.1.0
@@ -42,7 +42,7 @@ require (
 	github.com/googleapis/gax-go/v2 v2.27.0 // indirect
 	github.com/grokify/gocharts/v2 v2.27.1 // indirect
 	github.com/grokify/mogo v0.75.0 // indirect
-	github.com/grokify/oscompat v0.10.0 // indirect
+	github.com/grokify/oscompat v0.10.0
 	github.com/huandu/xstrings v1.6.3 // indirect
 	github.com/ianlancetaylor/demangle v0.0.0-20260724033716-83e58baca724 // indirect
 	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
@@ -67,7 +67,7 @@ require (
 	go.opentelemetry.io/otel v1.47.0 // indirect
 	go.opentelemetry.io/otel/metric v1.47.0 // indirect
 	go.opentelemetry.io/otel/trace v1.47.0 // indirect
-	go.opentelemetry.io/proto/otlp v1.11.0 // indirect
+	go.opentelemetry.io/proto/otlp v1.11.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.ngrok.com/muxado/v2 v2.0.1 // indirect
 	golang.ngrok.com/ngrok v1.13.0 // indirect
