@@ -13,18 +13,23 @@ import (
 	docsutil "github.com/grokify/gogoogle/docsutil/v1"
 	"github.com/plexusone/omniskill/skill"
 	"google.golang.org/api/docs/v1"
-	"google.golang.org/api/option"
 )
 
 // Skill provides Google Docs reading tools.
 type Skill struct {
 	httpClient *http.Client
-	documents  *docs.DocumentsService
+	svc        *docsutil.Service
 }
 
 // New creates a new Docs skill with the given authenticated HTTP client.
 func New(httpClient *http.Client) *Skill {
 	return &Skill{httpClient: httpClient}
+}
+
+// NewWithService creates a Docs skill that uses an existing gogoogle service,
+// for callers that build the service themselves (tests use a fake endpoint).
+func NewWithService(svc *docsutil.Service) *Skill {
+	return &Skill{svc: svc}
 }
 
 // Name returns the skill identifier.
@@ -42,13 +47,16 @@ func (s *Skill) Description() string {
 	return "Read Google Docs documents including content, paragraphs, and metadata"
 }
 
-// Init initializes the Google Docs API client.
+// Init creates the gogoogle Docs service unless one was supplied.
 func (s *Skill) Init(ctx context.Context) error {
-	svc, err := docs.NewService(ctx, option.WithHTTPClient(s.httpClient))
+	if s.svc != nil {
+		return nil
+	}
+	svc, err := docsutil.NewService(ctx, s.httpClient)
 	if err != nil {
 		return fmt.Errorf("failed to create Docs service: %w", err)
 	}
-	s.documents = docs.NewDocumentsService(svc)
+	s.svc = svc
 	return nil
 }
 
@@ -64,6 +72,7 @@ func (s *Skill) Tools() []skill.Tool {
 		s.getDocumentContentTool(),
 		s.getDocumentTextTool(),
 		s.getDocumentParagraphsTool(),
+		s.getDocumentSuggestionsTool(),
 	}
 }
 
@@ -71,7 +80,7 @@ func (s *Skill) Tools() []skill.Tool {
 var _ skill.Skill = (*Skill)(nil)
 
 func (s *Skill) getDocument(ctx context.Context, documentID string) (*docs.Document, error) {
-	return s.documents.Get(documentID).Context(ctx).Do()
+	return s.svc.GetDocument(ctx, documentID)
 }
 
 func documentMetadata(doc *docs.Document) map[string]any {
@@ -312,6 +321,42 @@ func (s *Skill) getDocumentTextTool() skill.Tool {
 				"title": doc.Title,
 				"text":  text,
 			}, nil
+		},
+	)
+}
+
+// suggestionsViewMode shows every pending suggestion inline in the document
+// body, which is what ExtractSuggestionContent classifies.
+const suggestionsViewMode = "SUGGESTIONS_INLINE"
+
+func (s *Skill) getDocumentSuggestionsTool() skill.Tool {
+	return skill.NewTool(
+		"get_document_suggestions",
+		"Get a Google Doc's text split by pending suggested edits. Each paragraph and table cell is a block with segments of original, inserted, and deleted text in document order, plus the block's original text and its text as if every suggestion were accepted. Suggestion authors are not available from the Docs API; use get_file_comments for comments. Accepts document ID or full URL.",
+		map[string]skill.Parameter{
+			"document_id": {
+				Type:        "string",
+				Description: "The ID or URL of the Google Doc document",
+				Required:    true,
+			},
+		},
+		func(ctx context.Context, params map[string]any) (any, error) {
+			documentIDOrURL, _ := params["document_id"].(string)
+			if documentIDOrURL == "" {
+				return nil, fmt.Errorf("document_id is required")
+			}
+
+			docID, err := docsutil.ParseDocumentURL(documentIDOrURL)
+			if err != nil {
+				return nil, fmt.Errorf("invalid document ID or URL: %w", err)
+			}
+
+			doc, err := s.svc.GetDocumentWithSuggestions(ctx, docID, suggestionsViewMode)
+			if err != nil {
+				return nil, fmt.Errorf("failed to get document: %w", err)
+			}
+
+			return docsutil.ExtractSuggestionContent(doc), nil
 		},
 	)
 }

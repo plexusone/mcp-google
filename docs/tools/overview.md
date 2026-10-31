@@ -1,12 +1,13 @@
 # Tools Overview
 
-Google MCP Server provides 14 tools for reading Google Docs, Sheets, and Slides.
+Google MCP Server provides 16 tools for reading Google Docs, Sheets, Slides, and Drive comments, and 2 more that upload files when you turn on [write mode](drive.md#write-mode).
 
 ## Tool Categories
 
 | Category | Tools | Description |
 |----------|-------|-------------|
-| [Google Docs](docs.md) | 4 tools | Read documents, content, and paragraphs |
+| [Google Docs](docs.md) | 5 tools | Read documents, content, paragraphs, and suggested edits |
+| [Google Drive](drive.md) | 1 tool, plus 2 in write mode | Read file comments; upload and update files |
 | [Google Sheets](sheets.md) | 5 tools | Read spreadsheets, sheets, and cell values |
 | [Google Slides](slides.md) | 5 tools | Read presentations, slides, and speaker notes |
 
@@ -20,6 +21,15 @@ Google MCP Server provides 14 tools for reading Google Docs, Sheets, and Slides.
 | `get_document_content` | Structured content with optional images/tables |
 | `get_document_text` | Plain text extraction |
 | `get_document_paragraphs` | Text organized by paragraphs |
+| `get_document_suggestions` | Text split into original, inserted, and deleted by suggested edits |
+
+### Google Drive
+
+| Tool | Purpose |
+|------|---------|
+| `get_file_comments` | Comments on any file, with quoted text, resolved state, and replies |
+| `upload_file` | Upload a local file, optionally converting it (write mode only) |
+| `update_file` | Replace a Drive file's content, keeping its ID (write mode only) |
 
 ### Google Sheets
 
@@ -58,6 +68,14 @@ For specific content:
 - **Docs**: Use `get_document_paragraphs` for structured text
 - **Sheets**: Use `get_sheet_values` for specific ranges
 - **Slides**: Use `list_slides` then `get_slide` for specific slides
+
+### Reviewing a Document
+
+To read all the feedback on a Google Doc:
+
+- **Text**: `get_document_text` or `get_document_paragraphs`
+- **Suggested edits**: `get_document_suggestions`
+- **Comments**: `get_file_comments`
 
 ### Metadata Only
 

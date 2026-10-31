@@ -32,6 +32,20 @@ The CLI is generated with Cobra, so `--help` is the easiest way to reference the
 | `get-document-text <document-id-or-url>` | `get_document_text` |
 | `get-document-paragraphs <document-id-or-url>` | `get_document_paragraphs` |
 
+| `get-document-suggestions <document-id-or-url>` | `get_document_suggestions` |
+
+## Google Drive Commands
+
+| Command | MCP tool |
+|---------|----------|
+| `get-file-comments <file-id-or-url> [--include-deleted]` | `get_file_comments` |
+| `upload-file <path> [--name] [--folder-id] [--convert-to doc\|sheet\|slides]` | `upload_file` |
+| `update-file <file-id> <path> [--convert-to doc\|sheet\|slides]` | `update_file` |
+
+`upload-file` and `update-file` change Google data, so they refuse to run unless
+`--enable-write` (or `MCP_GOOGLE_ENABLE_WRITE=true`) is set, and they read local
+files only from `--upload-root`. See [Google Drive tools](tools/drive.md#write-mode).
+
 ## Google Sheets Commands
 
 | Command | MCP tool |

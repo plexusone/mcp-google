@@ -10,6 +10,7 @@ import (
 	"github.com/plexusone/omnitoken"
 	"github.com/plexusone/omnivault/providers/memory"
 	"google.golang.org/api/docs/v1"
+	"google.golang.org/api/drive/v3"
 	"google.golang.org/api/sheets/v4"
 	slides "google.golang.org/api/slides/v1"
 )
@@ -22,6 +23,14 @@ func Scopes() []string {
 		sheets.SpreadsheetsReadonlyScope,
 		slides.DriveReadonlyScope,
 	}
+}
+
+// ScopesWrite returns Scopes plus drive.file, the narrowest scope that lets the
+// server create and update files. It is requested only in write mode
+// (--enable-write); drive.file covers just the files the app creates or opens,
+// never the whole Drive.
+func ScopesWrite() []string {
+	return append(Scopes(), drive.DriveFileScope)
 }
 
 // NewClient creates an authenticated HTTP client using a Google service account credentials file.
@@ -72,7 +81,11 @@ func NewTokenManager(ctx context.Context, opts TokenManagerOptions) (*omnitoken.
 		if err != nil {
 			return nil, err
 		}
-		if err := mgr.LoadGoogleServiceAccount(ctx, opts.CredentialsName, opts.ServiceAccountFile, Scopes()); err != nil {
+		scopes := Scopes()
+		if opts.EnableWrite {
+			scopes = ScopesWrite()
+		}
+		if err := mgr.LoadGoogleServiceAccount(ctx, opts.CredentialsName, opts.ServiceAccountFile, scopes); err != nil {
 			return nil, err
 		}
 		return mgr, nil
@@ -96,6 +109,11 @@ type TokenManagerOptions struct {
 
 	// VaultURI is the URI for vault-backed credentials (e.g., "op://vault", "file:///path").
 	VaultURI string
+
+	// EnableWrite requests the extra drive.file scope for a service account
+	// file. Credentials from a goauth file or a vault carry their own scopes,
+	// which must then include drive.file.
+	EnableWrite bool
 
 	// CredentialsName is the name to use when storing/retrieving credentials.
 	// Defaults to "google-slides" if not specified.

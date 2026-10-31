@@ -30,13 +30,29 @@ mcp-google serve \
 
 Verified tokens that carry a `scope` claim are enforced per tool call. Tokens without a `scope` claim are not gated — the call is allowed, and the identity is still audit-logged.
 
-| Scope | Gates |
-|-------|-------|
-| `docs:read` | Google Docs tools (`get_document_*`) |
-| `sheets:read` | Google Sheets tools (`get_spreadsheet_*`, `list_sheets`, `get_sheet_*`, `get_multiple_ranges`) |
-| `slides:read` | Google Slides tools (`get_presentation*`, `list_slides`, `get_slide*`) |
+Authorization uses an explicit map keyed by exact tool name. Every registered tool has exactly one required scope:
 
-A call to a tool whose required scope isn't present in the token's `scope` claim is denied with an `access denied` error before it reaches the Google API.
+| Scope | Tools |
+|-------|-------|
+| `docs:read` | `get_document_metadata`, `get_document_content`, `get_document_text`, `get_document_paragraphs`, `get_document_suggestions` |
+| `sheets:read` | `get_spreadsheet_metadata`, `list_sheets`, `get_sheet_values`, `get_sheet_data`, `get_multiple_ranges` |
+| `slides:read` | `get_presentation`, `list_slides`, `get_slide`, `get_slide_notes`, `get_presentation_content` |
+| `drive:read` | `get_file_comments` |
+| `drive:write` | `upload_file`, `update_file` (registered only with `--enable-write`) |
+
+!!! warning "Authorization change in v0.5.0"
+    `get_document_suggestions` needs `docs:read`, like the other Docs tools. The
+    new `get_file_comments` needs `drive:read`, and the upload tools need
+    `drive:write`. A deployment that issues scoped tokens must add `drive:read`
+    and, if it enables write mode, `drive:write` before callers can use them;
+    until then those calls are denied with a message naming the missing scope.
+    Tokens with no `scope` claim are not gated, as before. `drive:write` is
+    advertised in the resource metadata only when write mode is on.
+
+When the token carries a `scope` claim, a call is denied with an `access denied` error before it reaches the Google API if:
+
+- the token's `scope` claim does not include the tool's required scope (`access denied: tool <name> requires scope <scope>`), or
+- the tool has no entry in the map (`access denied: tool <name> has no scope mapping`). Unmapped tools are denied by default rather than allowed.
 
 ## Audit logging
 
@@ -46,7 +62,7 @@ Every `tools/call` request in HTTP mode is logged via the configured `*slog.Logg
 {"msg":"tool_call","tool":"get_document_text","sub":"user@example.com","act":"agent-123","client_id":"mcp-google-client","scope":"docs:read"}
 ```
 
-Denied calls are logged separately as `tool_call_denied` with the required scope that was missing.
+Denied calls are logged separately as `tool_call_denied`, with the `required_scope` that was missing, or with `reason` set to `unmapped_tool` when the tool has no scope mapping.
 
 ## Google credentials still required
 

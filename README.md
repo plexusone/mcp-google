@@ -25,11 +25,11 @@
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
  [license-url]: https://github.com/plexusone/mcp-google/blob/master/LICENSE
 
-An MCP (Model Context Protocol) server for reading Google Docs, Sheets, and Slides.
+An MCP (Model Context Protocol) server for reading Google Docs, Sheets, and Slides, and the comments and suggested edits on them.
 
 ## Features
 
-Read-only access to Google Docs, Sheets, and Slides via MCP tools.
+Read-only access to Google Docs, Sheets, Slides, and Drive comments via MCP tools. Two upload tools exist only if you turn on write mode.
 
 ### Google Docs Tools
 
@@ -37,6 +37,15 @@ Read-only access to Google Docs, Sheets, and Slides via MCP tools.
 - **get_document_content** - Get structured content (headings, paragraphs, images, tables)
 - **get_document_text** - Get all text as a single plain text string
 - **get_document_paragraphs** - Get text organized by paragraphs
+- **get_document_suggestions** - Get text split into original, inserted, and deleted by suggested edits
+
+### Google Drive Tools
+
+- **get_file_comments** - List a file's comments with quoted text, resolved state, and replies
+- **upload_file** - Upload a local file, optionally converting it to a Doc, Sheet, or Slides file (write mode only)
+- **update_file** - Replace a Drive file's content, keeping its ID (write mode only)
+
+Write mode is off by default. Start the server with `--enable-write` (or `MCP_GOOGLE_ENABLE_WRITE=true`) to register the two upload tools; they read local files only from `--upload-root`. See [Google Drive tools](docs/tools/drive.md#write-mode).
 
 ### Google Sheets Tools
 
@@ -307,7 +316,7 @@ mcp-google serve \
   --idjag-audience https://mcp-google.example.com
 ```
 
-Verified identity (subject, RFC 8693 `act` chain, scope) is audit-logged on every tool call, and calls are gated by scope (`docs:read`, `sheets:read`, `slides:read`) when the token carries one. See [docs/configuration/http-transport.md](docs/configuration/http-transport.md) for the full flag/env reference.
+Verified identity (subject, RFC 8693 `act` chain, scope) is audit-logged on every tool call, and calls are gated by scope (`docs:read`, `sheets:read`, `slides:read`, `drive:read`, and `drive:write` in write mode) when the token carries one. Each tool maps to exactly one required scope through an explicit per-tool table; when a scope claim is present, a tool without a mapping is denied. See [docs/configuration/http-transport.md](docs/configuration/http-transport.md) for the full flag/env reference.
 
 ## Google Docs Tools
 
