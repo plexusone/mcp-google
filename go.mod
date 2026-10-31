@@ -6,7 +6,7 @@ require (
 	github.com/grokify/goauth v0.25.0
 	github.com/grokify/gogoogle v0.13.0
 	github.com/modelcontextprotocol/go-sdk v1.8.0
-	github.com/plexusone/omniskill v0.12.0
+	github.com/plexusone/omniskill v0.12.1
 	github.com/plexusone/omnitoken v0.1.0
 	github.com/plexusone/omnivault-desktop v0.1.0
 	github.com/spf13/cobra v1.10.2
@@ -24,7 +24,7 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.3.1 // indirect
 	cloud.google.com/go/compute/metadata v0.10.0 // indirect
 	github.com/1password/onepassword-sdk-go v0.4.1 // indirect
-	github.com/aistandardsio/agent-protocols v0.8.0
+	github.com/aistandardsio/agent-protocols v0.9.0
 	github.com/bitwarden/sdk-go/v2 v2.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dylibso/observe-sdk/go v0.0.0-20240828172851-9145d8ad07e1 // indirect
@@ -33,7 +33,7 @@ require (
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
-	github.com/gobwas/glob v1.0.0 // indirect
+	github.com/gobwas/glob v1.1.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/google/jsonschema-go v0.4.3 // indirect
 	github.com/google/s2a-go v0.1.11 // indirect
@@ -44,12 +44,12 @@ require (
 	github.com/grokify/mogo v0.75.0 // indirect
 	github.com/grokify/oscompat v0.10.0
 	github.com/huandu/xstrings v1.6.3 // indirect
-	github.com/ianlancetaylor/demangle v0.0.0-20260724033716-83e58baca724 // indirect
+	github.com/ianlancetaylor/demangle v0.0.0-20261012173340-cbb8aaea4290 // indirect
 	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
-	github.com/inconshreveable/log15/v3 v3.1.0 // indirect
+	github.com/inconshreveable/log15/v3 v3.2.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jessevdk/go-flags v1.6.1 // indirect
-	github.com/jpillora/backoff v1.0.0 // indirect
+	github.com/jpillora/backoff v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.4.1 // indirect
 	github.com/mattn/go-colorable v0.1.16 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
@@ -69,7 +69,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.47.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.11.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.ngrok.com/muxado/v2 v2.0.1 // indirect
+	golang.ngrok.com/muxado/v2 v2.0.2 // indirect
 	golang.ngrok.com/ngrok v1.13.0 // indirect
 	golang.org/x/crypto v0.58.0 // indirect
 	golang.org/x/exp v0.0.0-20261014143641-f0251eb4aa3e // indirect
