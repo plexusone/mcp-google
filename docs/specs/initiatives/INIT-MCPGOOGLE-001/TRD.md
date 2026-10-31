@@ -124,6 +124,9 @@ present, unmapped tools are denied.
   - `unsupported_conversion`
   - `path_outside_root`
   - `write_disabled`
+  - `file_too_large`
+  - `invalid_request`
+  - `api_error`
 - **Scope denials** keep the existing denial format and are audit-logged.
 
 ## 7. Data Design
