@@ -25,7 +25,7 @@ mcp-google --credentials /path/to/service-account.json
   "type": "service_account",
   "project_id": "your-project",
   "private_key_id": "key-id",
-  "private_key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+  "private_key": "<the private_key value from your key file>",
   "client_email": "mcp-server@your-project.iam.gserviceaccount.com",
   "client_id": "123456789",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
@@ -51,7 +51,7 @@ Create a CredentialsSet JSON file with your Google credentials:
           "type": "service_account",
           "project_id": "your-project",
           "private_key_id": "key-id",
-          "private_key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+          "private_key": "<the private_key value from your key file>",
           "client_email": "mcp-server@your-project.iam.gserviceaccount.com",
           "client_id": "123456789"
         },
