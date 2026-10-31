@@ -178,3 +178,29 @@ func TestMiddleware(t *testing.T) {
 		}
 	})
 }
+
+// The write tools need drive:write, which no read scope implies, and the
+// denial is audit-logged with the scope that was missing.
+func TestWriteToolsNeedDriveWrite(t *testing.T) {
+	for _, tool := range []string{"upload_file", "update_file"} {
+		if got, ok := RequiredScope(tool); !ok || got != ScopeDriveWrite {
+			t.Errorf("RequiredScope(%q) = %q, %v; want %q", tool, got, ok, ScopeDriveWrite)
+		}
+		for _, scope := range []string{"drive:read", "docs:read sheets:read slides:read drive:read"} {
+			var buf bytes.Buffer
+			logger := slog.New(slog.NewJSONHandler(&buf, nil))
+			ctx := oauth2.SetTokenInfoContext(context.Background(), &oauth2.TokenInfo{Subject: "user:alice", Scope: scope})
+			err := callViaMiddlewareWithLogger(t, ctx, tool, logger)
+			if err == nil || err.Error() != "access denied: tool "+tool+" requires scope "+ScopeDriveWrite {
+				t.Errorf("%s with scope %q: err = %v", tool, scope, err)
+			}
+			if !strings.Contains(buf.String(), `"msg":"tool_call_denied"`) || !strings.Contains(buf.String(), `"required_scope":"drive:write"`) {
+				t.Errorf("%s: denial not audit-logged: %s", tool, buf.String())
+			}
+		}
+		ctx := oauth2.SetTokenInfoContext(context.Background(), &oauth2.TokenInfo{Subject: "user:alice", Scope: "drive:write"})
+		if err := callViaMiddleware(t, ctx, tool); err != nil {
+			t.Errorf("%s with drive:write was denied: %v", tool, err)
+		}
+	}
+}

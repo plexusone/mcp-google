@@ -19,7 +19,7 @@ func registeredToolNames(t *testing.T) []string {
 	t.Helper()
 	skills := []skill.Skill{
 		docs.New(nil),
-		drive.New(nil),
+		drive.New(nil, drive.WithWrite(".")), // write mode, so every mapped tool is registered
 		sheets.New(nil),
 		slides.New(nil),
 	}

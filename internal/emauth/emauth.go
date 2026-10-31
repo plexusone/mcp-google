@@ -25,6 +25,10 @@ const (
 	ScopeSheets = "sheets:read"
 	ScopeSlides = "slides:read"
 	ScopeDrive  = "drive:read"
+
+	// ScopeDriveWrite authorizes the write tools, which exist only when the
+	// server is started with --enable-write.
+	ScopeDriveWrite = "drive:write"
 )
 
 // toolScopes is the authorization map: every registered tool, keyed by its
@@ -48,6 +52,10 @@ var toolScopes = map[string]string{
 
 	// Google Drive (comments on any file)
 	"get_file_comments": ScopeDrive,
+
+	// Google Drive writes (registered only with --enable-write)
+	"upload_file": ScopeDriveWrite,
+	"update_file": ScopeDriveWrite,
 
 	// Google Slides
 	"get_presentation":         ScopeSlides,
