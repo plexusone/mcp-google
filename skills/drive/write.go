@@ -187,8 +187,11 @@ func stringParams(params map[string]any, keys ...string) (map[string]string, err
 	return out, nil
 }
 
-// upload resolves the local path inside the upload root, checks it, and calls
-// gogoogle: an upload when updateID is empty, an update otherwise.
+// upload opens the local file once, inside the upload root, checks the handle
+// it holds, and streams that handle to gogoogle with the read capped at the size
+// limit: an upload when updateID is empty, an update otherwise. The path is
+// never opened a second time, so a link swapped in after the check cannot
+// redirect the read, and a file that grows is cut off at the limit.
 func (s *Skill) upload(ctx context.Context, path, name, folder, updateID, convert string) (*driveutil.File, error) {
 	if !s.write.enabled {
 		return nil, toolErr(CodeWriteDisabled, "write tools are disabled; start the server with --enable-write")
@@ -197,16 +200,22 @@ func (s *Skill) upload(ctx context.Context, path, name, folder, updateID, conver
 	if err != nil {
 		return nil, err
 	}
-	resolved, err := s.resolve(path)
+	file, err := s.open(path)
 	if err != nil {
 		return nil, err
 	}
+	defer func() {
+		if cerr := file.Close(); cerr != nil {
+			s.logger.Warn("close upload file", "error", cerr)
+		}
+	}()
+	content := oscfs.CapReader(file, s.write.maxBytes)
 
 	var f *driveutil.File
 	if updateID == "" {
-		f, err = s.svc.Upload(ctx, driveutil.UploadRequest{Path: resolved, Name: name, FolderID: folder, ConvertTo: to})
+		f, err = s.svc.Upload(ctx, driveutil.UploadRequest{Path: path, Content: content, Name: name, FolderID: folder, ConvertTo: to})
 	} else {
-		f, err = s.svc.Update(ctx, updateID, resolved, to)
+		f, err = s.svc.UpdateContent(ctx, updateID, path, content, to)
 	}
 	if err != nil {
 		return nil, driveError(err)
@@ -222,45 +231,45 @@ func parseConvert(s string) (driveutil.ConvertTo, error) {
 	return "", toolErr(CodeUnsupportedConversion, "convert_to %q: want doc, sheet, or slides", s)
 }
 
-// resolve confines path to the upload root and checks that it names a regular
-// file within the size limit. The returned path is the real path inside the
-// root.
-func (s *Skill) resolve(path string) (string, error) {
+// open opens path inside the upload root and returns the handle only if it is
+// a regular file within the size limit. The open is confined by the operating
+// system, so a link that leads out of the root is refused at the moment of the
+// open, and the checks are made on the handle, not on the path.
+func (s *Skill) open(path string) (*os.File, error) {
 	if path == "" {
-		return "", toolErr(CodeInvalidRequest, "path is required")
+		return nil, toolErr(CodeInvalidRequest, "path is required")
 	}
 	root := s.write.realRoot
 	if root == "" { // Init has not run, so resolve now
 		r, err := oscfs.RealDir(s.write.root)
 		if err != nil {
-			return "", toolErr(CodeInvalidRequest, "upload root: %v", err)
+			return nil, toolErr(CodeInvalidRequest, "upload root: %v", err)
 		}
 		root = r
 	}
-	resolved, err := oscfs.ResolveInRoot(root, path)
-	if err != nil {
-		if errors.Is(err, oscfs.ErrOutsideRoot) {
-			return "", toolErr(CodePathOutsideRoot, "%q is outside the upload root", path)
-		}
-		return "", toolErr(CodeInvalidRequest, "path %q: %v", path, err)
-	}
-	info, err := os.Stat(resolved)
+	f, err := s.openFile(root, path, s.write.maxBytes)
 	switch {
+	case err == nil:
+		return f, nil
+	case errors.Is(err, oscfs.ErrOutsideRoot):
+		return nil, toolErr(CodePathOutsideRoot, "%q is outside the upload root", path)
 	case errors.Is(err, fs.ErrNotExist):
-		return "", toolErr(CodeNotFound, "no file %q under the upload root", path)
-	case err != nil:
-		return "", toolErr(CodeInvalidRequest, "path %q: cannot be read", path)
-	case !info.Mode().IsRegular():
-		return "", toolErr(CodeInvalidRequest, "%q is not a regular file", path)
-	case info.Size() > s.write.maxBytes:
-		return "", toolErr(CodeFileTooLarge, "%q is %d bytes; the limit is %d", path, info.Size(), s.write.maxBytes)
+		return nil, toolErr(CodeNotFound, "no file %q under the upload root", path)
+	case errors.Is(err, oscfs.ErrNotRegular):
+		return nil, toolErr(CodeInvalidRequest, "%q is not a regular file", path)
+	case errors.Is(err, oscfs.ErrTooLarge):
+		return nil, toolErr(CodeFileTooLarge, "%q is larger than the limit of %d bytes", path, s.write.maxBytes)
+	default:
+		return nil, toolErr(CodeInvalidRequest, "path %q: cannot be read", path)
 	}
-	return resolved, nil
 }
 
 // driveError maps a gogoogle error to a ToolError.
 func driveError(err error) *ToolError {
 	switch {
+	case errors.Is(err, oscfs.ErrTooLarge):
+		// The file passed the size check and then grew while it was sent.
+		return toolErr(CodeFileTooLarge, "the file grew past the size limit while it was being sent")
 	case errors.Is(err, driveutil.ErrNotFound):
 		return toolErr(CodeNotFound, "Drive file not found, or not shared with this server's credentials")
 	case errors.Is(err, driveutil.ErrPermissionDenied):
