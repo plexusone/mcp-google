@@ -183,7 +183,9 @@ func TestAuditRecordsTheCallerAndFailures(t *testing.T) {
 			t.Errorf("audit log lacks %s:\n%s", want, out)
 		}
 	}
-	if strings.Contains(out, "PAYLOAD") || strings.Contains(out, root) {
+	// The log is JSON, which doubles the backslashes of a Windows path.
+	jsonRoot := strings.ReplaceAll(root, `\`, `\\`)
+	if strings.Contains(out, "PAYLOAD") || strings.Contains(out, root) || strings.Contains(out, jsonRoot) {
 		t.Errorf("audit log leaks content or the server's upload root:\n%s", out)
 	}
 }
