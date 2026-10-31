@@ -429,3 +429,109 @@ func TestDefaultUploadLimitApplies(t *testing.T) {
 		t.Errorf("maxBytes = %d, want the default %d", got, DefaultMaxUploadBytes)
 	}
 }
+
+// afterOpen makes the skill change the file at path just after it has been
+// opened and checked, the moment a path-based upload would have been exposed.
+func afterOpen(s *Skill, change func(path string)) {
+	open := s.openFile
+	s.openFile = func(root, name string, maxBytes int64) (*os.File, error) {
+		f, err := open(root, name, maxBytes)
+		if err == nil {
+			change(filepath.Join(root, name))
+		}
+		return f, err
+	}
+}
+
+// A file that passes the size check and then grows is cut off at the limit
+// instead of being sent whole.
+func TestAFileThatGrowsPastTheLimitIsCutOff(t *testing.T) {
+	f := &fakeDrive{status: 200, body: created}
+	s, _, audit := writeSkill(t, f, WithMaxUploadBytes(10))
+	afterOpen(s, func(path string) {
+		grow, err := os.OpenFile(path, os.O_APPEND|os.O_WRONLY, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := grow.WriteString(strings.Repeat("X", 1000)); err != nil {
+			t.Fatal(err)
+		}
+		if err := grow.Close(); err != nil {
+			t.Fatal(err)
+		}
+	})
+	_, err := writeTool(t, s, "upload_file").Call(context.Background(), map[string]any{"path": "review.docx"}) // 7 bytes when checked
+	var te *ToolError
+	if !errors.As(err, &te) || te.Code != CodeFileTooLarge {
+		t.Fatalf("error = %v, want %s", err, CodeFileTooLarge)
+	}
+	for _, c := range f.calls {
+		if strings.Count(c.body, "X") > 10 {
+			t.Errorf("%d bytes past the limit reached Drive", strings.Count(c.body, "X"))
+		}
+	}
+	if !strings.Contains(audit.String(), `"code":"file_too_large"`) {
+		t.Errorf("the refusal was not audit-logged:\n%s", audit.String())
+	}
+}
+
+// What is sent is the file that was opened and checked. A link swapped in at
+// the path afterwards, here to a file outside the root, is never followed.
+func TestASwappedPathDoesNotRedirectTheRead(t *testing.T) {
+	f := &fakeDrive{status: 200, body: created}
+	s, _, _ := writeSkill(t, f)
+	outside := t.TempDir()
+	if err := os.WriteFile(filepath.Join(outside, "secret"), []byte("SECRET"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	var skipped string
+	afterOpen(s, func(path string) {
+		if err := os.Remove(path); err != nil {
+			skipped = "cannot replace an open file here: " + err.Error() // Windows refuses
+			return
+		}
+		if err := os.Symlink(filepath.Join(outside, "secret"), path); err != nil {
+			skipped = "cannot create symbolic links here: " + err.Error()
+		}
+	})
+	if _, err := writeTool(t, s, "upload_file").Call(context.Background(), map[string]any{"path": "review.docx"}); err != nil {
+		t.Fatal(err)
+	}
+	if skipped != "" {
+		t.Skip(skipped)
+	}
+	if len(f.calls) != 1 || !strings.Contains(f.calls[0].body, "PAYLOAD") || strings.Contains(f.calls[0].body, "SECRET") {
+		t.Errorf("the upload did not send the file that was opened:\n%+v", f.calls)
+	}
+}
+
+// os.Root does not follow a link with an absolute target, even one that leads
+// back into the root, so such a path is refused as outside the root.
+func TestAnAbsoluteLinkInsideTheRootIsRefused(t *testing.T) {
+	f := &fakeDrive{status: 200, body: created}
+	s, root, _ := writeSkill(t, f)
+	if err := os.Mkdir(filepath.Join(root, "real"), 0o750); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(root, "real", "a.docx"), []byte("A"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(filepath.Join(root, "real"), filepath.Join(root, "abs")); err != nil {
+		t.Skipf("cannot create symbolic links here: %v", err)
+	}
+	_, err := writeTool(t, s, "upload_file").Call(context.Background(), map[string]any{"path": "abs/a.docx"})
+	var te *ToolError
+	if !errors.As(err, &te) || te.Code != CodePathOutsideRoot {
+		t.Errorf("error = %v, want %s", err, CodePathOutsideRoot)
+	}
+	if len(f.calls) != 0 {
+		t.Errorf("a refused call reached Drive: %+v", f.calls)
+	}
+	// A link with a relative target that stays inside the root is followed.
+	if err := os.Symlink("real", filepath.Join(root, "rel")); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := writeTool(t, s, "upload_file").Call(context.Background(), map[string]any{"path": "rel/a.docx"}); err != nil {
+		t.Errorf("a relative link inside the root was refused: %v", err)
+	}
+}
