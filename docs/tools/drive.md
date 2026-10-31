@@ -86,7 +86,7 @@ mcp-google serve --enable-write --upload-root ./to-publish
 
 | Flag | Environment variable | Description |
 |------|----------------------|-------------|
-| `--enable-write` | `MCP_GOOGLE_ENABLE_WRITE=true` | Register `upload_file` and `update_file`, and request the `drive.file` Google scope |
+| `--enable-write` | `MCP_GOOGLE_ENABLE_WRITE=true` | Register `upload_file` and `update_file`. A service account file also requests the `drive.file` Google scope. A flag given on the command line, including `--enable-write=false`, wins over the variable |
 | `--upload-root` | `MCP_GOOGLE_UPLOAD_ROOT` | The directory the tools may read local files from (default: the working directory) |
 
 The upload root must exist when the server starts. The same flags apply to the
@@ -137,6 +137,15 @@ document.
 | `path` | string | Yes | Path of the local file, relative to the upload root |
 | `convert_to` | string | No | `doc`, `sheet`, or `slides`. Omit to store the file unchanged |
 
+!!! note "Which files can be updated"
+    With the `drive.file` scope, `update_file` can change only files that the
+    server's credentials created, or that a person opened with the app. A file
+    that was merely shared with a service account is outside that scope, and
+    Drive refuses the update as `permission_denied` or `not_found`. Publish the
+    file with `upload_file` first, and update the copy the server created. The
+    server does not ask for the broader `drive` scope, which would reach the
+    whole Drive.
+
 ### Conversions
 
 | `convert_to` | Accepted extensions | Result |
@@ -161,9 +170,12 @@ Google:
 The path must name a regular file no larger than **50 MB**.
 
 !!! note "The check is made when the tool runs"
-    A symbolic link created inside the upload root after the check, but before
-    the file is read, could still be followed. Keep the upload root writable only
-    by people who are allowed to upload from anywhere the server can read.
+    The path, the file type, and the size are checked, and the file is then
+    handed to the upload. A symbolic link created inside the upload root after
+    the check, but before the file is read, could still be followed, and a file
+    that grows in that interval could exceed the size limit. Keep the upload
+    root writable only by people who are allowed to upload from anywhere the
+    server can read.
 
 ### Errors
 
@@ -184,11 +196,13 @@ A failed write returns an error result whose text is JSON,
 ### Audit log
 
 Every write call is logged, whether it succeeds or fails, with who made it, which
-tool, the file name, and the resulting file ID or the failure code:
+tool, the file name, the Drive file an update targets, and the resulting file ID
+or the failure code:
 
 ```json
 {"level":"INFO","msg":"write_call","tool":"upload_file","name":"packet.docx","sub":"user@example.com","client_id":"client-1","scope":"drive:write","file_id":"1AbCdEf"}
 {"level":"WARN","msg":"write_call_failed","tool":"upload_file","name":"x","sub":"user@example.com","code":"path_outside_root"}
+{"level":"WARN","msg":"write_call_failed","tool":"update_file","name":"packet.docx","target":"1AbCdEf","sub":"user@example.com","code":"not_found"}
 ```
 
 Over stdio there is no verified identity, so `sub` is `local`. File contents,

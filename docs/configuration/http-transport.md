@@ -34,7 +34,7 @@ Authorization uses an explicit map keyed by exact tool name. Every registered to
 
 | Scope | Tools |
 |-------|-------|
-| `docs:read` | `get_document_metadata`, `get_document_content`, `get_document_text`, `get_document_paragraphs` |
+| `docs:read` | `get_document_metadata`, `get_document_content`, `get_document_text`, `get_document_paragraphs`, `get_document_suggestions` |
 | `sheets:read` | `get_spreadsheet_metadata`, `list_sheets`, `get_sheet_values`, `get_sheet_data`, `get_multiple_ranges` |
 | `slides:read` | `get_presentation`, `list_slides`, `get_slide`, `get_slide_notes`, `get_presentation_content` |
 | `drive:read` | `get_file_comments` |

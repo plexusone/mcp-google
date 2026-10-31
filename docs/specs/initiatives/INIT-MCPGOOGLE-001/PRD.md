@@ -54,7 +54,7 @@ matches no pattern. New tools that do not contain "document", "sheet", or
 | G-1 | Thin wrapper | No skill calls a Google API client directly; every call goes through a gogoogle package (test: no `google.golang.org/api/*` service method calls in `skills/`) |
 | G-2 | Read suggestions | `get_document_suggestions` returns segments classified original / insertion / deletion with original and accepted text per block |
 | G-3 | Read comments | `get_file_comments` returns all comments for a Doc, Sheet, or Slides file with quoted anchor text, resolved state, authors, and replies |
-| G-4 | Optional publishing | `upload_file` and `update_file` exist only when the server is started with `--enable-write`, and require the `drive:write` policy scope over HTTP |
+| G-4 | Optional publishing | `upload_file` and `update_file` exist only when the server is started with `--enable-write`, and require the `drive:write` policy scope over HTTP for tokens that carry a `scope` claim |
 | G-5 | Deny-by-default authorization | Every registered tool has an explicit required scope; an unmapped tool is denied; a test fails if any tool lacks a mapping |
 | G-6 | Read-only by default | With default flags, the server requests only read-only Google scopes and registers no write tools |
 
@@ -86,8 +86,9 @@ file or update an existing one, so that the review loop needs no manual
 upload — but only when I explicitly enable it.
 Acceptance: without `--enable-write`, the tools are absent from `tools/list`.
 With it, `upload_file{path, name?, folder_id?, convert_to}` returns file ID
-and link. Over HTTP, a token lacking `drive:write` is denied and the denial
-is audit-logged.
+and link. Over HTTP, a token that carries a `scope` claim without `drive:write`
+is denied and the denial is audit-logged. A token with no `scope` claim is not
+gated, as for every other tool.
 
 **US-4 — Trust the policy.** As an *operator*, I want new tools to be denied
 unless explicitly mapped to a scope, so that adding tools never silently
