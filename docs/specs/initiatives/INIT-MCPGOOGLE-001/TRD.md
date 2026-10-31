@@ -29,6 +29,7 @@ released in the gogoogle version this work bumps to.
 | TRD-004 | Opt-in write tools per §6.3 | PRD-FR-4, 6 | `tools/list` tests with and without flag; path-confinement tests |
 | TRD-005 | Explicit tool → scope map, deny unmapped (§6.4) | PRD-FR-5 | Registry and denial tests |
 | TRD-006 | Docs and release notes | PRD-FR-7 | Docs review; mkdocs build |
+| TRD-007 | Write tools open each file once through a confined open, check the handle, and stream it capped at the limit (§6.3) | PRD-FR-8 | Growth, swapped-path, and link tests |
 
 ## 3. System Invariants
 
@@ -38,6 +39,9 @@ released in the gogoogle version this work bumps to.
   call to a tool without one is denied.
 - **INV-3** Skills contain no Google API request logic; they translate MCP
   inputs and outputs around gogoogle calls.
+- **INV-4** A write call opens its local file once. What is sent is the
+  content of that open handle, never more than the size limit, and a link
+  created at the path afterwards is never followed.
 
 ## 4. Architecture
 
@@ -52,7 +56,7 @@ MCP client ─► mcp-google (omniskill runtime, stdio or HTTP + ID-JAG policy)
 | Component | Change |
 |-----------|--------|
 | `skills/docs` | Use `docsutil.Service` for all fetches; add `get_document_suggestions` |
-| `skills/drive` (new) | `get_file_comments`; `upload_file`, `update_file` behind opt-in |
+| `skills/drive` (new) | `get_file_comments`; `upload_file`, `update_file` behind opt-in, reading the file through oscompat's confined, size-checked open and streaming the handle to gogoogle |
 | `internal/auth` | Scope set computed from mode: read-only, plus `drive.file` when write is enabled |
 | `internal/emauth` | Explicit tool → scope map; deny unmapped |
 | `cmd/mcp-google` | `--enable-write`, `--upload-root` flags and env vars; register drive skill |
@@ -90,12 +94,30 @@ Not applicable — stateless request/response tools.
 **Registration.** These tools are registered only when `--enable-write` is
 set or `MCP_GOOGLE_ENABLE_WRITE=true`.
 
-**Path handling.** `path` is resolved against `--upload-root`. A request is
-rejected when:
+**Path handling.** `path` is taken from `--upload-root` and the file is
+opened once, through oscompat's `OpenRegularInRoot`, which uses the
+operating system's confined open (`os.Root`). A request is rejected, before
+anything is sent to Google, when:
 
-- the cleaned path escapes the root;
-- the path or any parent is a symlink resolving outside the root;
-- the file is larger than 50 MB.
+- the name has a `..` element, contains a NUL, or is rooted or
+  drive-qualified without being inside the root (`path_outside_root`);
+- the path is empty (`invalid_request`);
+- any element of the path is a symlink that leads out of the root. The open
+  itself refuses it, so there is no gap between the check and the open
+  (`path_outside_root`);
+- the path is not a regular file (`invalid_request`);
+- the file is larger than 50 MB (`file_too_large`).
+
+A symlink whose target is relative and stays inside the root is followed. A
+symlink with an absolute target is refused even when it points back into the
+root, because the confined open does not follow absolute links.
+
+**Streaming.** The checks are made on the open handle, not on the path. The
+handle is wrapped in oscompat's `CapReader` and passed to gogoogle as
+`UploadRequest.Content` or `UpdateContent`, so gogoogle never opens the path.
+A file that grows after the size check is cut off at the limit and refused as
+`file_too_large`. A link swapped in at the path after the open is never
+followed, because the content sent is the handle's.
 
 **Audit.** Every write call is audit-logged with the identity, tool, file
 name, and resulting file ID.
@@ -148,7 +170,9 @@ wrapper adds no schema of its own.
   (INV-1). Write mode adds only `drive.file`, never full `drive`.
 - **Deny-by-default.** Explicit per-tool scopes (INV-2) close the current gap
   where unmapped tools are allowed.
-- **Filesystem confinement.** Upload paths are confined to `--upload-root`.
+- **Filesystem confinement.** Upload paths are confined to `--upload-root`
+  by a single, operating-system-confined open (INV-4). The size check and the
+  read cap apply to the file that is actually sent.
 - **Personal data.** Comment author emails are passed through only when the
   API returns them. The docs advise treating them as personal data.
 - **Not applicable.** Encryption at rest (no storage); in transit, Google
@@ -166,7 +190,8 @@ wrapper adds no schema of its own.
 
 | Dependency | Version | Purpose |
 |------------|---------|---------|
-| `github.com/grokify/gogoogle` | v0.13.0 or later (adds `driveutil/v3`, `ExtractSuggestionContent`) | Google API SDK |
+| `github.com/grokify/gogoogle` | v0.14.0 or later (adds `driveutil/v3`, `ExtractSuggestionContent`, and upload and update from an `io.Reader`) | Google API SDK |
+| `github.com/grokify/oscompat` | v0.11.0 or later (adds `OpenRegularInRoot` and `CapReader`) | Confined, size-checked file open and capped reader |
 | `github.com/plexusone/omniskill` | current (v0.12.0) | Skill runtime |
 | `github.com/modelcontextprotocol/go-sdk` | current | MCP |
 
@@ -178,12 +203,16 @@ wrapper adds no schema of its own.
 - **Static test.** Asserts INV-3 (no direct Google API calls in skills).
 - **Write mode.** `tools/list` snapshots with and without `--enable-write`.
 - **Path confinement.** Tests cover `..`, absolute paths outside the root,
-  and symlinks.
+  and symlinks, including links with relative and absolute targets.
+- **Single open.** Tests change the file after it is opened: one grows it past
+  the limit, one replaces the path with a link to a file outside the root. The
+  first is refused as `file_too_large`, and the second still sends the file
+  that was opened (INV-4).
 
 ## 13. Deployment
 
-- **Release.** Ship as a minor release (v0.5.0) after the gogoogle release
-  is tagged.
+- **Release.** Ship as a minor release (v0.5.0) after the gogoogle and
+  oscompat releases are tagged.
 - **Rollout.** Write mode is off by default.
 - **Rollback.** Pin v0.4.0.
 
@@ -194,6 +223,8 @@ wrapper adds no schema of its own.
 | Implement Drive calls directly in a new skill | Duplicates SDK logic; other Go programs and the gogoogle CLI need the same functions |
 | Keep substring-based scope mapping and add "file" / "comment" patterns | Still allow-by-default; fragile as tool names grow |
 | Always register write tools, relying on Google scopes to fail | Exposes write intent to every client and widens requested OAuth scopes by default |
+| Check the path, then let gogoogle open it | Leaves a gap between the check and the open: a link swapped in is followed, and a file that grows is sent whole. Closing it needs the open handle, so the content is sent from the handle |
+| Copy the file to a private temporary file and pass its path | Closes the same gap but copies up to 50 MB and adds temporary-file handling that streaming the handle does not need |
 
 ## 15. Risks and Open Questions
 
@@ -201,6 +232,8 @@ wrapper adds no schema of its own.
 |----|-----------------|------------|
 | R-1 | Scoped-token deployments lose access to new tools until policies are updated | Release notes; clear denial messages naming the missing scope |
 | R-2 | Service accounts cannot see files not shared with them | Documented in setup guide (share the folder with the service account) |
+| R-3 | A symlink with an absolute target is refused even when it points inside the root | Documented in the tools reference and release notes; a relative link inside the root works |
+| R-4 | `drive.file` lets `update_file` reach only files the server's credentials created | Documented; publish with `upload_file` and update the copy it created |
 
 No open question blocks implementation.
 
@@ -209,3 +242,4 @@ No open question blocks implementation.
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 0.1 | 2026-10-29 | John Wang | Initial draft |
+| 0.2 | 2026-10-31 | John Wang | Add the single confined open and streamed upload (INV-4, TRD-007) |

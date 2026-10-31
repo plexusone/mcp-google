@@ -2,7 +2,7 @@
 
 **Initiative:** `INIT-MCPGOOGLE-001`
 **Repository:** `github.com/plexusone/mcp-google`
-**Status:** In progress — 1 of 2 phases completed
+**Status:** In progress — 2 of 3 phases completed
 
 > RMI IDs are stable and permanent. Commits implementing an item carry the trailer `Refs: RMI-MCPGOOGLE-<NNN>`. Phase status is derived from member RMIs. RMI `NNN` corresponds to PLAN step `P-NN`.
 
@@ -43,6 +43,17 @@
   - Acceptance: tools absent without `--enable-write`; path escapes rejected; a token with a `scope` claim but no `drive:write` is denied (tokens with no `scope` claim are not gated)
 - [ ] `RMI-MCPGOOGLE-007` Tools reference, configuration and scope docs, release notes, v0.5.0
   - Type: release · Status: planned
-  - Depends on: `RMI-MCPGOOGLE-004`, `RMI-MCPGOOGLE-006`
+  - Depends on: `RMI-MCPGOOGLE-004`, `RMI-MCPGOOGLE-008`
   - Satisfies: PRD-FR-7, TRD-006
   - Acceptance: CI green before tag; release notes call out the authorization change
+
+## Phase 3 — Confined Uploads
+
+**Theme:** Open each upload once through a confined, size-checked handle and stream it to Drive
+**Status:** Completed — 1 of 1 items completed
+
+- [x] `RMI-MCPGOOGLE-008` Open uploads once through a confined, size-checked handle and stream them
+  - Type: capability · Status: completed
+  - Depends on: `RMI-MCPGOOGLE-006`, `RMI-GOGOOGLE-008`
+  - Satisfies: PRD-FR-8, TRD-007
+  - Acceptance: `upload_file` and `update_file` open the file once inside the upload root, refuse links out of it, and cap the stream at the size limit; a file that grows is refused as `file_too_large` and a link swapped in after the open is not followed
