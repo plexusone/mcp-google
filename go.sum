@@ -55,8 +55,8 @@ github.com/grokify/gogoogle v0.14.0 h1:qpWRF0oPJXsKH+yCw+K+mthNbISnBdFarpa5pv+K6
 github.com/grokify/gogoogle v0.14.0/go.mod h1:O0mizTbp4Xdh8bBfzng0QTW8BE3M13qwS4sRDm2T02o=
 github.com/grokify/mogo v0.75.0 h1:YVOGu49NWvltMfG9wh3aarRD6CTF7y0llEFU+HU9drc=
 github.com/grokify/mogo v0.75.0/go.mod h1:FLksmFRywriEucyYLAGyub7C0po49Yc/nHc9q9gX67w=
-github.com/grokify/oscompat v0.11.0 h1:gt2g6VoUj2TTITuvFF7f70HvKuw8ov3na90ZrigE8I0=
-github.com/grokify/oscompat v0.11.0/go.mod h1:Ekex/WzHaA39LNt5xbeQRASo74NEXAIqBlqdvNF2oUM=
+github.com/grokify/oscompat v0.13.0 h1:WVqStATaUe3cBj3Kep0htGBIGd8/X+jvnTuRXcUNNPg=
+github.com/grokify/oscompat v0.13.0/go.mod h1:Ekex/WzHaA39LNt5xbeQRASo74NEXAIqBlqdvNF2oUM=
 github.com/hashicorp/yamux v0.1.1 h1:yrQxtgseBDrq9Y652vSRDvsKCJKOUD+GzTS4Y0Y8pvE=
 github.com/hashicorp/yamux v0.1.1/go.mod h1:CtWFDAQgb7dxtzFs4tWbplKIe2jSi3+5vKbgIO0SLnQ=
 github.com/huandu/xstrings v1.6.3 h1:7997PcI0mYC9uPNBJ7udg/KrdJh1GhJid8f2tzKFHYQ=
