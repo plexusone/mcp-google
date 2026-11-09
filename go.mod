@@ -11,7 +11,7 @@ require (
 	github.com/plexusone/omnitoken v0.1.0
 	github.com/plexusone/omnivault-desktop v0.1.0
 	github.com/spf13/cobra v1.10.2
-	google.golang.org/api v0.310.0
+	google.golang.org/api v0.311.0
 )
 
 require (
