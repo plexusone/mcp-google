@@ -5,7 +5,7 @@ go 1.26.4
 require (
 	github.com/grokify/goauth v0.25.0
 	github.com/grokify/gogoogle v0.14.0
-	github.com/grokify/oscompat v0.11.0
+	github.com/grokify/oscompat v0.13.0
 	github.com/modelcontextprotocol/go-sdk v1.8.0
 	github.com/plexusone/omniskill v0.12.1
 	github.com/plexusone/omnitoken v0.1.0
